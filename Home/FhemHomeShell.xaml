@@ -10,9 +10,23 @@
 
         <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="FhemServerSettingsRegion" />
 
-        <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="NavigationRegion" />
+        <Grid>
 
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="3*" />
+
+            </Grid.ColumnDefinitions>
+
+            <ContentControl Grid.Column="0" prism:RegionManager.RegionName="MenuRegion" />
+
+            <GridSplitter Grid.Column="1" Width="3" />
+
+            <ContentControl Grid.Column="2" prism:RegionManager.RegionName="ContentRegion" />
+
+        </Grid>
 
     </DockPanel>
     

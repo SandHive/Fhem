@@ -28,80 +28,64 @@ using System.Windows.Data;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemExplorerViewModel : BindableBase
+    public class FhemMenuViewModel : BindableBase
     {
         //---------------------------------------------------------------------
         #region Fields
 
         private IFhemClientService  m_fhemClientService;
-
-        private string  m_fhemResponse;
-
+        
         //-- Fields
         #endregion
         //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
-        /// Gets or sets the native command string. 
+        /// Gets the repository of all Fhem objects.
         /// </summary>
-        public string NativeCommandString { get; set; }
+        public ICollectionView FhemObjects { get; private set; }
         
-        /// <summary>
-        /// Gets the response of the native command string.
-        /// </summary>
-        public string FhemResponse
-        {
-            get { return m_fhemResponse; }
-            private set
-            {
-                //-- Check that the value has really changed
-                if( value == m_fhemResponse ) { return; }
-
-                //-- Apply value
-                m_fhemResponse = value;
-
-                //-- Propagate the change
-                this.OnPropertyChanged();
-            }
-        }
-        
-        /// <summary>
-        /// Gets the command for sending a native command string.
-        /// </summary>
-        public DelegateCommand SendNativeCommandStringCommand { get; private set; }
-
         //-- Properties
         #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemExplorerViewModel class.
+        /// Initializes a new instance of the FhemMenuViewModel class.
         /// </summary>
-        public FhemExplorerViewModel( IFhemClientService a_fhemClientService )
+        public FhemMenuViewModel( IFhemClientService a_fhemClientService )
         {
             //-- Initialize fields
             m_fhemClientService = a_fhemClientService;
 
-            //-- Initialize commands
-            this.SendNativeCommandStringCommand = new DelegateCommand( () => this.SendNativeCommandStringCommandAction() );
+            //-- Register to events
+            m_fhemClientService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged ;
         }
 
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
-        #region Methods
+        #region Event Handlers
 
-        /// <summary>
-        /// The action that should be performed when executing the 'SendNativeCommandStringCommand'.
-        /// </summary>
-        private void SendNativeCommandStringCommandAction()
+        private void FhemClient_IsConnectedChanged( object sender, EventArgs e )
         {
-            this.FhemResponse = m_fhemClientService.FhemClient.SendNativeCommand( this.NativeCommandString );
+            if( m_fhemClientService.FhemClient.IsConnected )
+            {
+                //-- Get the Fhem object repository 
+                var fhemObjectRepository = m_fhemClientService.FhemClient.GetObjectRepository();
+
+                //-- Use the Fhem object repository as source for the collection view 
+                this.FhemObjects = CollectionViewSource.GetDefaultView( fhemObjectRepository );
+
+                //-- Sort the Fhem objects by their names
+                this.FhemObjects.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );
+
+                //-- Force a property update
+                this.OnPropertyChanged( "FhemObjects" );
+            }
         }
 
-        //-- Methods
+        //-- Event Handlers
         #endregion
         //---------------------------------------------------------------------
     }

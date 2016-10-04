@@ -1,0 +1,22 @@
+﻿<UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemMenuView"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" MinWidth="300" ItemsSource="{Binding FhemObjects}">
+
+        <ListBox.ItemTemplate>
+
+            <DataTemplate>
+
+                <TextBlock Text="{Binding Name}" />
+
+            </DataTemplate>
+
+        </ListBox.ItemTemplate>
+
+    </ListBox>
+
+</UserControl>
