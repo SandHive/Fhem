@@ -62,7 +62,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule
         {
             m_regionViewRegistry.RegisterViewWithRegion( "FhemServerSettingsRegion", typeof( FhemServerSettingsView ) );
             m_regionViewRegistry.RegisterViewWithRegion( "MenuRegion", typeof( FhemMenuView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemExplorerView ) );
+            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemNativeCommandView ) );
         }
 
         //-- IModule Members

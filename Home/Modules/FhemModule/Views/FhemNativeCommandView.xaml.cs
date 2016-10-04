@@ -23,17 +23,17 @@ using System.Windows.Controls;
 namespace Sand.Fhem.Home.Modules.FhemModule.Views
 {
     /// <summary>
-    /// Interaction logic for FhemExplorerView.xaml
+    /// Interaction logic for FhemNativeCommandView.xaml
     /// </summary>
-    public partial class FhemExplorerView : UserControl
+    public partial class FhemNativeCommandView : UserControl
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemExplorerView class.
+        /// Initializes a new instance of the FhemNativeCommandView class.
         /// </summary>
-        public FhemExplorerView()
+        public FhemNativeCommandView()
         {
             InitializeComponent();
         }

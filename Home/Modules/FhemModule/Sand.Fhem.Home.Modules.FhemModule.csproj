@@ -75,13 +75,13 @@
     <Compile Include="Services\IFhemClientService.cs" />
     <Compile Include="Services\FhemClientService.cs" />
     <Compile Include="ViewModels\FhemMenuViewModel.cs" />
-    <Compile Include="ViewModels\FhemExplorerViewModel.cs" />
+    <Compile Include="ViewModels\FhemNativeCommandViewModel.cs" />
     <Compile Include="ViewModels\FhemServerSettingsViewModel.cs" />
     <Compile Include="Views\FhemMenuView.xaml.cs">
       <DependentUpon>FhemMenuView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemExplorerView.xaml.cs">
-      <DependentUpon>FhemExplorerView.xaml</DependentUpon>
+    <Compile Include="Views\FhemNativeCommandView.xaml.cs">
+      <DependentUpon>FhemNativeCommandView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FhemServerSettingsView.xaml.cs">
       <DependentUpon>FhemServerSettingsView.xaml</DependentUpon>
@@ -98,9 +98,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemExplorerView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\FhemNativeCommandView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\FhemServerSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>

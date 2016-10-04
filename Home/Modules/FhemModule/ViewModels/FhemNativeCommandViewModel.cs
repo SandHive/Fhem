@@ -28,7 +28,7 @@ using System.Windows.Data;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemExplorerViewModel : BindableBase
+    public class FhemNativeCommandViewModel : BindableBase
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -77,9 +77,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemExplorerViewModel class.
+        /// Initializes a new instance of the FhemNativeCommandViewModel class.
         /// </summary>
-        public FhemExplorerViewModel( IFhemClientService a_fhemClientService )
+        public FhemNativeCommandViewModel( IFhemClientService a_fhemClientService )
         {
             //-- Initialize fields
             m_fhemClientService = a_fhemClientService;
