@@ -5,112 +5,71 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemExplorerView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <DockPanel>
+    <Grid>
 
-        <GroupBox Name="ConnectionGroupBox" DockPanel.Dock="Top" Header="Fhem Server Connection" Margin="3" Padding="7">
+        <Grid.ColumnDefinitions>
 
-            <GroupBox.Style>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="3*" />
 
-                <Style TargetType="GroupBox">
+        </Grid.ColumnDefinitions>
 
-                    <Setter Property="Background" Value="Yellow" />
+        <TreeView Grid.Column="0" MinWidth="300" ItemsSource="{Binding FhemObjects}">
 
-                    <Style.Triggers>
+            <TreeView.ItemTemplate>
 
-                        <DataTrigger Binding="{Binding IsFhemClientConnected}" Value="True">
+                <DataTemplate>
 
-                            <Setter Property="Background" Value="LimeGreen" />
+                    <TextBlock Text="{Binding Name}" />
 
-                        </DataTrigger>
+                </DataTemplate>
 
-                    </Style.Triggers>
+            </TreeView.ItemTemplate>
 
-                </Style>
+        </TreeView>
 
-            </GroupBox.Style>
-            
-            <StackPanel Orientation="Horizontal">
+        <GridSplitter Grid.Column="1" Width="3" />
 
-                <TextBlock Text="Server IP:" />
-                <TextBox Text="{Binding FhemServerIP, Mode=TwoWay}" Margin="3,0" Width="100" />
+        <GroupBox Grid.Column="2" Header="Fhem Command" Margin="3" Padding="7">
 
-                <TextBlock Text="Server Port:" />
-                <TextBox Text="{Binding FhemServerPort, Mode=TwoWay}" Margin="3,0" Width="100" />
+            <DockPanel>
 
-                <Button Command="{Binding ConnectCommand}" Content="Connect" Margin="3,0" />
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="3">
 
-            </StackPanel>
+                    <TextBlock Text="Command:" />
+                    <TextBox Margin="3,0" Text="{Binding NativeCommandString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+
+                        <TextBox.InputBindings>
+
+                            <KeyBinding Gesture="Enter" Command="{Binding SendNativeCommandStringCommand}" />
+
+                        </TextBox.InputBindings>
+
+                    </TextBox>
+
+                    <Button Command="{Binding SendNativeCommandStringCommand}" Content="Send" Margin="3,0" />
+
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <TextBlock Text="Response:" />
+                    <TextBox Text="{Binding FhemResponse, Mode=OneWay}"  
+                             Height="500" 
+                             IsReadOnly="True" 
+                             Margin="3,0" 
+                             ScrollViewer.CanContentScroll="True" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Visible" 
+                             ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                             Width="800" />
+
+                </StackPanel>
+
+            </DockPanel>
 
         </GroupBox>
 
-        <Grid>
-
-            <Grid.ColumnDefinitions>
-
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="3" />
-                <ColumnDefinition Width="3*" />
-
-            </Grid.ColumnDefinitions>
-
-            <TreeView Grid.Column="0" MinWidth="300" ItemsSource="{Binding FhemObjects}">
-
-                <TreeView.ItemTemplate>
-
-                    <DataTemplate>
-
-                        <TextBlock Text="{Binding Name}" />
-
-                    </DataTemplate>
-                    
-                </TreeView.ItemTemplate>
-                
-                
-            </TreeView>
-            
-            <GridSplitter Grid.Column="1" Width="3" />
-
-            <GroupBox Grid.Column="2" Header="Fhem Command" Margin="3" Padding="7">
-
-                <DockPanel>
-
-                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="3">
-
-                        <TextBlock Text="Command:" />
-                        <TextBox Margin="3,0" Text="{Binding NativeCommandString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
-
-                            <TextBox.InputBindings>
-
-                                <KeyBinding Gesture="Enter" Command="{Binding SendNativeCommandStringCommand}" />
-
-                            </TextBox.InputBindings>
-
-                        </TextBox>
-
-                        <Button Command="{Binding SendNativeCommandStringCommand}" Content="Send" Margin="3,0" />
-
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal">
-
-                        <TextBlock Text="Response:" />
-                        <TextBox Text="{Binding FhemResponse, Mode=OneWay}"  
-                                 Height="500" 
-                                 IsReadOnly="True" 
-                                 Margin="3,0" 
-                                 ScrollViewer.CanContentScroll="True" 
-                                 ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                                 Width="800" />
-
-                    </StackPanel>
-
-                </DockPanel>
-
-            </GroupBox>
-
-        </Grid>
-
-    </DockPanel>
+    </Grid>
 
 </UserControl>

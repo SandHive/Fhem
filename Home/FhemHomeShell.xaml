@@ -6,10 +6,14 @@
     Title="Fhem Agent" 
     SizeToContent="WidthAndHeight">
     
-    <StackPanel>
+    <DockPanel>
 
-        <ContentControl prism:RegionManager.RegionName="MainRegion" />
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="FhemServerSettingsRegion" />
 
-    </StackPanel>
+        <ContentControl DockPanel.Dock="Left" prism:RegionManager.RegionName="NavigationRegion" />
+
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+
+    </DockPanel>
     
 </Window>

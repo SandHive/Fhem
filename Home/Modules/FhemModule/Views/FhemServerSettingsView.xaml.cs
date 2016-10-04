@@ -18,53 +18,27 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Microsoft.Practices.Unity;
-using Prism.Modularity;
-using Prism.Regions;
-using Sand.Fhem.Home.Modules.FhemModule.Services;
-using Sand.Fhem.Home.Modules.FhemModule.Views;
+using System.Windows.Controls;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule
+namespace Sand.Fhem.Home.Modules.FhemModule.Views
 {
-    public class FhemModule : IModule
+    /// <summary>
+    /// Interaction logic for FhemServerSettingsView.xaml
+    /// </summary>
+    public partial class FhemServerSettingsView : UserControl
     {
-        //---------------------------------------------------------------------
-        #region Fields
-
-        private FhemClientService  m_fhemClientService = new FhemClientService();
-
-        private IRegionViewRegistry  m_regionViewRegistry;
-
-        //-- Fields
-        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemModule class.
+        /// Initializes a new instance of the FhemServerSettingsView class.
         /// </summary>
-        /// <param name="a_regionViewRegistry"></param>
-        public FhemModule( IUnityContainer a_container, IRegionViewRegistry a_regionViewRegistry )
+        public FhemServerSettingsView()
         {
-            //-- Initialize fields
-            m_regionViewRegistry = a_regionViewRegistry;
-
-            //-- Register services
-            a_container.RegisterInstance<IFhemClientService>( m_fhemClientService );
+            InitializeComponent();
         }
 
         //-- Constructors
-        #endregion
-        //---------------------------------------------------------------------
-        #region IModule Members
-
-        public void Initialize()
-        {
-            m_regionViewRegistry.RegisterViewWithRegion( "FhemServerSettingsRegion", typeof( FhemServerSettingsView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemExplorerView ) );
-        }
-
-        //-- IModule Members
         #endregion
         //---------------------------------------------------------------------
     }
