@@ -71,11 +71,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         {
             if( m_fhemClientService.FhemClient.IsConnected )
             {
-                //-- Get the Fhem object repository 
-                var fhemObjectRepository = m_fhemClientService.FhemClient.GetObjectRepository();
-
                 //-- Use the Fhem object repository as source for the collection view 
-                this.FhemObjects = CollectionViewSource.GetDefaultView( fhemObjectRepository );
+                this.FhemObjects = CollectionViewSource.GetDefaultView( m_fhemClientService.FhemObjectRepository );
 
                 //-- Sort the Fhem objects by their names
                 this.FhemObjects.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );

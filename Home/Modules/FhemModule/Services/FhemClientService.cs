@@ -19,15 +19,46 @@
  * IN THE SOFTWARE.
  */
 using Sand.Fhem.Basics;
+using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.Services
 {
     public class FhemClientService : IFhemClientService
     {
         //---------------------------------------------------------------------
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the FhemClientService class.
+        /// </summary>
+        public FhemClientService()
+        {
+            //-- Register to events
+            this.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
+        }
+
+        //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region Event Handlers
+
+        private void FhemClient_IsConnectedChanged( object sender, EventArgs e )
+        {
+            if( this.FhemClient.IsConnected )
+            {
+                //-- Get the Fhem object repository 
+                this.FhemObjectRepository = this.FhemClient.GetObjectRepository();
+            }
+        }
+
+        //-- Event Handlers
+        #endregion
+        //---------------------------------------------------------------------
         #region IFhemClientService Members
 
         public FhemClient FhemClient { get; } = new FhemClient();
+
+        public FhemObjectRepository FhemObjectRepository { get; private set; }
 
         //-- IFhemClientService Members
         #endregion

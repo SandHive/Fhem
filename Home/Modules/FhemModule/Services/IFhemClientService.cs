@@ -28,6 +28,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         /// Gets the Fhem client.
         /// </summary>
         FhemClient FhemClient { get; }
+
+        /// <summary>
+        /// Gets the repository with all available Fhem objects.
+        /// </summary>
+        FhemObjectRepository FhemObjectRepository { get; }
     }
 }
 //-----------------------------------------------------------------------------
