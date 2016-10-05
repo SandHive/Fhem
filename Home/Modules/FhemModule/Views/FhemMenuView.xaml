@@ -5,13 +5,23 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemMenuView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListBox ScrollViewer.VerticalScrollBarVisibility="Visible" MinWidth="300" ItemsSource="{Binding FhemObjects}">
+    <ListBox MinWidth="300" ItemsSource="{Binding FhemMenuItems}">
 
+        <ListBox.ItemContainerStyle>
+
+            <Style TargetType="ListBoxItem">
+
+                <Setter Property="IsSelected" Value="{Binding IsActive}"/>
+                
+            </Style>
+            
+        </ListBox.ItemContainerStyle>
+        
         <ListBox.ItemTemplate>
 
             <DataTemplate>
 
-                <TextBlock Text="{Binding Name}" />
+                <TextBlock Text="{Binding Header}" />
 
             </DataTemplate>
 

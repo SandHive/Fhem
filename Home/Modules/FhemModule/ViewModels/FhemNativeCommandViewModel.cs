@@ -19,21 +19,16 @@
  * IN THE SOFTWARE.
  */
 using Prism.Commands;
-using Prism.Mvvm;
-using Sand.Fhem.Basics;
+using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
-using System.ComponentModel;
-using System.Windows.Data;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemNativeCommandViewModel : BindableBase
+    public class FhemNativeCommandViewModel : FhemContentViewModel
     {
         //---------------------------------------------------------------------
         #region Fields
-
-        private IFhemClientService  m_fhemClientService;
 
         private string  m_fhemResponse;
 
@@ -79,16 +74,28 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the FhemNativeCommandViewModel class.
         /// </summary>
-        public FhemNativeCommandViewModel( IFhemClientService a_fhemClientService )
+        public FhemNativeCommandViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
+            : base( a_fhemClientService, a_regionManager )
         {
-            //-- Initialize fields
-            m_fhemClientService = a_fhemClientService;
-
             //-- Initialize commands
             this.SendNativeCommandStringCommand = new DelegateCommand( () => this.SendNativeCommandStringCommandAction() );
         }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region FhemContentViewModel Members
+
+        public override string Header { get; } = "Send Native Command";
+
+        protected override void OnActivated()
+        {
+            base.OnActivated();
+
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemNativeCommandView", UriKind.Relative ) );
+        }
+
+        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
         #region Methods
@@ -98,7 +105,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         private void SendNativeCommandStringCommandAction()
         {
-            this.FhemResponse = m_fhemClientService.FhemClient.SendNativeCommand( this.NativeCommandString );
+            this.FhemResponse = this.FhemClientService.FhemClient.SendNativeCommand( this.NativeCommandString );
         }
 
         //-- Methods

@@ -18,27 +18,64 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
-using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Data;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemMenuViewModel : BindableBase
+    public abstract class FhemContentViewModel : BindableBase
     {
+        //---------------------------------------------------------------------
+        #region Fields
+
+        private bool  m_isActive;
+
+        //-- Fields
+        #endregion
         //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
-        /// Gets the menu items.
+        /// Gets the Fhem client service.
         /// </summary>
-        public ObservableCollection<FhemContentViewModel> FhemMenuItems { get; } = new ObservableCollection<FhemContentViewModel>();
+        protected IFhemClientService FhemClientService { get; private set; }
+
+        /// <summary>
+        /// Gets the header.
+        /// </summary>
+        public abstract string Header { get; }
+
+        /// <summary>
+        /// Gets or sets a flag that specifies whether this content view model
+        /// is currently active and should be shown in the content region.
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return m_isActive;
+            }
+            set
+            {
+                //-- Do nothing when the value has not changed
+                if( m_isActive == value ) { return; }
+
+                //-- Update the value
+                m_isActive = value;
+
+                if( m_isActive )
+                {
+                    //-- Give an inherited class the chance to react on
+                    this.OnActivated();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the region manager.
+        /// </summary>
+        protected IRegionManager RegionManager { get; private set; }
 
         //-- Properties
         #endregion
@@ -46,16 +83,26 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMenuViewModel class.
+        /// Initializes a new instance of the FhemContentViewModel class.
         /// </summary>
-        public FhemMenuViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
+        public FhemContentViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
         {
             //-- Initialize properties
-            this.FhemMenuItems.Add( new FhemObjectsViewModel( a_fhemClientService, a_regionManager ) );
-            this.FhemMenuItems.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
+            this.FhemClientService = a_fhemClientService;
+            this.RegionManager = a_regionManager;
         }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        /// <summary>
+        /// Invoked when the 'IsActive' is set to 'True'.
+        /// </summary>
+        protected virtual void OnActivated() { }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }
