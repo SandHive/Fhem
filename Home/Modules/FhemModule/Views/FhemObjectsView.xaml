@@ -5,9 +5,37 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectsView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <DockPanel>
+    <Grid>
 
-        <GroupBox DockPanel.Dock="Bottom" MaxHeight="250" Header="Fhem Object Details" Margin="3" Padding="7">
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="3" />
+            <RowDefinition Height="3*" />
+
+        </Grid.RowDefinitions>
+        
+        <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
+
+            <ListBox ItemsSource="{Binding FhemObjects}" SelectedItem="{Binding SelectedFhemObject}">
+
+                <ListBox.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <TextBlock Text="{Binding Name}" />
+
+                    </DataTemplate>
+
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+        </GroupBox>
+
+        <GridSplitter Grid.Row="1" ResizeDirection="Rows" HorizontalAlignment="Stretch" />
+
+        <GroupBox Grid.Row="2" Header="Fhem Object Details" Margin="3" Padding="7">
 
             <ScrollViewer>
 
@@ -54,24 +82,6 @@
 
         </GroupBox>
 
-        <GroupBox Header="Fhem Objects" Margin="3" Padding="7">
-
-            <ListBox ItemsSource="{Binding FhemObjects}" SelectedItem="{Binding SelectedFhemObject}">
-
-                <ListBox.ItemTemplate>
-
-                    <DataTemplate>
-
-                        <TextBlock Text="{Binding Name}" />
-
-                    </DataTemplate>
-
-                </ListBox.ItemTemplate>
-
-            </ListBox>
-
-        </GroupBox>
-
-    </DockPanel>
+    </Grid>
 
 </UserControl>
