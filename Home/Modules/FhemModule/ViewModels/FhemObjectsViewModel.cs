@@ -19,6 +19,7 @@
  * IN THE SOFTWARE.
  */
 using Prism.Regions;
+using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
 using System.ComponentModel;
@@ -29,12 +30,37 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
     public class FhemObjectsViewModel : FhemContentViewModel
     {
         //---------------------------------------------------------------------
+        #region Fields
+
+        private FhemObject  m_selectedFhemObject;
+
+        //-- Fields
+        #endregion
+        //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
         /// Gets the repository of all Fhem objects.
         /// </summary>
         public ICollectionView FhemObjects { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the selected Fhem object.
+        /// </summary>
+        public FhemObject SelectedFhemObject
+        {
+            get { return m_selectedFhemObject; }
+            set
+            {
+                //-- Do nothing when the value has not changed
+                if( value == m_selectedFhemObject ) { return; }
+
+                //-- Update the value
+                m_selectedFhemObject = value;
+
+                this.OnPropertyChanged();
+            }
+        }
 
         //-- Properties
         #endregion

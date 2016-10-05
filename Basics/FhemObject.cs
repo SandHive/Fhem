@@ -32,6 +32,9 @@ namespace Sand.Fhem.Basics
 
         public object Internals { get; private set; }
 
+        /// <summary>
+        /// Gets the name of the Fhem obje.ct
+        /// </summary>
         public string Name { get; private set; }
 
         public string PossibleAttributes { get; private set; }
@@ -45,11 +48,14 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Constructors
 
-
-        private FhemObject()
-        {
-           
-        }
+        /// <summary>
+        /// Initializes a new instance of the FhemObject class.
+        /// </summary>
+        /// <remarks>
+        /// This constructor is private to force the usage of the 'From...'
+        /// methods.
+        /// </remarks>
+        private FhemObject() { }
 
         //-- Constructors
         #endregion

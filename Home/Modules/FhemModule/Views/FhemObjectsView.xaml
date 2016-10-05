@@ -5,22 +5,73 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectsView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <GroupBox Header="Shabubu" Margin="3" Padding="7">
+    <DockPanel>
 
-        <ListBox ItemsSource="{Binding FhemObjects}">
+        <GroupBox DockPanel.Dock="Bottom" MaxHeight="250" Header="Fhem Object Details" Margin="3" Padding="7">
 
-            <ListBox.ItemTemplate>
+            <ScrollViewer>
 
-                <DataTemplate>
+                <Grid>
 
-                    <TextBlock Text="{Binding Name}" />
+                    <Grid.ColumnDefinitions>
 
-                </DataTemplate>
-                
-            </ListBox.ItemTemplate>
-            
-        </ListBox>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
 
-    </GroupBox>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="Auto "/>
+                        <RowDefinition Height="Auto "/>
+                        <RowDefinition Height="Auto "/>
+                        <RowDefinition Height="Auto "/>
+                        <RowDefinition Height="Auto "/>
+                        <RowDefinition Height="Auto "/>
+
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Name: " />
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedFhemObject.Name}" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attributes: " />
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding SelectedFhemObject.Attributes}" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="PossibleAttributes: " />
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding SelectedFhemObject.PossibleAttributes}" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="PossibleSets: " />
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SelectedFhemObject.PossibleSets}" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Internals: " />
+                    <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding SelectedFhemObject.Internals}" />
+
+                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Readings: " />
+                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding SelectedFhemObject.Readings}" />
+
+                </Grid>
+
+            </ScrollViewer>
+
+        </GroupBox>
+
+        <GroupBox Header="Fhem Objects" Margin="3" Padding="7">
+
+            <ListBox ItemsSource="{Binding FhemObjects}" SelectedItem="{Binding SelectedFhemObject}">
+
+                <ListBox.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <TextBlock Text="{Binding Name}" />
+
+                    </DataTemplate>
+
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+        </GroupBox>
+
+    </DockPanel>
 
 </UserControl>
