@@ -20,6 +20,8 @@
  */
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
@@ -28,12 +30,15 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Properties
 
-        public object Attributes { get; private set; }
+        /// <summary>
+        /// Gets the attributes of the Fhem object.
+        /// </summary>
+        public ReadOnlyDictionary<string, string> Attributes { get; private set; }
 
         public object Internals { get; private set; }
 
         /// <summary>
-        /// Gets the name of the Fhem obje.ct
+        /// Gets the name of the Fhem object.
         /// </summary>
         public string Name { get; private set; }
 
@@ -75,16 +80,37 @@ namespace Sand.Fhem.Basics
             {
                 throw new ArgumentOutOfRangeException( "The json object must have 6 children!" );
             }
-            
+
             //-- Create the new fhem object
             var me = new FhemObject();
-            
+
             //-- Analyze the first json property
             foreach( var jsonProperty in a_jsonObject.Children<JProperty>() )
             {
                 switch( jsonProperty.Name )
                 {
-                    case "Attributes": me.Attributes = jsonProperty.Value; break;
+                    #region case "Attributes":
+
+                    case "Attributes":
+
+                        //-- Get the Json object that contains the attributes
+                        var attributesAsJsonObject = (JObject) jsonProperty.First;
+
+                        //-- Prepare a dictionary
+                        var attributes = new Dictionary<string, string>( attributesAsJsonObject.Count );
+
+                        foreach( var jsonAttribute in attributesAsJsonObject.Children<JProperty>() )
+                        {
+                            attributes.Add( jsonAttribute.Name, (string) jsonAttribute.Value );
+                        }
+
+                        //-- Wrap the dictionary with a readonly dictionary
+                        me.Attributes = new ReadOnlyDictionary<string, string>( attributes );
+
+                        break;
+
+                    //-- case "Attributes":
+                    #endregion
 
                     case "Internals": me.Internals = jsonProperty.Value; break;
 
@@ -99,7 +125,7 @@ namespace Sand.Fhem.Basics
                     default: break;
                 }
             }
-            
+
             return me;
         }
 
