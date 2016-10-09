@@ -68,7 +68,7 @@
                     <ListBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes}" />
 
                     <TextBlock Grid.Column="0" Grid.Row="3" Text="PossibleSets: " />
-                    <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding SelectedFhemObject.PossibleSets}" />
+                    <ListBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding SelectedFhemObject.PossibleSets}" />
 
                     <TextBlock Grid.Column="0" Grid.Row="4" Text="Internals: " />
                     <ListBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding SelectedFhemObject.Internals}" />

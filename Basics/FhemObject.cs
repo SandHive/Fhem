@@ -50,7 +50,10 @@ namespace Sand.Fhem.Basics
         /// </summary>
         public string[] PossibleAttributes { get; private set; }
 
-        public string PossibleSets { get; private set; }
+        /// <summary>
+        /// Gets the possible sets of the Fhem object.
+        /// </summary>
+        public string[] PossibleSets { get; private set; }
 
         public object Readings { get; private set; }
 
@@ -73,7 +76,21 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Methods
 
-
+        /// <summary>
+        /// Parses a Fhem object from its json object representation.
+        /// </summary>
+        /// <param name="a_jsonObject">
+        /// The json object that represents the Fhem object.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// The json object may not be null.
+        /// </exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The json object must have 6 children
+        /// </exception>
+        /// <returns>
+        /// The parses Fhem object.
+        /// </returns>
         public static FhemObject FromJObject( JObject a_jsonObject )
         {
             //-- Validate argument
@@ -160,8 +177,24 @@ namespace Sand.Fhem.Basics
 
                     //-- case "PossibleAttrs":
                     #endregion
+                    
+                    #region case "PossibleSets":
 
-                    case "PossibleSets": me.PossibleSets = (string) jsonProperty.Value; break;
+                    case "PossibleSets":
+
+                        //-- Get the string that contains all possible sets
+                        var encodedPossibleSets = (string) jsonProperty.Value;
+
+                        //-- Just separate the sets
+                        me.PossibleSets = encodedPossibleSets.Split( new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
+
+                        //-- Sort the result
+                        Array.Sort( me.PossibleSets );
+
+                        break;
+
+                    //-- case "PossibleSets":
+                    #endregion
 
                     case "Readings": me.Readings = jsonProperty.Value; break;
 
