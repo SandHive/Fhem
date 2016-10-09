@@ -35,7 +35,10 @@ namespace Sand.Fhem.Basics
         /// </summary>
         public ReadOnlyDictionary<string, string> Attributes { get; private set; }
 
-        public object Internals { get; private set; }
+        /// <summary>
+        /// Gets the internals of the Fhem object.
+        /// </summary>
+        public ReadOnlyDictionary<string, string> Internals { get; private set; }
 
         /// <summary>
         /// Gets the name of the Fhem object.
@@ -112,7 +115,28 @@ namespace Sand.Fhem.Basics
                     //-- case "Attributes":
                     #endregion
 
-                    case "Internals": me.Internals = jsonProperty.Value; break;
+                    #region case "Internals":
+
+                    case "Internals":
+
+                        //-- Get the Json object that contains the attributes
+                        var internalsAsJsonObject = (JObject) jsonProperty.First;
+
+                        //-- Prepare a dictionary
+                        var internals = new Dictionary<string, string>( internalsAsJsonObject.Count );
+
+                        foreach( var jsonInternal in internalsAsJsonObject.Children<JProperty>() )
+                        {
+                            internals.Add( jsonInternal.Name, (string) jsonInternal.Value );
+                        }
+
+                        //-- Wrap the dictionary with a readonly dictionary
+                        me.Internals = new ReadOnlyDictionary<string, string>( internals );
+
+                        break;
+
+                    //-- case "Internals":
+                    #endregion
 
                     case "Name": me.Name = (string) jsonProperty.Value; break;
 
