@@ -74,7 +74,30 @@
                     <ListBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding SelectedFhemObject.Internals}" />
 
                     <TextBlock Grid.Column="0" Grid.Row="5" Text="Readings: " />
-                    <TextBlock Grid.Column="1" Grid.Row="5" Text="{Binding SelectedFhemObject.Readings}" />
+                    <ListBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding SelectedFhemObject.Readings}">
+
+                        <ListBox.ItemTemplate>
+
+                            <DataTemplate>
+
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBlock Text="Name: " />
+                                    <TextBlock Text="{Binding Value.Name}" />
+
+                                    <TextBlock Text="   Value: " />
+                                    <TextBlock Text="{Binding Value.Value}" />
+
+                                    <TextBlock Text="   DateTime: " />
+                                    <TextBlock Text="{Binding Value.DateTime}" />
+
+                                </StackPanel>
+                                
+                            </DataTemplate>
+                            
+                        </ListBox.ItemTemplate>
+                        
+                    </ListBox>
 
                 </Grid>
 

@@ -55,7 +55,10 @@ namespace Sand.Fhem.Basics
         /// </summary>
         public string[] PossibleSets { get; private set; }
 
-        public object Readings { get; private set; }
+        /// <summary>
+        /// Gets the readings of the Fhem object.
+        /// </summary>
+        public SortedList<string, FhemObjectReadingItem> Readings { get; private set; }
 
         //-- Properties
         #endregion
@@ -107,7 +110,7 @@ namespace Sand.Fhem.Basics
             //-- Create the new fhem object
             var me = new FhemObject();
 
-            //-- Analyze the first json property
+            //-- Analyze the children
             foreach( var jsonProperty in a_jsonObject.Children<JProperty>() )
             {
                 switch( jsonProperty.Name )
@@ -196,7 +199,27 @@ namespace Sand.Fhem.Basics
                     //-- case "PossibleSets":
                     #endregion
 
-                    case "Readings": me.Readings = jsonProperty.Value; break;
+                    case "Readings":
+
+                        //-- Get the Json object that contains the readings
+                        var readingsAsJsonObject = (JObject) jsonProperty.First;
+
+                        //-- Prepare a dictionary
+                        var readings = new SortedList<string, FhemObjectReadingItem>( readingsAsJsonObject.Count );
+
+                        foreach( var jsonReading in readingsAsJsonObject.Children<JProperty>() )
+                        {
+                            //-- Parse the reading item
+                            var readingItem = FhemObjectReadingItem.FromJProperty( jsonReading );
+
+                            //-- Store the reading item 
+                            readings.Add( readingItem.Name, readingItem );
+                        }
+                        
+                        //-- Apply the gathered dictionary 
+                        me.Readings = readings;
+
+                        break;
 
                     default: break;
                 }
