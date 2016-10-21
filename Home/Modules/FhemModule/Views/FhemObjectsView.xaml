@@ -9,12 +9,12 @@
 
         <Grid.RowDefinitions>
 
-            <RowDefinition Height="5*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="3" />
-            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
 
         </Grid.RowDefinitions>
-        
+
         <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
 
             <ListBox ItemsSource="{Binding FhemObjects}" SelectedItem="{Binding SelectedFhemObject}">
@@ -37,71 +37,73 @@
 
         <GroupBox Grid.Row="2" Header="Fhem Object Details" Margin="3" Padding="7">
 
-            <ScrollViewer>
+            <StackPanel>
 
-                <Grid>
+                <TextBlock Text="{Binding SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
 
-                    <Grid.ColumnDefinitions>
+                <ScrollViewer>
 
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
+                    <Grid>
 
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
 
-                        <RowDefinition Height="Auto "/>
-                        <RowDefinition Height="Auto "/>
-                        <RowDefinition Height="Auto "/>
-                        <RowDefinition Height="Auto "/>
-                        <RowDefinition Height="Auto "/>
-                        <RowDefinition Height="Auto "/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
 
-                    </Grid.RowDefinitions>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Name: " />
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SelectedFhemObject.Name}" />
+                            <RowDefinition Height="Auto "/>
+                            <RowDefinition Height="Auto "/>
+                            <RowDefinition Height="Auto "/>
+                            <RowDefinition Height="Auto "/>
+                            <RowDefinition Height="Auto "/>
 
-                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Attributes: " />
-                    <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectedFhemObject.Attributes}" />
+                        </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="0" Grid.Row="2" Text="PossibleAttributes: " />
-                    <ListBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes}" />
+                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Attributes: " />
+                        <ListBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding SelectedFhemObject.Attributes}" />
 
-                    <TextBlock Grid.Column="0" Grid.Row="3" Text="PossibleSets: " />
-                    <ListBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding SelectedFhemObject.PossibleSets}" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="PossibleAttributes: " />
+                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes}" />
 
-                    <TextBlock Grid.Column="0" Grid.Row="4" Text="Internals: " />
-                    <ListBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding SelectedFhemObject.Internals}" />
+                        <TextBlock Grid.Column="0" Grid.Row="2" Text="PossibleSets: " />
+                        <ListBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding SelectedFhemObject.PossibleSets}" />
 
-                    <TextBlock Grid.Column="0" Grid.Row="5" Text="Readings: " />
-                    <ListBox Grid.Column="1" Grid.Row="5" ItemsSource="{Binding SelectedFhemObject.Readings}">
+                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Internals: " />
+                        <ListBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding SelectedFhemObject.Internals}" />
 
-                        <ListBox.ItemTemplate>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Readings: " />
+                        <ListBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding SelectedFhemObject.Readings}">
 
-                            <DataTemplate>
+                            <ListBox.ItemTemplate>
 
-                                <StackPanel Orientation="Horizontal">
+                                <DataTemplate>
 
-                                    <TextBlock Text="DateTime: " />
-                                    <TextBlock Text="{Binding Value.DateTime}" />
+                                    <StackPanel Orientation="Horizontal">
 
-                                    <TextBlock Text="   Name: " />
-                                    <TextBlock Text="{Binding Value.Name}" />
+                                        <TextBlock Text="DateTime: " />
+                                        <TextBlock Text="{Binding Value.DateTime}" />
 
-                                    <TextBlock Text="   Value: " />
-                                    <TextBlock Text="{Binding Value.Value}" />
+                                        <TextBlock Text="   Name: " />
+                                        <TextBlock Text="{Binding Value.Name}" />
 
-                                </StackPanel>
-                                
-                            </DataTemplate>
-                            
-                        </ListBox.ItemTemplate>
-                        
-                    </ListBox>
+                                        <TextBlock Text="   Value: " />
+                                        <TextBlock Text="{Binding Value.Value}" />
 
-                </Grid>
+                                    </StackPanel>
 
-            </ScrollViewer>
+                                </DataTemplate>
+
+                            </ListBox.ItemTemplate>
+
+                        </ListBox>
+
+                    </Grid>
+
+                </ScrollViewer>
+
+            </StackPanel>
 
         </GroupBox>
 

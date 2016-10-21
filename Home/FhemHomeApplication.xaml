@@ -1,4 +1,12 @@
 ﻿<Application 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Class="Sand.Fhem.Prism.FhemAgent.FhemHomeApplication" />
+    x:Class="Sand.Fhem.Prism.FhemAgent.FhemHomeApplication">
+
+    <Application.Resources>
+
+        <ResourceDictionary Source="pack://application:,,,/Sand.Fhem.Home.Modules.FhemModule;component/Resources/FhemModuleResourceLibrary.xaml" />
+
+    </Application.Resources>
+
+</Application>

@@ -58,17 +58,14 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             }
             set
             {
-                //-- Do nothing when the value has not changed
-                if( m_isActive == value ) { return; }
-
-                //-- Update the value
-                m_isActive = value;
-
-                if( m_isActive )
+                if( this.SetProperty( ref m_isActive, value ) )
                 {
-                    //-- Give an inherited class the chance to react on
-                    this.OnActivated();
-                }
+                    if( m_isActive )
+                    {
+                        //-- Give an inherited class the chance to react on
+                        this.OnActivated();
+                    }
+                }                
             }
         }
 

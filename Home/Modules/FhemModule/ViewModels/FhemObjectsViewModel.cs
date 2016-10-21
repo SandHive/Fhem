@@ -50,16 +50,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public FhemObject SelectedFhemObject
         {
             get { return m_selectedFhemObject; }
-            set
-            {
-                //-- Do nothing when the value has not changed
-                if( value == m_selectedFhemObject ) { return; }
-
-                //-- Update the value
-                m_selectedFhemObject = value;
-
-                this.OnPropertyChanged();
-            }
+            set { this.SetProperty( ref m_selectedFhemObject, value ); }
         }
 
         //-- Properties
