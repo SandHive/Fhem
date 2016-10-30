@@ -63,19 +63,16 @@ namespace Sand.Fhem.Basics
         #region Methods
 
         /// <summary>
-        /// Parses a Fhem object from its json object representation.
+        /// Parses a reading item from its json property representation.
         /// </summary>
         /// <param name="a_jsonProperty">
-        /// The json object that represents the Fhem object.
+        /// The json object that represents the reading item.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// The json object may not be null.
         /// </exception>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// The json object must have 6 children
-        /// </exception>
         /// <returns>
-        /// The parses Fhem object.
+        /// The parsed reading item.
         /// </returns>
         public static FhemObjectReadingItem FromJProperty( JProperty a_jsonProperty )
         {

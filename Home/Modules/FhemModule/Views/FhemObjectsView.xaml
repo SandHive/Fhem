@@ -37,9 +37,9 @@
 
         <GroupBox Grid.Row="2" Header="Fhem Object Details" Margin="3" Padding="7">
 
-            <StackPanel>
+            <DockPanel>
 
-                <TextBlock Text="{Binding SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
+                <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
 
                 <ScrollViewer>
 
@@ -65,7 +65,7 @@
                         <ListBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding SelectedFhemObject.Attributes}" />
 
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="PossibleAttributes: " />
-                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes}" />
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes.PossibleAttributeItems.Keys}" />
 
                         <TextBlock Grid.Column="0" Grid.Row="2" Text="PossibleSets: " />
                         <ListBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding SelectedFhemObject.PossibleSets}" />
@@ -103,7 +103,7 @@
 
                 </ScrollViewer>
 
-            </StackPanel>
+            </DockPanel>
 
         </GroupBox>
 
