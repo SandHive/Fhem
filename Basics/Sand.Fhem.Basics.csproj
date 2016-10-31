@@ -45,6 +45,7 @@
     <Compile Include="FhemObject.cs" />
     <Compile Include="FhemObjectRepository.cs" />
     <Compile Include="FhemPossibleAttributesCollection.cs" />
+    <Compile Include="FhemReadingItemsCollection.cs" />
     <Compile Include="FhemReadingItem.cs" />
     <Compile Include="NetworkStreamWriter.cs" />
     <Compile Include="NetworkStreamReader.cs" />

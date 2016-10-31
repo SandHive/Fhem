@@ -18,18 +18,19 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class FhemPossibleAttributesCollection : IReadOnlyList<FhemItemValuesPair>
+    public class FhemReadingItemsCollection : IReadOnlyList<FhemReadingItem>
     {
         //---------------------------------------------------------------------
         #region Fields
 
-        private SortedList<string, FhemItemValuesPair>  m_possibleAttributes;
+        private SortedList<string, FhemReadingItem>  m_readings;
 
         //-- Fields
         #endregion
@@ -37,14 +38,13 @@ namespace Sand.Fhem.Basics
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemPossibleAttributesCollection 
-        /// class.
+        /// Initializes a new instance of the FhemReadingItemsCollection class.
         /// </summary>
         /// <remarks>
         /// This constructor is private to force the usage of the 'From...'
         /// methods.
         /// </remarks>
-        private FhemPossibleAttributesCollection() { }
+        private FhemReadingItemsCollection() { }
 
         //-- Constructors
         #endregion
@@ -55,26 +55,26 @@ namespace Sand.Fhem.Basics
         {
             get
             {
-                return m_possibleAttributes.Count;
+                return m_readings.Count;
             }
         }
 
-        public FhemItemValuesPair this[int a_index]
+        public FhemReadingItem this[int a_index]
         {
             get
             {
-                return m_possibleAttributes.Values[a_index];
+                return m_readings.Values[a_index];
             }
         }
 
-        public IEnumerator<FhemItemValuesPair> GetEnumerator()
+        public IEnumerator<FhemReadingItem> GetEnumerator()
         {
-            return m_possibleAttributes.Values.GetEnumerator();
+            return m_readings.Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return m_possibleAttributes.Values.GetEnumerator();
+            return m_readings.Values.GetEnumerator();
         }
 
         //-- IReadOnlyList Members
@@ -83,48 +83,44 @@ namespace Sand.Fhem.Basics
         #region Methods
 
         /// <summary>
-        /// Parses the possible attributes from their string representation.
+        /// Parses a reading items collection from its json object 
+        /// representation.
         /// </summary>
-        /// <param name="a_parseString">
-        /// The string that represents the possible attributes.
+        /// <param name="a_jsonObject">
+        /// The json object that represents the reading items collection.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// The parse string may not be null or empty.
+        /// The json object may not be null.
         /// </exception>
         /// <returns>
-        /// The parsed possible attributes.
+        /// The parsed reading items collection.
         /// </returns>
-        public static FhemPossibleAttributesCollection Parse( string a_parseString )
+        public static FhemReadingItemsCollection FromJObject( JObject a_jsonObject )
         {
             //-- Validate argument
-            if( String.IsNullOrWhiteSpace( a_parseString ) )
+            if( a_jsonObject == null )
             {
-                throw new ArgumentNullException( "The parse string may not be null or empty!" );
+                throw new ArgumentNullException( "The json object may not be null!" );
             }
-            
-            //-- Create the new possible attribute item
-            var me = new FhemPossibleAttributesCollection();
 
-            //-- Just separate the attributes
-            var attributeValuesPairs = a_parseString.Split( new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
+            //-- Create the new reading items collection
+            var me = new FhemReadingItemsCollection();
             
-            //-- Prepare the internal sorted list (we use a SortedList for two
-            //-- reasons: 1. to sort the possible attributes by their names, 2.
-            //-- to be able to prevent dupplicates by having a 'key' property
-            //-- so the last value will always overwrite the previous one)
-            me.m_possibleAttributes = new SortedList<string, FhemItemValuesPair>( attributeValuesPairs.Length );
+            //-- Prepare the internal sorted list
+            me.m_readings = new SortedList<string, FhemReadingItem>( a_jsonObject.Count );
 
-            foreach( var attributeValuesPair in attributeValuesPairs )
+            foreach( var jsonReading in a_jsonObject.Children<JProperty>() )
             {
-                var itemValuesPair = FhemItemValuesPair.Parse( attributeValuesPair );
+                //-- Parse the reading item
+                var readingItem = FhemReadingItem.FromJProperty( jsonReading );
 
-                //-- In case of duplicates, the last one wins
-                me.m_possibleAttributes[itemValuesPair.Name] = itemValuesPair;
+                //-- Store the reading item 
+                me.m_readings[readingItem.Name] = readingItem;
             }
 
             return me;
         }
-        
+
         //-- Methods
         #endregion
         //---------------------------------------------------------------------

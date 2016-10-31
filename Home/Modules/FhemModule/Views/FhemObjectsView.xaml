@@ -95,13 +95,13 @@
                                     <StackPanel Orientation="Horizontal">
 
                                         <TextBlock Text="DateTime: " />
-                                        <TextBlock Text="{Binding Value.DateTime}" />
+                                        <TextBlock Text="{Binding DateTime}" />
 
                                         <TextBlock Text="   Name: " />
-                                        <TextBlock Text="{Binding Value.Name}" />
+                                        <TextBlock Text="{Binding Name}" />
 
                                         <TextBlock Text="   Value: " />
-                                        <TextBlock Text="{Binding Value.Value}" />
+                                        <TextBlock Text="{Binding Value}" />
 
                                     </StackPanel>
 

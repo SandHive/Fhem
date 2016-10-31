@@ -66,10 +66,10 @@ namespace Sand.Fhem.Basics
         /// Parses a reading item from its json property representation.
         /// </summary>
         /// <param name="a_jsonProperty">
-        /// The json object that represents the reading item.
+        /// The json property that represents the reading item.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        /// The json object may not be null.
+        /// The json property may not be null.
         /// </exception>
         /// <returns>
         /// The parsed reading item.
@@ -79,7 +79,7 @@ namespace Sand.Fhem.Basics
             //-- Validate argument
             if( a_jsonProperty == null )
             {
-                throw new ArgumentNullException( "The json object may not be null!" );
+                throw new ArgumentNullException( "The json property may not be null!" );
             }
             
             //-- Create the new reading item
