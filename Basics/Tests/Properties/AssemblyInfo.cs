@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-//-----------------------------------------------------------------------------
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "Sand.Fhem.Basics" )]
+[assembly: AssemblyTitle( "Sand.Fhem.Basics.Tests" )]
 [assembly: AssemblyDescription( "" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "" )]
-[assembly: AssemblyProduct( "Sand.Fhem.Basics" )]
+[assembly: AssemblyProduct( "Sand.Fhem.Basics.Tests" )]
 [assembly: AssemblyCopyright( "Copyright ©  2016" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible( false )]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid( "44631110-4be8-448e-b78e-fc9eb3b93b5d" )]
+[assembly: Guid( "70a3b7cc-bad3-47f9-b806-eb68b63c0cf5" )]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -35,8 +34,3 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion( "1.0.0.0" )]
 [assembly: AssemblyFileVersion( "1.0.0.0" )]
-
-//-- Grant access to internal functionality to the testing assemblies
-[assembly: InternalsVisibleTo( "Sand.Fhem.Basics.Tests" )]
-
-//-----------------------------------------------------------------------------

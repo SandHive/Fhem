@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sand.Fhem.Home", "Home\Sand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sand.Fhem.Home.Modules.FhemModule", "Home\Modules\FhemModule\Sand.Fhem.Home.Modules.FhemModule.csproj", "{91BF7649-9B6A-4912-BF0A-0040523080CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sand.Fhem.Basics.Tests", "Basics\Tests\Sand.Fhem.Basics.Tests.csproj", "{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{91BF7649-9B6A-4912-BF0A-0040523080CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91BF7649-9B6A-4912-BF0A-0040523080CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91BF7649-9B6A-4912-BF0A-0040523080CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
