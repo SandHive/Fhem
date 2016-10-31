@@ -24,7 +24,7 @@ using System.Collections.Generic;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class FhemPossibleAttributes : IReadOnlyList<FhemItemValuesPair>
+    public class FhemPossibleAttributesCollection : IReadOnlyList<FhemItemValuesPair>
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -37,13 +37,14 @@ namespace Sand.Fhem.Basics
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemPossibleAttributes class.
+        /// Initializes a new instance of the FhemPossibleAttributesCollection 
+        /// class.
         /// </summary>
         /// <remarks>
         /// This constructor is private to force the usage of the 'From...'
         /// methods.
         /// </remarks>
-        private FhemPossibleAttributes() { }
+        private FhemPossibleAttributesCollection() { }
 
         //-- Constructors
         #endregion
@@ -93,7 +94,7 @@ namespace Sand.Fhem.Basics
         /// <returns>
         /// The parsed possible attribute.
         /// </returns>
-        public static FhemPossibleAttributes Parse( string a_parseString )
+        public static FhemPossibleAttributesCollection Parse( string a_parseString )
         {
             //-- Validate argument
             if( String.IsNullOrWhiteSpace( a_parseString ) )
@@ -102,7 +103,7 @@ namespace Sand.Fhem.Basics
             }
             
             //-- Create the new possible attribute item
-            var me = new FhemPossibleAttributes();
+            var me = new FhemPossibleAttributesCollection();
 
             //-- Just separate the attributes
             var attributeValuesPairs = a_parseString.Split( new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );

@@ -48,7 +48,7 @@ namespace Sand.Fhem.Basics
         /// <summary>
         /// Gets the possible attributes of the Fhem object.
         /// </summary>
-        public FhemPossibleAttributes PossibleAttributes { get; private set; }
+        public FhemPossibleAttributesCollection PossibleAttributes { get; private set; }
 
         /// <summary>
         /// Gets the possible sets of the Fhem object.
@@ -163,7 +163,7 @@ namespace Sand.Fhem.Basics
 
                     case "Name": me.Name = (string) jsonProperty.Value; break;
 
-                    case "PossibleAttrs": me.PossibleAttributes = FhemPossibleAttributes.Parse( (string) jsonProperty.Value ); break;
+                    case "PossibleAttrs": me.PossibleAttributes = FhemPossibleAttributesCollection.Parse( (string) jsonProperty.Value ); break;
 
                     #region case "PossibleSets":
 
