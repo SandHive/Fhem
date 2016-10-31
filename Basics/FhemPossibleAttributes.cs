@@ -19,11 +19,12 @@
  * IN THE SOFTWARE.
  */
 using System;
+using System.Collections;
 using System.Collections.Generic;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class FhemObjectPossibleAttributes
+    public class FhemPossibleAttributes : IReadOnlyList<FhemItemValuesPair>
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -31,13 +32,6 @@ namespace Sand.Fhem.Basics
         private SortedList<string, FhemItemValuesPair>  m_possibleAttributeItems;
 
         //-- Fields
-        #endregion
-        //---------------------------------------------------------------------
-        #region Properties
-
-        public IEnumerable<FhemItemValuesPair> PossibleAttributeItems {  get { return m_possibleAttributeItems.Values; } }
-
-        //-- Properties
         #endregion
         //---------------------------------------------------------------------
         #region Constructors
@@ -50,9 +44,40 @@ namespace Sand.Fhem.Basics
         /// This constructor is private to force the usage of the 'From...'
         /// methods.
         /// </remarks>
-        private FhemObjectPossibleAttributes() { }
+        private FhemPossibleAttributes() { }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region IReadOnlyList Members
+
+        public int Count
+        {
+            get
+            {
+                return m_possibleAttributeItems.Count;
+            }
+        }
+
+        public FhemItemValuesPair this[int a_index]
+        {
+            get
+            {
+                return m_possibleAttributeItems.Values[a_index];
+            }
+        }
+
+        public IEnumerator<FhemItemValuesPair> GetEnumerator()
+        {
+            return m_possibleAttributeItems.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return m_possibleAttributeItems.Values.GetEnumerator();
+        }
+
+        //-- IReadOnlyList Members
         #endregion
         //---------------------------------------------------------------------
         #region Methods
@@ -69,7 +94,7 @@ namespace Sand.Fhem.Basics
         /// <returns>
         /// The parsed possible attribute.
         /// </returns>
-        public static FhemObjectPossibleAttributes Parse( string a_parseString )
+        public static FhemPossibleAttributes Parse( string a_parseString )
         {
             //-- Validate argument
             if( String.IsNullOrWhiteSpace( a_parseString ) )
@@ -78,15 +103,15 @@ namespace Sand.Fhem.Basics
             }
             
             //-- Create the new possible attribute item
-            var me = new FhemObjectPossibleAttributes();
+            var me = new FhemPossibleAttributes();
 
             //-- Just separate the attributes
             var attributeValuesPairs = a_parseString.Split( new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
-
-            //-- Sort the result
-            Array.Sort( attributeValuesPairs );
-
-            //-- Prepare the internal sorted list
+            
+            //-- Prepare the internal sorted list (we use a SortedList for two
+            //-- reasons: 1. to sort the possible attributes by their names, 2.
+            //-- to be able to prevent dupplicates by having a 'key' property
+            //-- so the last value will always overwrite the previous one)
             me.m_possibleAttributeItems = new SortedList<string, FhemItemValuesPair>( attributeValuesPairs.Length );
 
             foreach( var attributeValuesPair in attributeValuesPairs )
@@ -99,7 +124,7 @@ namespace Sand.Fhem.Basics
 
             return me;
         }
-
+        
         //-- Methods
         #endregion
         //---------------------------------------------------------------------

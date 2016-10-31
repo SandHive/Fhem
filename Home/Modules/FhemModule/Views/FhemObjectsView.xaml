@@ -65,7 +65,7 @@
                         <ListBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding SelectedFhemObject.Attributes}" />
 
                         <TextBlock Grid.Column="0" Grid.Row="1" Text="PossibleAttributes: " />
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes.PossibleAttributeItems}">
+                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes}">
 
                             <ComboBox.ItemTemplate>
 
