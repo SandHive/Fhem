@@ -28,14 +28,14 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Fields
 
-        private SortedList<string, IList<string>>  m_possibleAttributeItems;
+        private SortedList<string, FhemItemValuesPair>  m_possibleAttributeItems;
 
         //-- Fields
         #endregion
         //---------------------------------------------------------------------
         #region Properties
 
-        public IEnumerable<KeyValuePair<string, IList<string>>> PossibleAttributeItems {  get { return m_possibleAttributeItems; } }
+        public IEnumerable<FhemItemValuesPair> PossibleAttributeItems {  get { return m_possibleAttributeItems.Values; } }
 
         //-- Properties
         #endregion
@@ -81,33 +81,20 @@ namespace Sand.Fhem.Basics
             var me = new FhemObjectPossibleAttributes();
 
             //-- Just separate the attributes
-            var AttributeValuePairs = a_parseString.Split( new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
+            var attributeValuesPairs = a_parseString.Split( new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries );
 
             //-- Sort the result
-            Array.Sort( AttributeValuePairs );
+            Array.Sort( attributeValuesPairs );
 
-            me.m_possibleAttributeItems = new SortedList<string, IList<string>>( AttributeValuePairs.Length );
+            //-- Prepare the internal sorted list
+            me.m_possibleAttributeItems = new SortedList<string, FhemItemValuesPair>( attributeValuesPairs.Length );
 
-            foreach( var attributeValuePair in AttributeValuePairs )
+            foreach( var attributeValuesPair in attributeValuesPairs )
             {
-                var attributeValuePairParts = attributeValuePair.Split( new char[] { ':' }, StringSplitOptions.RemoveEmptyEntries );
+                var itemValuesPair = FhemItemValuesPair.Parse( attributeValuesPair );
 
-                if( attributeValuePairParts.Length == 1 )
-                {
-                    //-- In case of duplicates, the last one wins
-                    me.m_possibleAttributeItems[attributeValuePairParts[0]] = new List<string>( 0 );
-                }
-                else if( attributeValuePairParts.Length == 2 )
-                {
-                    var possibleValues = attributeValuePairParts[1].Split( new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries );
-
-                    //-- In case of duplicates, the last one wins
-                    me.m_possibleAttributeItems[attributeValuePairParts[0]] = possibleValues;
-                }
-                else
-                {
-                    throw new InvalidOperationException();
-                }
+                //-- In case of duplicates, the last one wins
+                me.m_possibleAttributeItems[itemValuesPair.Name] = itemValuesPair;
             }
 
             return me;
