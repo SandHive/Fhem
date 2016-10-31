@@ -30,7 +30,7 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Fields
 
-        private SortedList<string, FhemReadingItem>  m_readings;
+        private SortedList<DateTime, FhemReadingItem>  m_readings;
 
         //-- Fields
         #endregion
@@ -107,7 +107,7 @@ namespace Sand.Fhem.Basics
             var me = new FhemReadingItemsCollection();
             
             //-- Prepare the internal sorted list
-            me.m_readings = new SortedList<string, FhemReadingItem>( a_jsonObject.Count );
+            me.m_readings = new SortedList<DateTime, FhemReadingItem>( a_jsonObject.Count );
 
             foreach( var jsonReading in a_jsonObject.Children<JProperty>() )
             {
@@ -115,7 +115,7 @@ namespace Sand.Fhem.Basics
                 var readingItem = FhemReadingItem.FromJProperty( jsonReading );
 
                 //-- Store the reading item 
-                me.m_readings[readingItem.Name] = readingItem;
+                me.m_readings[readingItem.DateTime] = readingItem;
             }
 
             return me;
