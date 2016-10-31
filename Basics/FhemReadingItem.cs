@@ -23,7 +23,7 @@ using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class FhemObjectReadingItem
+    public class FhemReadingItem
     {
         //---------------------------------------------------------------------
         #region Properties
@@ -49,13 +49,13 @@ namespace Sand.Fhem.Basics
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectReadingItem class.
+        /// Initializes a new instance of the FhemReadingItem class.
         /// </summary>
         /// <remarks>
         /// This constructor is private to force the usage of the 'From...'
         /// methods.
         /// </remarks>
-        private FhemObjectReadingItem() { }
+        private FhemReadingItem() { }
 
         //-- Constructors
         #endregion
@@ -74,7 +74,7 @@ namespace Sand.Fhem.Basics
         /// <returns>
         /// The parsed reading item.
         /// </returns>
-        public static FhemObjectReadingItem FromJProperty( JProperty a_jsonProperty )
+        public static FhemReadingItem FromJProperty( JProperty a_jsonProperty )
         {
             //-- Validate argument
             if( a_jsonProperty == null )
@@ -83,7 +83,7 @@ namespace Sand.Fhem.Basics
             }
             
             //-- Create the new reading item
-            var me = new FhemObjectReadingItem() { Name = a_jsonProperty.Name };
+            var me = new FhemReadingItem() { Name = a_jsonProperty.Name };
 
             //-- Analyze the first json property
             var readingItemAsJsonObject = (JObject) a_jsonProperty.First;

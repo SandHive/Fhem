@@ -37,8 +37,7 @@ namespace Sand.Fhem.Basics
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectPossibleAttributeItem 
-        /// class.
+        /// Initializes a new instance of the FhemPossibleAttributes class.
         /// </summary>
         /// <remarks>
         /// This constructor is private to force the usage of the 'From...'

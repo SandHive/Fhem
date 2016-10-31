@@ -58,7 +58,7 @@ namespace Sand.Fhem.Basics
         /// <summary>
         /// Gets the readings of the Fhem object.
         /// </summary>
-        public SortedList<string, FhemObjectReadingItem> Readings { get; private set; }
+        public SortedList<string, FhemReadingItem> Readings { get; private set; }
 
         //-- Properties
         #endregion
@@ -189,12 +189,12 @@ namespace Sand.Fhem.Basics
                         var readingsAsJsonObject = (JObject) jsonProperty.First;
 
                         //-- Prepare a dictionary
-                        var readings = new SortedList<string, FhemObjectReadingItem>( readingsAsJsonObject.Count );
+                        var readings = new SortedList<string, FhemReadingItem>( readingsAsJsonObject.Count );
 
                         foreach( var jsonReading in readingsAsJsonObject.Children<JProperty>() )
                         {
                             //-- Parse the reading item
-                            var readingItem = FhemObjectReadingItem.FromJProperty( jsonReading );
+                            var readingItem = FhemReadingItem.FromJProperty( jsonReading );
 
                             //-- Store the reading item 
                             readings.Add( readingItem.Name, readingItem );

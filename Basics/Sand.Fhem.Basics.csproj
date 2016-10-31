@@ -42,10 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FhemItemValuesPair.cs" />
-    <Compile Include="FhemObjectReadingItem.cs" />
     <Compile Include="FhemObject.cs" />
     <Compile Include="FhemObjectRepository.cs" />
     <Compile Include="FhemPossibleAttributes.cs" />
+    <Compile Include="FhemReadingItem.cs" />
     <Compile Include="NetworkStreamWriter.cs" />
     <Compile Include="NetworkStreamReader.cs" />
     <Compile Include="FhemClient.cs" />
