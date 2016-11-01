@@ -27,9 +27,9 @@
                         <GridViewColumn DisplayMemberBinding="{Binding State}" Header="State" />
 
                     </GridView>
-                    
+
                 </ListView.View>
-                
+
                 <!--<ListBox.ItemTemplate>
 
                     <DataTemplate>
@@ -46,58 +46,67 @@
 
         <GridSplitter Grid.Row="1" ResizeDirection="Rows" HorizontalAlignment="Stretch" />
 
-        <GroupBox Grid.Row="2" Header="Fhem Object Details" Margin="3" Padding="7">
+        <DockPanel Grid.Row="2" >
 
-            <DockPanel>
+            <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
 
-                <TextBlock DockPanel.Dock="Top" Text="{Binding SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
+            <ScrollViewer>
 
-                <ScrollViewer>
+                <StackPanel>
 
-                    <Grid>
+                    <Expander Header="Attributes" IsExpanded="True">
 
-                        <Grid.ColumnDefinitions>
+                        <StackPanel>
 
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ListView ItemsSource="{Binding SelectedFhemObject.Attributes}">
 
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
+                                <ListView.View>
 
-                            <RowDefinition Height="Auto "/>
-                            <RowDefinition Height="Auto "/>
-                            <RowDefinition Height="Auto "/>
-                            <RowDefinition Height="Auto "/>
-                            <RowDefinition Height="Auto "/>
+                                    <GridView>
 
-                        </Grid.RowDefinitions>
+                                        <GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Name" />
+                                        <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
 
-                        <TextBlock Grid.Column="0" Grid.Row="0" Text="Attributes: " />
-                        <ListBox Grid.Column="1" Grid.Row="0" ItemsSource="{Binding SelectedFhemObject.Attributes}" />
+                                    </GridView>
 
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="PossibleAttributes: " />
-                        <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding SelectedFhemObject.PossibleAttributes}">
+                                </ListView.View>
 
-                            <ComboBox.ItemTemplate>
+                            </ListView>
 
-                                <DataTemplate>
+                            <TextBlock Text="PossibleAttributes: " />
+                            <ComboBox ItemsSource="{Binding SelectedFhemObject.PossibleAttributes}">
 
-                                    <TextBlock Text="{Binding Name}" />
+                                <ComboBox.ItemTemplate>
 
-                                </DataTemplate>
-                                
-                            </ComboBox.ItemTemplate>
-                            
-                        </ComboBox>
+                                    <DataTemplate>
 
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="PossibleSets: " />
-                        <ListBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding SelectedFhemObject.PossibleSets}" />
+                                        <TextBlock Text="{Binding Name}" />
 
-                        <TextBlock Grid.Column="0" Grid.Row="3" Text="Internals: " />
-                        <ListBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding SelectedFhemObject.Internals}" />
+                                    </DataTemplate>
 
-                        <TextBlock Grid.Column="0" Grid.Row="4" Text="Readings: " />
-                        <ListBox Grid.Column="1" Grid.Row="4" ItemsSource="{Binding SelectedFhemObject.Readings}">
+                                </ComboBox.ItemTemplate>
+
+                            </ComboBox>
+
+                        </StackPanel>
+
+                    </Expander>
+
+                    <Expander Header="Possible Sets">
+
+                        <ListBox ItemsSource="{Binding SelectedFhemObject.PossibleSets}" />
+
+                    </Expander>
+
+                    <Expander Header="Internals">
+
+                        <ListBox ItemsSource="{Binding SelectedFhemObject.Internals}" />
+
+                    </Expander>
+
+                    <Expander Header="Readings">
+
+                        <ListBox ItemsSource="{Binding SelectedFhemObject.Readings}">
 
                             <ListBox.ItemTemplate>
 
@@ -122,13 +131,14 @@
 
                         </ListBox>
 
-                    </Grid>
 
-                </ScrollViewer>
+                    </Expander>
 
-            </DockPanel>
+                </StackPanel>
 
-        </GroupBox>
+            </ScrollViewer>
+
+        </DockPanel>
 
     </Grid>
 
