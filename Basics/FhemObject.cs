@@ -28,6 +28,13 @@ namespace Sand.Fhem.Basics
     public class FhemObject
     {
         //---------------------------------------------------------------------
+        #region Constants
+
+        private const string STATE_TAG = "STATE";
+
+        //-- Constants
+        #endregion
+        //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
@@ -59,6 +66,11 @@ namespace Sand.Fhem.Basics
         /// Gets the readings of the Fhem object.
         /// </summary>
         public FhemReadingItemsCollection Readings { get; private set; }
+
+        /// <summary>
+        /// Gets the state of the Fhem object.
+        /// </summary>
+        public string State { get; private set; }
 
         //-- Properties
         #endregion
@@ -187,6 +199,12 @@ namespace Sand.Fhem.Basics
 
                     default: break;
                 }
+            }
+
+            //-- Store the 'state' in an own property
+            if( me.Internals.ContainsKey( STATE_TAG ) )
+            {
+                me.State = me.Internals[STATE_TAG];
             }
 
             return me;

@@ -17,9 +17,20 @@
 
         <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
 
-            <ListBox ItemsSource="{Binding FhemObjects}" SelectedItem="{Binding SelectedFhemObject}">
+            <ListView ItemsSource="{Binding FhemObjects}" SelectedItem="{Binding SelectedFhemObject}">
 
-                <ListBox.ItemTemplate>
+                <ListView.View>
+
+                    <GridView>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                        <GridViewColumn DisplayMemberBinding="{Binding State}" Header="State" />
+
+                    </GridView>
+                    
+                </ListView.View>
+                
+                <!--<ListBox.ItemTemplate>
 
                     <DataTemplate>
 
@@ -27,9 +38,9 @@
 
                     </DataTemplate>
 
-                </ListBox.ItemTemplate>
+                </ListBox.ItemTemplate>-->
 
-            </ListBox>
+            </ListView>
 
         </GroupBox>
 
