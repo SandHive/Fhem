@@ -19,42 +19,60 @@
  * IN THE SOFTWARE.
  */
 using Prism.Mvvm;
-using Prism.Regions;
-using Sand.Fhem.Home.Modules.FhemModule.Services;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public abstract class FhemContentViewModel : CollectionItemViewModel
+    public abstract class CollectionItemViewModel : BindableBase
     {
+        //---------------------------------------------------------------------
+        #region Fields
+
+        private bool  m_isSelected;
+
+        //-- Fields
+        #endregion
         //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
-        /// Gets the Fhem client service.
+        /// Gets the header.
         /// </summary>
-        protected IFhemClientService FhemClientService { get; private set; }
-        
+        public object Header { get; protected set; }
+
         /// <summary>
-        /// Gets the region manager.
+        /// Gets or sets a flag that specifies whether this content view model
+        /// is currently selected and should be shown in the content region.
         /// </summary>
-        protected IRegionManager RegionManager { get; private set; }
+        public bool IsSelected
+        {
+            get
+            {
+                return m_isSelected;
+            }
+            set
+            {
+                if( this.SetProperty( ref m_isSelected, value ) )
+                {
+                    if( m_isSelected )
+                    {
+                        //-- Give an inherited class the chance to react on the selection
+                        this.OnSelected();
+                    }
+                }                
+            }
+        }
 
         //-- Properties
         #endregion
         //---------------------------------------------------------------------
-        #region Constructors
+        #region Methods
 
         /// <summary>
-        /// Initializes a new instance of the FhemContentViewModel class.
+        /// Invoked when the 'IsSelected' property is set to 'True'.
         /// </summary>
-        public FhemContentViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-        {
-            //-- Initialize properties
-            this.FhemClientService = a_fhemClientService;
-            this.RegionManager = a_regionManager;
-        }
+        protected virtual void OnSelected() { }
 
-        //-- Constructors
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

@@ -64,6 +64,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public FhemObjectsViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
             : base( a_fhemClientService, a_regionManager )
         {
+            //-- Initialize properties
+            this.Header = "Show Fhem Objects";
+
             //-- Register to events
             this.FhemClientService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
         }
@@ -93,11 +96,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         //---------------------------------------------------------------------
         #region FhemContentViewModel Members
 
-        public override string Header { get; } = "Show Fhem Objects";
-        
-        protected override void OnActivated()
+        protected override void OnSelected()
         {
-            base.OnActivated();
+            base.OnSelected();
 
             this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsView", UriKind.Relative ) );
         }

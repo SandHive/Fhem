@@ -77,6 +77,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public FhemNativeCommandViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
             : base( a_fhemClientService, a_regionManager )
         {
+            //-- Initialize properties
+            this.Header = "Send Native Command";
+
             //-- Initialize commands
             this.SendNativeCommandStringCommand = new DelegateCommand( () => this.SendNativeCommandStringCommandAction() );
         }
@@ -86,12 +89,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         //---------------------------------------------------------------------
         #region FhemContentViewModel Members
 
-        public override string Header { get; } = "Send Native Command";
-
-        protected override void OnActivated()
+        protected override void OnSelected()
         {
-            base.OnActivated();
-
+            base.OnSelected();
+        
             this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemNativeCommandView", UriKind.Relative ) );
         }
 

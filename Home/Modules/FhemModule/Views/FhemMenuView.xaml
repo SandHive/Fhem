@@ -11,7 +11,7 @@
 
             <Style TargetType="ListBoxItem">
 
-                <Setter Property="IsSelected" Value="{Binding IsActive}"/>
+                <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
                 
             </Style>
             
