@@ -4,8 +4,12 @@
 
     <ResourceDictionary.MergedDictionaries>
 
+        <ResourceDictionary Source="ResourceDictionaries\Styles\Named\FhemObjectPropertiesExpanderStyle.xaml" />
         <ResourceDictionary Source="ResourceDictionaries\Styles\Named\TextBlockStyles.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
+    
+    <!-- Converters -->
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
 </ResourceDictionary>

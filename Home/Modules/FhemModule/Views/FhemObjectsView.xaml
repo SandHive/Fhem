@@ -54,11 +54,11 @@
 
                 <StackPanel>
 
-                    <Expander Header="Attributes" IsExpanded="True">
+                    <Expander Header="Attributes" Style="{StaticResource FhemObjectPropertiesExpanderStyle}">
 
                         <StackPanel>
 
-                            <ListView ItemsSource="{Binding SelectedFhemObject.Attributes}">
+                            <ListView ItemsSource="{Binding SelectedFhemObject.Attributes}" Visibility="{Binding SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                                 <ListView.View>
 
@@ -92,19 +92,23 @@
 
                     </Expander>
 
-                    <Expander Header="Possible Sets">
+                    <Expander Header="Possible Sets" 
+                              Style="{StaticResource FhemObjectPropertiesExpanderStyle}" 
+                              Visibility="{Binding SelectedFhemObject.ContainsPossibleSets, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                         <ListBox ItemsSource="{Binding SelectedFhemObject.PossibleSets}" />
 
                     </Expander>
 
-                    <Expander Header="Internals">
+                    <Expander Header="Internals" Style="{StaticResource FhemObjectPropertiesExpanderStyle}">
 
                         <ListBox ItemsSource="{Binding SelectedFhemObject.Internals}" />
 
                     </Expander>
 
-                    <Expander Header="Readings">
+                    <Expander Header="Readings" 
+                              Style="{StaticResource FhemObjectPropertiesExpanderStyle}" 
+                              Visibility="{Binding SelectedFhemObject.ContainsReadings, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                         <ListBox ItemsSource="{Binding SelectedFhemObject.Readings}">
 

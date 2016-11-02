@@ -38,6 +38,33 @@ namespace Sand.Fhem.Basics
         #region Properties
 
         /// <summary>
+        /// Gets a flag that specifies whether this Fhem object contains 
+        /// attributes.
+        /// </summary>
+        public bool ContainsAttributes
+        {
+            get { return this.Attributes.Count > 0; }
+        }
+
+        /// <summary>
+        /// Gets a flag that specifies whether this Fhem object contains 
+        /// possible sets.
+        /// </summary>
+        public bool ContainsPossibleSets
+        {
+            get { return this.PossibleSets.Length > 0; }
+        }
+
+        /// <summary>
+        /// Gets a flag that specifies whether this Fhem object contains 
+        /// readings.
+        /// </summary>
+        public bool ContainsReadings
+        {
+            get { return this.Readings.Count > 0; }
+        }
+
+        /// <summary>
         /// Gets the attributes of the Fhem object.
         /// </summary>
         public ReadOnlyDictionary<string, string> Attributes { get; private set; }
