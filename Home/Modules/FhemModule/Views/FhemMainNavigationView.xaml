@@ -5,18 +5,11 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemMainNavigationView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListBox MinWidth="300" ItemsSource="{Binding FhemMenuItems}" SelectedIndex="0">
+    <ListBox ItemsSource="{Binding FhemMenuItems}" 
+             ItemContainerStyle="{StaticResource FhemNavigationListBoxItemStyle}"
+             MinWidth="300" 
+             SelectedIndex="0">
 
-        <ListBox.ItemContainerStyle>
-
-            <Style TargetType="ListBoxItem">
-
-                <Setter Property="IsSelected" Value="{Binding IsSelected}"/>
-                
-            </Style>
-            
-        </ListBox.ItemContainerStyle>
-        
         <ListBox.ItemTemplate>
 
             <DataTemplate>
