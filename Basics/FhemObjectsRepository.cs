@@ -26,7 +26,7 @@ using System.Collections.Specialized;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class FhemObjectRepository : /* ObservableCollection<string>, */ IEnumerable, INotifyCollectionChanged
+    public class FhemObjectsRepository : IEnumerable, INotifyCollectionChanged
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -39,14 +39,14 @@ namespace Sand.Fhem.Basics
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectRepository class.
+        /// Initializes a new instance of the FhemObjectsRepository class.
         /// </summary>
         /// <remarks>
         /// The constructor is private to force the usage of the static 
         /// 'Create' method (long lasting operations do not belong into a 
         /// constructor ;).
         /// </remarks>
-        private FhemObjectRepository()
+        private FhemObjectsRepository()
         {
             //-- Register to events
             m_fhemObjectCollection.CollectionChanged += fhemObjectCollection_CollectionChanged;
@@ -95,14 +95,14 @@ namespace Sand.Fhem.Basics
         /// <returns>
         /// The created FhemObjectRepository instance.
         /// </returns>
-        public static FhemObjectRepository Create( JObject a_jsonObject )
+        public static FhemObjectsRepository Create( JObject a_jsonObject )
         {
             if( a_jsonObject == null )
             {
                 throw new ArgumentNullException( "The JSON object may not be null!" );
             }
 
-            var me = new FhemObjectRepository();
+            var me = new FhemObjectsRepository();
 
             //-- Determine the 3 main json tokens
             var argJsonToken = a_jsonObject.First;

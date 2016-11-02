@@ -27,7 +27,7 @@ using System.Windows.Data;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemObjectsViewModel : FhemContentViewModel
+    public class FhemObjectsRepositoryViewModel : FhemContentViewModel
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -59,9 +59,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectsViewModel class.
+        /// Initializes a new instance of the FhemObjectsRepositoryViewModel 
+        /// class.
         /// </summary>
-        public FhemObjectsViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
+        public FhemObjectsRepositoryViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
             : base( a_fhemClientService, a_regionManager )
         {
             //-- Initialize properties
@@ -100,7 +101,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         {
             base.OnSelected();
 
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsView", UriKind.Relative ) );
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsRepositoryView", UriKind.Relative ) );
         }
 
         //-- FhemContentViewModel Members

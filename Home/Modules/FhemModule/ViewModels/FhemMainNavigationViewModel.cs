@@ -46,7 +46,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public FhemMainNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
         {
             //-- Initialize properties
-            this.FhemMenuItems.Add( new FhemObjectsViewModel( a_fhemClientService, a_regionManager ) );
+            this.FhemMenuItems.Add( new FhemObjectsRepositoryViewModel( a_fhemClientService, a_regionManager ) );
             this.FhemMenuItems.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
         }
 

@@ -58,7 +58,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
 
         public FhemClient FhemClient { get; } = new FhemClient();
 
-        public FhemObjectRepository FhemObjectRepository { get; private set; }
+        public FhemObjectsRepository FhemObjectRepository { get; private set; }
 
         //-- IFhemClientService Members
         #endregion

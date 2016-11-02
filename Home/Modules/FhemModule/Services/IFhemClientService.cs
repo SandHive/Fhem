@@ -32,7 +32,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         /// <summary>
         /// Gets the repository with all available Fhem objects.
         /// </summary>
-        FhemObjectRepository FhemObjectRepository { get; }
+        FhemObjectsRepository FhemObjectRepository { get; }
     }
 }
 //-----------------------------------------------------------------------------

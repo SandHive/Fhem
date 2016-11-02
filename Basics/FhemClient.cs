@@ -142,7 +142,7 @@ namespace Sand.Fhem.Basics
         /// <returns>
         /// A repository with all available Fhem objects.
         /// </returns>
-        public FhemObjectRepository GetObjectRepository()
+        public FhemObjectsRepository GetObjectRepository()
         {
             //-- Use the 'jsonlist2' command for creating the FHEM object repository
             var response = this.SendNativeCommand( "jsonlist2" );
@@ -151,7 +151,7 @@ namespace Sand.Fhem.Basics
             var jsonObject = JObject.Parse( response );
 
             //-- Create the FHEM object repository
-            var fhemObjectRepository = FhemObjectRepository.Create( jsonObject );
+            var fhemObjectRepository = FhemObjectsRepository.Create( jsonObject );
 
             return fhemObjectRepository;
         }
