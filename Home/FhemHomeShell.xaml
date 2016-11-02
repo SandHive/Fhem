@@ -19,7 +19,7 @@
 
             </Grid.ColumnDefinitions>
 
-            <ContentControl Grid.Column="0" prism:RegionManager.RegionName="MenuRegion" />
+            <ContentControl Grid.Column="0" prism:RegionManager.RegionName="NavigationRegion" />
 
             <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
 

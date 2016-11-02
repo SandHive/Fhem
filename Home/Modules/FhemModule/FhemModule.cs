@@ -61,7 +61,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule
         public void Initialize()
         {
             m_regionViewRegistry.RegisterViewWithRegion( "FhemServerSettingsRegion", typeof( FhemServerSettingsView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "MenuRegion", typeof( FhemMenuView ) );
+            m_regionViewRegistry.RegisterViewWithRegion( "NavigationRegion", typeof( FhemMainNavigationView ) );
             m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectsView ) );
             m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemNativeCommandView ) );
         }

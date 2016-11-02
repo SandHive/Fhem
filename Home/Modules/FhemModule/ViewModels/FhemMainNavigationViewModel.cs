@@ -18,24 +18,36 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using System.Windows.Controls;
+using Prism.Mvvm;
+using Prism.Regions;
+using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.Views
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    /// <summary>
-    /// Interaction logic for FhemMenuView.xaml
-    /// </summary>
-    public partial class FhemMenuView : UserControl
+    public class FhemMainNavigationViewModel : BindableBase
     {
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets the menu items.
+        /// </summary>
+        public ObservableCollection<FhemContentViewModel> FhemMenuItems { get; } = new ObservableCollection<FhemContentViewModel>();
+
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMenuView class.
+        /// Initializes a new instance of the FhemMainNavigationViewModel class.
         /// </summary>
-        public FhemMenuView()
+        public FhemMainNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
         {
-            InitializeComponent();
+            //-- Initialize properties
+            this.FhemMenuItems.Add( new FhemObjectsViewModel( a_fhemClientService, a_regionManager ) );
+            this.FhemMenuItems.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
         }
 
         //-- Constructors
