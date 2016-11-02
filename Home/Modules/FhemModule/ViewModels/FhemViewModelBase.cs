@@ -23,20 +23,34 @@ using Sand.Fhem.Home.Modules.FhemModule.Services;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemMainNavigationViewModel : FhemNavigationViewModelBase
+    public abstract class FhemViewModelBase : CollectionItemViewModel
     {
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets the Fhem client service.
+        /// </summary>
+        protected IFhemClientService FhemClientService { get; private set; }
+        
+        /// <summary>
+        /// Gets the region manager.
+        /// </summary>
+        protected IRegionManager RegionManager { get; private set; }
+
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMainNavigationViewModel class.
+        /// Initializes a new instance of the FhemContentViewModel class.
         /// </summary>
-        public FhemMainNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
+        public FhemViewModelBase( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
         {
             //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectsRepositoryViewModel( a_fhemClientService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
+            this.FhemClientService = a_fhemClientService;
+            this.RegionManager = a_regionManager;
         }
 
         //-- Constructors

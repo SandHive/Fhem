@@ -18,28 +18,64 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Commands;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemMainNavigationViewModel : FhemNavigationViewModelBase
+    public class FhemObjectAttributesViewModel : FhemViewModelBase
     {
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets the command for navigating back to the main screen.
+        /// </summary>
+        public DelegateCommand NavigateBackCommand { get; private set; }
+        
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMainNavigationViewModel class.
+        /// Initializes a new instance of the FhemObjectAttributesViewModel class.
         /// </summary>
-        public FhemMainNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
+        public FhemObjectAttributesViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
             : base( a_fhemClientService, a_regionManager )
         {
             //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectsRepositoryViewModel( a_fhemClientService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
+            this.Header = "Attributes";
+
+            //-- Initialize commands
+            this.NavigateBackCommand = new DelegateCommand( this.NavigateBackCommandAction );
         }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region FhemContentViewModel Members
+
+        protected override void OnSelected()
+        {
+            base.OnSelected();
+
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectAttributesView", UriKind.Relative ) );
+        }
+
+        //-- FhemContentViewModel Members
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        private void NavigateBackCommandAction()
+        {
+            this.RegionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemMainNavigationView", UriKind.Relative ) );
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

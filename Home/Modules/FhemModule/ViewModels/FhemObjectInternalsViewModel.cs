@@ -20,26 +20,39 @@
  */
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemMainNavigationViewModel : FhemNavigationViewModelBase
+    public class FhemObjectInternalsViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMainNavigationViewModel class.
+        /// Initializes a new instance of the FhemObjectInternalsViewModel 
+        /// class.
         /// </summary>
-        public FhemMainNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
+        public FhemObjectInternalsViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
             : base( a_fhemClientService, a_regionManager )
         {
             //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectsRepositoryViewModel( a_fhemClientService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
+            this.Header = "Internals";
         }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region FhemContentViewModel Members
+
+        protected override void OnSelected()
+        {
+            base.OnSelected();
+
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectInternalsView", UriKind.Relative ) );
+        }
+
+        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
     }

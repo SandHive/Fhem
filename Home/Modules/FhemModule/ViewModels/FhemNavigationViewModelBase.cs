@@ -18,26 +18,33 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Mvvm;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemMainNavigationViewModel : FhemNavigationViewModelBase
+    public abstract class FhemNavigationViewModelBase : FhemViewModelBase
     {
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets the navigation view models.
+        /// </summary>
+        public ObservableCollection<FhemViewModelBase> NavigationViewModels { get; } = new ObservableCollection<FhemViewModelBase>();
+
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMainNavigationViewModel class.
+        /// Initializes a new instance of the FhemNavigationViewModel class.
         /// </summary>
-        public FhemMainNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
-        {
-            //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectsRepositoryViewModel( a_fhemClientService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
-        }
+        public FhemNavigationViewModelBase( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
+            : base( a_fhemClientService, a_regionManager ) { }
 
         //-- Constructors
         #endregion

@@ -25,7 +25,7 @@ using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemNativeCommandViewModel : FhemContentViewModel
+    public class FhemNativeCommandViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
         #region Fields

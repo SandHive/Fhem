@@ -60,10 +60,18 @@ namespace Sand.Fhem.Home.Modules.FhemModule
 
         public void Initialize()
         {
+            //-- Register the view for selecting the desired Fhem server
             m_regionViewRegistry.RegisterViewWithRegion( "FhemServerSettingsRegion", typeof( FhemServerSettingsView ) );
+
+            //-- Register the views of the main screen
             m_regionViewRegistry.RegisterViewWithRegion( "NavigationRegion", typeof( FhemMainNavigationView ) );
             m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectsRepositoryView ) );
             m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemNativeCommandView ) );
+
+            //-- Register the Fhem object views
+            m_regionViewRegistry.RegisterViewWithRegion( "NavigationRegion", typeof( FhemObjectNavigationView ) );
+            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectAttributesView ) );
+            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectInternalsView ) );
         }
 
         //-- IModule Members

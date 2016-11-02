@@ -18,25 +18,24 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Prism.Regions;
-using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System.Windows.Controls;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
+namespace Sand.Fhem.Home.Modules.FhemModule.Views
 {
-    public class FhemMainNavigationViewModel : FhemNavigationViewModelBase
+    /// <summary>
+    /// Interaction logic for FhemObjectInternalsView.xaml
+    /// </summary>
+    public partial class FhemObjectInternalsView : UserControl
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMainNavigationViewModel class.
+        /// Initializes a new instance of the FhemObjectInternalsView class.
         /// </summary>
-        public FhemMainNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
+        public FhemObjectInternalsView()
         {
-            //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectsRepositoryViewModel( a_fhemClientService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemNativeCommandViewModel( a_fhemClientService, a_regionManager ) );
+            InitializeComponent();
         }
 
         //-- Constructors

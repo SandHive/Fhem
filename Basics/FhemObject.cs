@@ -22,9 +22,11 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
+    [DebuggerDisplay( "{Name}" )]
     public class FhemObject
     {
         //---------------------------------------------------------------------

@@ -18,6 +18,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Commands;
 using Prism.Regions;
 using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
@@ -27,7 +28,7 @@ using System.Windows.Data;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemObjectsRepositoryViewModel : FhemContentViewModel
+    public class FhemObjectsRepositoryViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -40,9 +41,14 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Properties
 
         /// <summary>
-        /// Gets the repository of all Fhem objects.
+        /// Gets the Fhem objects repository.
         /// </summary>
-        public ICollectionView FhemObjects { get; private set; }
+        public ICollectionView FhemObjectsRepository { get; private set; }
+
+        /// <summary>
+        /// Gets the command for opening the details of a Fhem object.
+        /// </summary>
+        public DelegateCommand<FhemObject> OpenFhemObjectDetailsCommand { get; private set; }
 
         /// <summary>
         /// Gets or sets the selected Fhem object.
@@ -68,6 +74,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             //-- Initialize properties
             this.Header = "Show Fhem Objects";
 
+            //-- Initialize commands
+            this.OpenFhemObjectDetailsCommand = new DelegateCommand<FhemObject>( this.OpenFhemObjectDetailsCommandAction );
+
             //-- Register to events
             this.FhemClientService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
         }
@@ -82,13 +91,13 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             if( this.FhemClientService.FhemClient.IsConnected )
             {
                 //-- Use the Fhem object repository as source for the collection view 
-                this.FhemObjects = CollectionViewSource.GetDefaultView( this.FhemClientService.FhemObjectRepository );
+                this.FhemObjectsRepository = CollectionViewSource.GetDefaultView( this.FhemClientService.FhemObjectRepository );
 
                 //-- Sort the Fhem objects by their names
-                this.FhemObjects.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );
+                this.FhemObjectsRepository.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );
 
                 //-- Force a property update
-                this.OnPropertyChanged( "FhemObjects" );
+                this.OnPropertyChanged( "FhemObjectsRepository" );
             }
         }
 
@@ -105,6 +114,16 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         }
 
         //-- FhemContentViewModel Members
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        private void OpenFhemObjectDetailsCommandAction( FhemObject a_fhemObject )
+        {
+            this.RegionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemObjectNavigationView", UriKind.Relative ) );
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

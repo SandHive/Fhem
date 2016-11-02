@@ -1,0 +1,16 @@
+﻿<UserControl 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectAttributesView"
+    prism:ViewModelLocator.AutoWireViewModel="True">
+
+    <StackPanel>
+
+        <TextBlock Text="Attributes" />
+
+        <Button Content="Back" Command="{Binding NavigateBackCommand}" />
+        
+    </StackPanel>
+    
+</UserControl>

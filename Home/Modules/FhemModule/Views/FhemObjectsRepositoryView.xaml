@@ -3,7 +3,8 @@
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectsRepositoryView"
-    prism:ViewModelLocator.AutoWireViewModel="True">
+    prism:ViewModelLocator.AutoWireViewModel="True"
+    Name="me">
 
     <Grid>
 
@@ -17,28 +18,72 @@
 
         <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
 
-            <ListView ItemsSource="{Binding FhemObjects}" SelectedItem="{Binding SelectedFhemObject}">
+            <ListView ItemsSource="{Binding FhemObjectsRepository}" SelectedItem="{Binding SelectedFhemObject}">
+
+                <ListView.ItemContainerStyle>
+                    
+                    <Style TargetType="ListViewItem">
+                        
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        
+                    </Style>
+                    
+                </ListView.ItemContainerStyle>
 
                 <ListView.View>
 
                     <GridView>
 
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
-                        <GridViewColumn DisplayMemberBinding="{Binding State}" Header="State" />
+                        <GridViewColumn Header="Name">
+
+                            <GridViewColumn.CellTemplate>
+
+                                <DataTemplate>
+
+                                    <TextBlock Text="{Binding Name}">
+
+                                        <TextBlock.InputBindings>
+
+                                            <MouseBinding Gesture="LeftDoubleClick" 
+                                                          Command="{Binding DataContext.OpenFhemObjectDetailsCommand, ElementName=me}"
+                                                          CommandParameter="{Binding .}" />
+
+                                        </TextBlock.InputBindings>
+                                        
+                                    </TextBlock>
+
+                                </DataTemplate>
+                                
+                            </GridViewColumn.CellTemplate>
+
+                        </GridViewColumn>
+                        <GridViewColumn Header="State">
+
+                            <GridViewColumn.CellTemplate>
+
+                                <DataTemplate>
+
+                                    <TextBlock Text="{Binding State}">
+
+                                        <TextBlock.InputBindings>
+
+                                            <MouseBinding Gesture="LeftDoubleClick" 
+                                                          Command="{Binding DataContext.OpenFhemObjectDetailsCommand, ElementName=me}"
+                                                          CommandParameter="{Binding .}" />
+
+                                        </TextBlock.InputBindings>
+
+                                    </TextBlock>
+
+                                </DataTemplate>
+
+                            </GridViewColumn.CellTemplate>
+
+                        </GridViewColumn>
 
                     </GridView>
 
                 </ListView.View>
-
-                <!--<ListBox.ItemTemplate>
-
-                    <DataTemplate>
-
-                        <TextBlock Text="{Binding Name}" />
-
-                    </DataTemplate>
-
-                </ListBox.ItemTemplate>-->
 
             </ListView>
 
