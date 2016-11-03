@@ -7,7 +7,39 @@
 
     <StackPanel>
 
-        <TextBlock Text="Attributes" />
+        <StackPanel>
+
+            <ListView ItemsSource="{Binding FhemClientService.SelectedFhemObject.Attributes}" Visibility="{Binding FhemClientService.SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                <ListView.View>
+
+                    <GridView>
+
+                        <GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Name" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
+
+                    </GridView>
+
+                </ListView.View>
+
+            </ListView>
+
+            <TextBlock Text="PossibleAttributes: " />
+            <ComboBox ItemsSource="{Binding FhemClientService.SelectedFhemObject.PossibleAttributes}">
+
+                <ComboBox.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <TextBlock Text="{Binding Name}" />
+
+                    </DataTemplate>
+
+                </ComboBox.ItemTemplate>
+
+            </ComboBox>
+
+        </StackPanel>
 
         <Button Content="Back" Command="{Binding NavigateBackCommand}" />
         

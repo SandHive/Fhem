@@ -31,13 +31,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
     public class FhemObjectsRepositoryViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
-        #region Fields
-
-        private FhemObject  m_selectedFhemObject;
-
-        //-- Fields
-        #endregion
-        //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
@@ -49,16 +42,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Gets the command for opening the details of a Fhem object.
         /// </summary>
         public DelegateCommand<FhemObject> OpenFhemObjectDetailsCommand { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the selected Fhem object.
-        /// </summary>
-        public FhemObject SelectedFhemObject
-        {
-            get { return m_selectedFhemObject; }
-            set { this.SetProperty( ref m_selectedFhemObject, value ); }
-        }
-
+        
         //-- Properties
         #endregion
         //---------------------------------------------------------------------

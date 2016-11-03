@@ -31,7 +31,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Gets the Fhem client service.
         /// </summary>
-        protected IFhemClientService FhemClientService { get; private set; }
+        public IFhemClientService FhemClientService { get; private set; }
         
         /// <summary>
         /// Gets the region manager.

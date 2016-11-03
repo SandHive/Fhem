@@ -18,13 +18,21 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Mvvm;
 using Sand.Fhem.Basics;
 using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.Services
 {
-    public class FhemClientService : IFhemClientService
+    public class FhemClientService : BindableBase, IFhemClientService
     {
+        //---------------------------------------------------------------------
+        #region Fields
+
+        private FhemObject  m_selectedFhemObject;
+
+        //-- Fields
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
@@ -59,6 +67,12 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         public FhemClient FhemClient { get; } = new FhemClient();
 
         public FhemObjectsRepository FhemObjectRepository { get; private set; }
+
+        public FhemObject SelectedFhemObject
+        {
+            get { return m_selectedFhemObject; }
+            set { this.SetProperty( ref m_selectedFhemObject, value ); }
+        }
 
         //-- IFhemClientService Members
         #endregion

@@ -33,6 +33,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         /// Gets the repository with all available Fhem objects.
         /// </summary>
         FhemObjectsRepository FhemObjectRepository { get; }
+        
+        /// <summary>
+        /// Gets or sets the selected Fhem object.
+        /// </summary>
+        FhemObject SelectedFhemObject { get; set; }
     }
 }
 //-----------------------------------------------------------------------------
