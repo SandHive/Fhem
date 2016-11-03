@@ -28,16 +28,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
     public class FhemObjectAttributesViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
-        #region Properties
-
-        /// <summary>
-        /// Gets the command for navigating back to the main screen.
-        /// </summary>
-        public DelegateCommand NavigateBackCommand { get; private set; }
-        
-        //-- Properties
-        #endregion
-        //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
@@ -48,9 +38,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         {
             //-- Initialize properties
             this.Header = "Attributes";
-
-            //-- Initialize commands
-            this.NavigateBackCommand = new DelegateCommand( this.NavigateBackCommandAction );
         }
 
         //-- Constructors
@@ -66,16 +53,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         }
 
         //-- FhemContentViewModel Members
-        #endregion
-        //---------------------------------------------------------------------
-        #region Methods
-
-        private void NavigateBackCommandAction()
-        {
-            this.RegionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemMainNavigationView", UriKind.Relative ) );
-        }
-
-        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }
