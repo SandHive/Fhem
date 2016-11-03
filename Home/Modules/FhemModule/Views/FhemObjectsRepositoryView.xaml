@@ -18,7 +18,7 @@
 
         <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
 
-            <ListView ItemsSource="{Binding FhemObjectsRepository}" SelectedItem="{Binding FhemClientService.SelectedFhemObject}">
+            <ListView ItemsSource="{Binding FhemObjectsRepository}" SelectedItem="{Binding FhemService.SelectedFhemObject}">
 
                 <ListView.ItemContainerStyle>
                     
@@ -93,7 +93,7 @@
 
         <DockPanel Grid.Row="2" >
 
-            <TextBlock DockPanel.Dock="Top" Text="{Binding FhemClientService.SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
+            <TextBlock DockPanel.Dock="Top" Text="{Binding FhemService.SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
 
             <ScrollViewer>
 
@@ -103,7 +103,7 @@
 
                         <StackPanel>
 
-                            <ListView ItemsSource="{Binding FhemClientService.SelectedFhemObject.Attributes}" Visibility="{Binding FhemClientService.SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ListView ItemsSource="{Binding FhemService.SelectedFhemObject.Attributes}" Visibility="{Binding FhemService.SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
 
                                 <ListView.View>
 
@@ -119,7 +119,7 @@
                             </ListView>
 
                             <TextBlock Text="PossibleAttributes: " />
-                            <ComboBox ItemsSource="{Binding FhemClientService.SelectedFhemObject.PossibleAttributes}">
+                            <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleAttributes}">
 
                                 <ComboBox.ItemTemplate>
 
@@ -139,23 +139,23 @@
 
                     <Expander Header="Possible Sets" 
                               Style="{StaticResource FhemObjectPropertiesExpanderStyle}" 
-                              Visibility="{Binding FhemClientService.SelectedFhemObject.ContainsPossibleSets, Converter={StaticResource BooleanToVisibilityConverter}}">
+                              Visibility="{Binding FhemService.SelectedFhemObject.ContainsPossibleSets, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                        <ListBox ItemsSource="{Binding FhemClientService.SelectedFhemObject.PossibleSets}" />
+                        <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleSets}" />
 
                     </Expander>
 
                     <Expander Header="Internals" Style="{StaticResource FhemObjectPropertiesExpanderStyle}">
 
-                        <ListBox ItemsSource="{Binding FhemClientService.SelectedFhemObject.Internals}" />
+                        <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.Internals}" />
 
                     </Expander>
 
                     <Expander Header="Readings" 
                               Style="{StaticResource FhemObjectPropertiesExpanderStyle}" 
-                              Visibility="{Binding FhemClientService.SelectedFhemObject.ContainsReadings, Converter={StaticResource BooleanToVisibilityConverter}}">
+                              Visibility="{Binding FhemService.SelectedFhemObject.ContainsReadings, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                        <ListBox ItemsSource="{Binding FhemClientService.SelectedFhemObject.Readings}">
+                        <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.Readings}">
 
                             <ListBox.ItemTemplate>
 

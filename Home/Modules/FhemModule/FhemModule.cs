@@ -31,7 +31,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule
         //---------------------------------------------------------------------
         #region Fields
 
-        private FhemClientService  m_fhemClientService = new FhemClientService();
+        private FhemService  m_fhemService = new FhemService();
 
         private IRegionViewRegistry  m_regionViewRegistry;
 
@@ -50,7 +50,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule
             m_regionViewRegistry = a_regionViewRegistry;
 
             //-- Register services
-            a_container.RegisterInstance<IFhemClientService>( m_fhemClientService );
+            a_container.RegisterInstance<IFhemService>( m_fhemService );
         }
 
         //-- Constructors

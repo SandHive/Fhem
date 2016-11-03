@@ -43,8 +43,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the FhemObjectAttributesViewModel class.
         /// </summary>
-        public FhemObjectAttributesViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
+        public FhemObjectAttributesViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService, a_regionManager )
         {
             //-- Initialize properties
             this.Header = "Attributes";

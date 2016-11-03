@@ -74,8 +74,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the FhemNativeCommandViewModel class.
         /// </summary>
-        public FhemNativeCommandViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
+        public FhemNativeCommandViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService, a_regionManager )
         {
             //-- Initialize properties
             this.Header = "Send Native Command";
@@ -106,7 +106,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         private void SendNativeCommandStringCommandAction()
         {
-            this.FhemResponse = this.FhemClientService.FhemClient.SendNativeCommand( this.NativeCommandString );
+            this.FhemResponse = this.FhemService.FhemClient.SendNativeCommand( this.NativeCommandString );
         }
 
         //-- Methods

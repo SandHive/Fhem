@@ -24,7 +24,7 @@ using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.Services
 {
-    public class FhemClientService : BindableBase, IFhemClientService
+    public class FhemService : BindableBase, IFhemService
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -37,9 +37,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemClientService class.
+        /// Initializes a new instance of the FhemService class.
         /// </summary>
-        public FhemClientService()
+        public FhemService()
         {
             //-- Register to events
             this.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
@@ -62,7 +62,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         //-- Event Handlers
         #endregion
         //---------------------------------------------------------------------
-        #region IFhemClientService Members
+        #region IFhemService Members
 
         public FhemClient FhemClient { get; } = new FhemClient();
 
@@ -74,7 +74,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
             set { this.SetProperty( ref m_selectedFhemObject, value ); }
         }
 
-        //-- IFhemClientService Members
+        //-- IFhemService Members
         #endregion
         //---------------------------------------------------------------------
     }

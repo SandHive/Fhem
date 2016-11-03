@@ -52,8 +52,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Initializes a new instance of the FhemObjectsRepositoryViewModel 
         /// class.
         /// </summary>
-        public FhemObjectsRepositoryViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
+        public FhemObjectsRepositoryViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService, a_regionManager )
         {
             //-- Initialize properties
             this.Header = "Show Fhem Objects";
@@ -62,7 +62,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             this.OpenFhemObjectDetailsCommand = new DelegateCommand<FhemObject>( this.OpenFhemObjectDetailsCommandAction );
 
             //-- Register to events
-            this.FhemClientService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
+            this.FhemService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
         }
 
         //-- Constructors
@@ -72,10 +72,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 
         private void FhemClient_IsConnectedChanged( object sender, EventArgs e )
         {
-            if( this.FhemClientService.FhemClient.IsConnected )
+            if( this.FhemService.FhemClient.IsConnected )
             {
                 //-- Use the Fhem object repository as source for the collection view 
-                this.FhemObjectsRepository = CollectionViewSource.GetDefaultView( this.FhemClientService.FhemObjectRepository );
+                this.FhemObjectsRepository = CollectionViewSource.GetDefaultView( this.FhemService.FhemObjectRepository );
 
                 //-- Sort the Fhem objects by their names
                 this.FhemObjectsRepository.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );

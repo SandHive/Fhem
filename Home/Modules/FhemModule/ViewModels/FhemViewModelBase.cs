@@ -29,9 +29,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Properties
 
         /// <summary>
-        /// Gets the Fhem client service.
+        /// Gets the Fhem service.
         /// </summary>
-        public IFhemClientService FhemClientService { get; private set; }
+        public IFhemService FhemService { get; private set; }
         
         /// <summary>
         /// Gets the region manager.
@@ -46,10 +46,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the FhemContentViewModel class.
         /// </summary>
-        public FhemViewModelBase( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
+        public FhemViewModelBase( IFhemService a_fhemService, IRegionManager a_regionManager )
         {
             //-- Initialize properties
-            this.FhemClientService = a_fhemClientService;
+            this.FhemService = a_fhemService;
             this.RegionManager = a_regionManager;
         }
 

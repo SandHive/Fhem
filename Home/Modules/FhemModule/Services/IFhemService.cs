@@ -22,7 +22,7 @@ using Sand.Fhem.Basics;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.Services
 {
-    public interface IFhemClientService
+    public interface IFhemService
     {
         /// <summary>
         /// Gets the Fhem client.

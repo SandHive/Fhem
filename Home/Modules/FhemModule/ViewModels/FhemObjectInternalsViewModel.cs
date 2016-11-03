@@ -33,8 +33,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Initializes a new instance of the FhemObjectInternalsViewModel 
         /// class.
         /// </summary>
-        public FhemObjectInternalsViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
+        public FhemObjectInternalsViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService, a_regionManager )
         {
             //-- Initialize properties
             this.Header = "Internals";

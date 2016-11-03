@@ -31,12 +31,12 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the FhemMainNavigationViewModel class.
         /// </summary>
-        public FhemObjectNavigationViewModel( IFhemClientService a_fhemClientService, IRegionManager a_regionManager )
-            : base( a_fhemClientService, a_regionManager )
+        public FhemObjectNavigationViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService, a_regionManager )
         {
             //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectAttributesViewModel( a_fhemClientService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemObjectInternalsViewModel( a_fhemClientService, a_regionManager ) );
+            this.NavigationViewModels.Add( new FhemObjectAttributesViewModel( a_fhemService, a_regionManager ) );
+            this.NavigationViewModels.Add( new FhemObjectInternalsViewModel( a_fhemService, a_regionManager ) );
         }
 
         //-- Constructors

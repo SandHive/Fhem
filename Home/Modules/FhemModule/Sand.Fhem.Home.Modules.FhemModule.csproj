@@ -72,8 +72,8 @@
   <ItemGroup>
     <Compile Include="FhemModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IFhemClientService.cs" />
-    <Compile Include="Services\FhemClientService.cs" />
+    <Compile Include="Services\FhemService.cs" />
+    <Compile Include="Services\IFhemService.cs" />
     <Compile Include="ViewModels\CollectionItemViewModel.cs" />
     <Compile Include="ViewModels\FhemNavigationViewModelBase.cs" />
     <Compile Include="ViewModels\FhemObjectInternalsViewModel.cs" />

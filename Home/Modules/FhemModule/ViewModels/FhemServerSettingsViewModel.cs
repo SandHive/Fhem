@@ -34,7 +34,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         //---------------------------------------------------------------------
         #region Fields
 
-        private IFhemClientService  m_fhemClientService;
+        private IFhemService  m_fhemService;
         
         //-- Fields
         #endregion
@@ -59,7 +59,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Gets a flag that specifies whether a Fhem client is connected.
         /// </summary>
-        public bool IsFhemClientConnected {  get { return m_fhemClientService.FhemClient.IsConnected; } }
+        public bool IsFhemClientConnected {  get { return m_fhemService.FhemClient.IsConnected; } }
         
         //-- Properties
         #endregion
@@ -70,13 +70,13 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Initializes a new instance of the FhemServerSettingsViewModel 
         /// class.
         /// </summary>
-        public FhemServerSettingsViewModel( IFhemClientService a_fhemClientService )
+        public FhemServerSettingsViewModel( IFhemService a_fhemService )
         {
             //-- Initialize fields
-            m_fhemClientService = a_fhemClientService;
+            m_fhemService = a_fhemService;
 
             //-- Register to events
-            m_fhemClientService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged ;
+            m_fhemService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged ;
 
             //-- Initialize commands
             this.ConnectCommand = new DelegateCommand( () => this.ConnectCommandAction()  );
@@ -104,7 +104,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         private void ConnectCommandAction()
         {
             //-- Connect to the Fhem server
-            m_fhemClientService.FhemClient.Connect( this.FhemServerIP, int.Parse( this.FhemServerPort ) );
+            m_fhemService.FhemClient.Connect( this.FhemServerIP, int.Parse( this.FhemServerPort ) );
         }
         
         //-- Methods
