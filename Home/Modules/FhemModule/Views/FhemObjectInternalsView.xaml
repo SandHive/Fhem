@@ -5,6 +5,19 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectInternalsView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.Internals}" />
+    <ListView ItemsSource="{Binding FhemService.SelectedFhemObject.Internals}">
+
+        <ListView.View>
+
+            <GridView>
+
+                <GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Name" />
+                <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
+
+            </GridView>
+            
+        </ListView.View>
+        
+    </ListView>
 
 </UserControl>
