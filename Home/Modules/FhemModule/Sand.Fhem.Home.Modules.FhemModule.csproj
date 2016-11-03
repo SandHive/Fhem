@@ -76,6 +76,8 @@
     <Compile Include="Services\IFhemService.cs" />
     <Compile Include="ViewModels\CollectionItemViewModel.cs" />
     <Compile Include="ViewModels\FhemNavigationViewModelBase.cs" />
+    <Compile Include="ViewModels\FhemObjectReadingsViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectPossibleSetsViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectTitleViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectInternalsViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectAttributesViewModel.cs" />
@@ -85,6 +87,12 @@
     <Compile Include="ViewModels\FhemObjectsRepositoryViewModel.cs" />
     <Compile Include="ViewModels\FhemServerSettingsViewModel.cs" />
     <Compile Include="ViewModels\FhemViewModelBase.cs" />
+    <Compile Include="Views\FhemObjectReadingsView.xaml.cs">
+      <DependentUpon>FhemObjectReadingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FhemObjectPossibleSetsView.xaml.cs">
+      <DependentUpon>FhemObjectPossibleSetsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FhemObjectTitleView.xaml.cs">
       <DependentUpon>FhemObjectTitleView.xaml</DependentUpon>
     </Compile>
@@ -121,15 +129,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\ResourceDictionaries\Styles\Named\FhemObjectPropertiesExpanderStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\ResourceDictionaries\Styles\Named\TextBlockStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\FhemModuleResourceLibrary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FhemObjectReadingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FhemObjectPossibleSetsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

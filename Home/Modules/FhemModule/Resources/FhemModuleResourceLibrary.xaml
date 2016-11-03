@@ -5,7 +5,6 @@
     <ResourceDictionary.MergedDictionaries>
 
         <ResourceDictionary Source="ResourceDictionaries\Styles\Named\FhemNavigationListBoxItemStyle.xaml" />
-        <ResourceDictionary Source="ResourceDictionaries\Styles\Named\FhemObjectPropertiesExpanderStyle.xaml" />
         <ResourceDictionary Source="ResourceDictionaries\Styles\Named\TextBlockStyles.xaml" />
 
     </ResourceDictionary.MergedDictionaries>

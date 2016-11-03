@@ -2,9 +2,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectInternalsView"
+    x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectPossibleSetsView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.Internals}" />
+    <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleSets}" />
 
 </UserControl>

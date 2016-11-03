@@ -71,6 +71,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule
             m_regionViewRegistry.RegisterViewWithRegion( "NavigationRegion", typeof( FhemObjectNavigationView ) );
             m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectAttributesView ) );
             m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectInternalsView ) );
+            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectPossibleSetsView ) );
+            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectReadingsView ) );
         }
 
         //-- IModule Members

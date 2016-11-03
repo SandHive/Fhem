@@ -20,72 +20,39 @@
  */
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemObjectNavigationViewModel : FhemNavigationViewModelBase, INavigationAware
+    public class FhemObjectReadingsViewModel : FhemViewModelBase
     {
-        //---------------------------------------------------------------------
-        #region Fields
-
-        private int  m_selectedIndex;
-
-        //-- Fields
-        #endregion
-        //---------------------------------------------------------------------
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the selected index.
-        /// </summary>
-        public int SelectedIndex
-        {
-            get { return m_selectedIndex; }
-            set
-            {
-                this.SetProperty( ref m_selectedIndex, value );
-            }
-        }
-
-        //-- Properties
-        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemMainNavigationViewModel class.
+        /// Initializes a new instance of the FhemObjectReadingsViewModel 
+        /// class.
         /// </summary>
-        public FhemObjectNavigationViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+        public FhemObjectReadingsViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
             : base( a_fhemService, a_regionManager )
         {
             //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectAttributesViewModel( a_fhemService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemObjectInternalsViewModel( a_fhemService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemObjectPossibleSetsViewModel( a_fhemService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemObjectReadingsViewModel( a_fhemService, a_regionManager ) );
+            this.Header = "Readings";
         }
 
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
-        #region INavigationAware Members
+        #region FhemContentViewModel Members
 
-        public bool IsNavigationTarget( NavigationContext navigationContext )
+        protected override void OnSelected()
         {
-            return true;
+            base.OnSelected();
+
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectReadingsView", UriKind.Relative ) );
         }
 
-        public void OnNavigatedFrom( NavigationContext navigationContext )
-        {
-            
-        }
-
-        public void OnNavigatedTo( NavigationContext navigationContext )
-        {
-            this.SelectedIndex = 0;
-        }
-
-        //-- INavigationAware Members
+        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
     }

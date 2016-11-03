@@ -6,189 +6,77 @@
     prism:ViewModelLocator.AutoWireViewModel="True"
     Name="me">
 
-    <Grid>
+    <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
 
-        <Grid.RowDefinitions>
+        <ListView ItemsSource="{Binding FhemObjectsRepository}" SelectedItem="{Binding FhemService.SelectedFhemObject}">
 
-            <RowDefinition Height="*" />
-            <RowDefinition Height="3" />
-            <RowDefinition Height="*" />
+            <ListView.ItemContainerStyle>
 
-        </Grid.RowDefinitions>
+                <Style TargetType="ListViewItem">
 
-        <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 
-            <ListView ItemsSource="{Binding FhemObjectsRepository}" SelectedItem="{Binding FhemService.SelectedFhemObject}">
+                </Style>
 
-                <ListView.ItemContainerStyle>
-                    
-                    <Style TargetType="ListViewItem">
-                        
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        
-                    </Style>
-                    
-                </ListView.ItemContainerStyle>
+            </ListView.ItemContainerStyle>
 
-                <ListView.View>
+            <ListView.View>
 
-                    <GridView>
+                <GridView>
 
-                        <GridViewColumn Header="Name">
+                    <GridViewColumn Header="Name">
 
-                            <GridViewColumn.CellTemplate>
+                        <GridViewColumn.CellTemplate>
 
-                                <DataTemplate>
+                            <DataTemplate>
 
-                                    <TextBlock Text="{Binding Name}">
+                                <TextBlock Text="{Binding Name}">
 
-                                        <TextBlock.InputBindings>
+                                    <TextBlock.InputBindings>
 
-                                            <MouseBinding Gesture="LeftDoubleClick" 
+                                        <MouseBinding Gesture="LeftDoubleClick" 
+                                                      Command="{Binding DataContext.OpenFhemObjectDetailsCommand, ElementName=me}"
+                                                      CommandParameter="{Binding .}" />
+
+                                    </TextBlock.InputBindings>
+
+                                </TextBlock>
+
+                            </DataTemplate>
+
+                        </GridViewColumn.CellTemplate>
+
+                    </GridViewColumn>
+                    <GridViewColumn Header="State">
+
+                        <GridViewColumn.CellTemplate>
+
+                            <DataTemplate>
+
+                                <TextBlock Text="{Binding State}">
+
+                                    <TextBlock.InputBindings>
+
+                                        <MouseBinding Gesture="LeftDoubleClick" 
                                                           Command="{Binding DataContext.OpenFhemObjectDetailsCommand, ElementName=me}"
                                                           CommandParameter="{Binding .}" />
 
-                                        </TextBlock.InputBindings>
-                                        
-                                    </TextBlock>
+                                    </TextBlock.InputBindings>
 
-                                </DataTemplate>
-                                
-                            </GridViewColumn.CellTemplate>
+                                </TextBlock>
 
-                        </GridViewColumn>
-                        <GridViewColumn Header="State">
+                            </DataTemplate>
 
-                            <GridViewColumn.CellTemplate>
+                        </GridViewColumn.CellTemplate>
 
-                                <DataTemplate>
+                    </GridViewColumn>
 
-                                    <TextBlock Text="{Binding State}">
+                </GridView>
 
-                                        <TextBlock.InputBindings>
+            </ListView.View>
 
-                                            <MouseBinding Gesture="LeftDoubleClick" 
-                                                          Command="{Binding DataContext.OpenFhemObjectDetailsCommand, ElementName=me}"
-                                                          CommandParameter="{Binding .}" />
+        </ListView>
 
-                                        </TextBlock.InputBindings>
-
-                                    </TextBlock>
-
-                                </DataTemplate>
-
-                            </GridViewColumn.CellTemplate>
-
-                        </GridViewColumn>
-
-                    </GridView>
-
-                </ListView.View>
-
-            </ListView>
-
-        </GroupBox>
-
-        <GridSplitter Grid.Row="1" ResizeDirection="Rows" HorizontalAlignment="Stretch" />
-
-        <DockPanel Grid.Row="2" >
-
-            <TextBlock DockPanel.Dock="Top" Text="{Binding FhemService.SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
-
-            <ScrollViewer>
-
-                <StackPanel>
-
-                    <Expander Header="Attributes" Style="{StaticResource FhemObjectPropertiesExpanderStyle}">
-
-                        <StackPanel>
-
-                            <ListView ItemsSource="{Binding FhemService.SelectedFhemObject.Attributes}" Visibility="{Binding FhemService.SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
-
-                                <ListView.View>
-
-                                    <GridView>
-
-                                        <GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Name" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
-
-                                    </GridView>
-
-                                </ListView.View>
-
-                            </ListView>
-
-                            <TextBlock Text="PossibleAttributes: " />
-                            <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleAttributes}">
-
-                                <ComboBox.ItemTemplate>
-
-                                    <DataTemplate>
-
-                                        <TextBlock Text="{Binding Name}" />
-
-                                    </DataTemplate>
-
-                                </ComboBox.ItemTemplate>
-
-                            </ComboBox>
-
-                        </StackPanel>
-
-                    </Expander>
-
-                    <Expander Header="Possible Sets" 
-                              Style="{StaticResource FhemObjectPropertiesExpanderStyle}" 
-                              Visibility="{Binding FhemService.SelectedFhemObject.ContainsPossibleSets, Converter={StaticResource BooleanToVisibilityConverter}}">
-
-                        <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleSets}" />
-
-                    </Expander>
-
-                    <Expander Header="Internals" Style="{StaticResource FhemObjectPropertiesExpanderStyle}">
-
-                        <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.Internals}" />
-
-                    </Expander>
-
-                    <Expander Header="Readings" 
-                              Style="{StaticResource FhemObjectPropertiesExpanderStyle}" 
-                              Visibility="{Binding FhemService.SelectedFhemObject.ContainsReadings, Converter={StaticResource BooleanToVisibilityConverter}}">
-
-                        <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.Readings}">
-
-                            <ListBox.ItemTemplate>
-
-                                <DataTemplate>
-
-                                    <StackPanel Orientation="Horizontal">
-
-                                        <TextBlock Text="DateTime: " />
-                                        <TextBlock Text="{Binding DateTime}" />
-
-                                        <TextBlock Text="   Name: " />
-                                        <TextBlock Text="{Binding Name}" />
-
-                                        <TextBlock Text="   Value: " />
-                                        <TextBlock Text="{Binding Value}" />
-
-                                    </StackPanel>
-
-                                </DataTemplate>
-
-                            </ListBox.ItemTemplate>
-
-                        </ListBox>
-
-
-                    </Expander>
-
-                </StackPanel>
-
-            </ScrollViewer>
-
-        </DockPanel>
-
-    </Grid>
+    </GroupBox>
 
 </UserControl>
