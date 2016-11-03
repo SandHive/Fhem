@@ -7,7 +7,7 @@
     
     <DockPanel>
 
-        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="FhemServerSettingsRegion" />
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="TitleRegion" />
 
         <Grid>
 

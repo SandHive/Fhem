@@ -104,7 +104,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 
         private void OpenFhemObjectDetailsCommandAction( FhemObject a_fhemObject )
         {
+            this.RegionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemObjectTitleView", UriKind.Relative ) );
             this.RegionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemObjectNavigationView", UriKind.Relative ) );
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectAttributesView", UriKind.Relative ) );
         }
 
         //-- Methods

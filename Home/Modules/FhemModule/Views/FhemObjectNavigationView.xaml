@@ -8,7 +8,7 @@
     <ListBox ItemsSource="{Binding NavigationViewModels}" 
              ItemContainerStyle="{StaticResource FhemNavigationListBoxItemStyle}"
              MinWidth="300" 
-             SelectedIndex="0">
+             SelectedIndex="{Binding SelectedIndex}">
 
         <ListBox.ItemTemplate>
 

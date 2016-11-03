@@ -18,62 +18,63 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Microsoft.Practices.Unity;
-using Prism.Modularity;
+using Prism.Commands;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
-using Sand.Fhem.Home.Modules.FhemModule.Views;
+using System;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemModule : IModule
+    public class FhemObjectTitleViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
-        #region Fields
+        #region Properties
 
-        private FhemService  m_fhemService = new FhemService();
-
-        private IRegionViewRegistry  m_regionViewRegistry;
-
-        //-- Fields
+        /// <summary>
+        /// Gets the command for navigating back to the main screen.
+        /// </summary>
+        public DelegateCommand NavigateBackCommand { get; private set; }
+        
+        //-- Properties
         #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemModule class.
+        /// Initializes a new instance of the FhemObjectAttributesViewModel class.
         /// </summary>
-        /// <param name="a_regionViewRegistry"></param>
-        public FhemModule( IUnityContainer a_container, IRegionViewRegistry a_regionViewRegistry )
+        public FhemObjectTitleViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService, a_regionManager )
         {
-            //-- Initialize fields
-            m_regionViewRegistry = a_regionViewRegistry;
-
-            //-- Register services
-            a_container.RegisterInstance<IFhemService>( m_fhemService );
+            //-- Initialize commands
+            this.NavigateBackCommand = new DelegateCommand( this.NavigateBackCommandAction );
         }
 
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
-        #region IModule Members
+        #region FhemContentViewModel Members
 
-        public void Initialize()
+        protected override void OnSelected()
         {
-            //-- Register the views of the main screen
-            m_regionViewRegistry.RegisterViewWithRegion( "TitleRegion", typeof( FhemServerSettingsView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "NavigationRegion", typeof( FhemMainNavigationView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectsRepositoryView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemNativeCommandView ) );
+            base.OnSelected();
 
-            //-- Register the Fhem object views
-            m_regionViewRegistry.RegisterViewWithRegion( "TitleRegion", typeof( FhemObjectTitleView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "NavigationRegion", typeof( FhemObjectNavigationView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectAttributesView ) );
-            m_regionViewRegistry.RegisterViewWithRegion( "ContentRegion", typeof( FhemObjectInternalsView ) );
+            this.RegionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemObjectTitleView", UriKind.Relative ) );
         }
 
-        //-- IModule Members
+        //-- FhemContentViewModel Members
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        private void NavigateBackCommandAction()
+        {
+            this.RegionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemServerSettingsView", UriKind.Relative ) );
+            this.RegionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemMainNavigationView", UriKind.Relative ) );
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsRepositoryView", UriKind.Relative ) );
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

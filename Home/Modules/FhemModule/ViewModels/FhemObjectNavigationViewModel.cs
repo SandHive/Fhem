@@ -18,13 +18,35 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using System;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemObjectNavigationViewModel : FhemNavigationViewModelBase
+    public class FhemObjectNavigationViewModel : FhemNavigationViewModelBase, INavigationAware
     {
+        //---------------------------------------------------------------------
+        #region Fields
+
+        private int  m_selectedIndex;
+
+        //-- Fields
+        #endregion
+        //---------------------------------------------------------------------
+        #region Properties
+
+        public int SelectedIndex
+        {
+            get { return m_selectedIndex; }
+            set
+            {
+                this.SetProperty( ref m_selectedIndex, value );
+            }
+        }
+
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
@@ -40,6 +62,26 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region INavigationAware Members
+
+        public bool IsNavigationTarget( NavigationContext navigationContext )
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom( NavigationContext navigationContext )
+        {
+            
+        }
+
+        public void OnNavigatedTo( NavigationContext navigationContext )
+        {
+            this.SelectedIndex = 0;
+        }
+
+        //-- INavigationAware Members
         #endregion
         //---------------------------------------------------------------------
     }

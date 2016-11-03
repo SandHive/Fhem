@@ -76,6 +76,7 @@
     <Compile Include="Services\IFhemService.cs" />
     <Compile Include="ViewModels\CollectionItemViewModel.cs" />
     <Compile Include="ViewModels\FhemNavigationViewModelBase.cs" />
+    <Compile Include="ViewModels\FhemObjectTitleViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectInternalsViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectAttributesViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectNavigationViewModel.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="ViewModels\FhemObjectsRepositoryViewModel.cs" />
     <Compile Include="ViewModels\FhemServerSettingsViewModel.cs" />
     <Compile Include="ViewModels\FhemViewModelBase.cs" />
+    <Compile Include="Views\FhemObjectTitleView.xaml.cs">
+      <DependentUpon>FhemObjectTitleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\FhemObjectInternalsView.xaml.cs">
       <DependentUpon>FhemObjectInternalsView.xaml</DependentUpon>
     </Compile>
@@ -126,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\FhemModuleResourceLibrary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FhemObjectTitleView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
