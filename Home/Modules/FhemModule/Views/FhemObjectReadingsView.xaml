@@ -5,29 +5,20 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectReadingsView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.Readings}">
+    <ListView ItemsSource="{Binding FhemService.SelectedFhemObject.Readings}">
 
-        <ListBox.ItemTemplate>
+        <ListView.View>
 
-            <DataTemplate>
+            <GridView>
 
-                <StackPanel Orientation="Horizontal">
+                <GridViewColumn DisplayMemberBinding="{Binding DateTime}" Header="DateTime" />
+                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
 
-                    <TextBlock Text="DateTime: " />
-                    <TextBlock Text="{Binding DateTime}" />
-
-                    <TextBlock Text="   Name: " />
-                    <TextBlock Text="{Binding Name}" />
-
-                    <TextBlock Text="   Value: " />
-                    <TextBlock Text="{Binding Value}" />
-
-                </StackPanel>
-
-            </DataTemplate>
-
-        </ListBox.ItemTemplate>
-
-    </ListBox>
+            </GridView>
+            
+        </ListView.View>
+        
+    </ListView>
 
 </UserControl>
