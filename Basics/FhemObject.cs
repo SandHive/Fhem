@@ -50,6 +50,15 @@ namespace Sand.Fhem.Basics
 
         /// <summary>
         /// Gets a flag that specifies whether this Fhem object contains 
+        /// internals.
+        /// </summary>
+        public bool ContainsInternals
+        {
+            get { return this.Internals.Count > 0; }
+        }
+
+        /// <summary>
+        /// Gets a flag that specifies whether this Fhem object contains 
         /// possible sets.
         /// </summary>
         public bool ContainsPossibleSets

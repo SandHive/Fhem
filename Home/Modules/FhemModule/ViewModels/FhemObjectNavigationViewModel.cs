@@ -20,6 +20,7 @@
  */
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
@@ -100,26 +101,30 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         {
             //-- Update the 'IsVisible' flag of all navigation view models
             m_fhemObjectAttributesViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsAttributes;
-            m_fhemObjectInternalsViewModel.IsVisible = true;
+            m_fhemObjectInternalsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsInternals;
             m_fhemObjectPossibleSetsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsPossibleSets;
             m_fhemObjectReadingsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsReadings;
 
-            //-- Select always the first visible navigation view model
+            //-- Select and navigate always to the first visible navigation view model
             if( m_fhemObjectAttributesViewModel.IsVisible )
             {
                 this.SelectedItem = m_fhemObjectAttributesViewModel;
+                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectAttributesView", UriKind.Relative ) );
             }
             else if( m_fhemObjectInternalsViewModel.IsVisible )
             {
                 this.SelectedItem = m_fhemObjectInternalsViewModel;
+                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectInternalsView", UriKind.Relative ) );
             }
             else if( m_fhemObjectPossibleSetsViewModel.IsVisible )
             {
                 this.SelectedItem = m_fhemObjectPossibleSetsViewModel;
+                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectPossibleSetsView", UriKind.Relative ) );
             }
             else if( m_fhemObjectReadingsViewModel.IsVisible )
             {
                 this.SelectedItem = m_fhemObjectReadingsViewModel;
+                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectReadingsView", UriKind.Relative ) );
             }
         }
 
