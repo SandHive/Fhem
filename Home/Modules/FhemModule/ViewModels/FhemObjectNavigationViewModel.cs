@@ -28,7 +28,17 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         //---------------------------------------------------------------------
         #region Fields
 
+        private FhemObjectAttributesViewModel  m_fhemObjectAttributesViewModel;
+
+        private FhemObjectInternalsViewModel  m_fhemObjectInternalsViewModel;
+
+        private FhemObjectPossibleSetsViewModel  m_fhemObjectPossibleSetsViewModel;
+
+        private FhemObjectReadingsViewModel  m_fhemObjectReadingsViewModel;
+
         private int  m_selectedIndex;
+
+        private FhemViewModelBase  m_selectedItem;
 
         //-- Fields
         #endregion
@@ -36,14 +46,14 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Properties
 
         /// <summary>
-        /// Gets or sets the selected index.
+        /// Gets or sets the selected item.
         /// </summary>
-        public int SelectedIndex
+        public FhemViewModelBase SelectedItem
         {
-            get { return m_selectedIndex; }
+            get { return m_selectedItem; }
             set
             {
-                this.SetProperty( ref m_selectedIndex, value );
+                this.SetProperty( ref m_selectedItem, value );
             }
         }
 
@@ -58,11 +68,17 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public FhemObjectNavigationViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
             : base( a_fhemService, a_regionManager )
         {
-            //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectAttributesViewModel( a_fhemService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemObjectInternalsViewModel( a_fhemService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemObjectPossibleSetsViewModel( a_fhemService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemObjectReadingsViewModel( a_fhemService, a_regionManager ) );
+            //-- Initialize fields
+            m_fhemObjectAttributesViewModel = new FhemObjectAttributesViewModel( a_fhemService, a_regionManager );
+            m_fhemObjectInternalsViewModel = new FhemObjectInternalsViewModel( a_fhemService, a_regionManager );
+            m_fhemObjectPossibleSetsViewModel = new FhemObjectPossibleSetsViewModel( a_fhemService, a_regionManager );
+            m_fhemObjectReadingsViewModel = new FhemObjectReadingsViewModel( a_fhemService, a_regionManager );
+
+            //-- Add all navigation view models to our list
+            this.NavigationViewModels.Add( m_fhemObjectAttributesViewModel );
+            this.NavigationViewModels.Add( m_fhemObjectInternalsViewModel );
+            this.NavigationViewModels.Add( m_fhemObjectPossibleSetsViewModel );
+            this.NavigationViewModels.Add( m_fhemObjectReadingsViewModel );
         }
 
         //-- Constructors
@@ -82,7 +98,29 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 
         public void OnNavigatedTo( NavigationContext navigationContext )
         {
-            this.SelectedIndex = 0;
+            //-- Update the 'IsVisible' flag of all navigation view models
+            m_fhemObjectAttributesViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsAttributes;
+            m_fhemObjectInternalsViewModel.IsVisible = true;
+            m_fhemObjectPossibleSetsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsPossibleSets;
+            m_fhemObjectReadingsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsReadings;
+
+            //-- Select always the first visible navigation view model
+            if( m_fhemObjectAttributesViewModel.IsVisible )
+            {
+                this.SelectedItem = m_fhemObjectAttributesViewModel;
+            }
+            else if( m_fhemObjectInternalsViewModel.IsVisible )
+            {
+                this.SelectedItem = m_fhemObjectInternalsViewModel;
+            }
+            else if( m_fhemObjectPossibleSetsViewModel.IsVisible )
+            {
+                this.SelectedItem = m_fhemObjectPossibleSetsViewModel;
+            }
+            else if( m_fhemObjectReadingsViewModel.IsVisible )
+            {
+                this.SelectedItem = m_fhemObjectReadingsViewModel;
+            }
         }
 
         //-- INavigationAware Members

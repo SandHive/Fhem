@@ -7,42 +7,36 @@
 
     <StackPanel>
 
-        <StackPanel>
+        <ListView ItemsSource="{Binding FhemService.SelectedFhemObject.Attributes}" Visibility="{Binding FhemService.SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-            <ListView ItemsSource="{Binding FhemService.SelectedFhemObject.Attributes}" Visibility="{Binding FhemService.SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ListView.View>
 
-                <ListView.View>
+                <GridView>
 
-                    <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
 
-                        <GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Name" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
+                </GridView>
 
-                    </GridView>
+            </ListView.View>
 
-                </ListView.View>
+        </ListView>
 
-            </ListView>
+        <TextBlock Text="PossibleAttributes: " />
+        <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleAttributes}">
 
-            <TextBlock Text="PossibleAttributes: " />
-            <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleAttributes}">
+            <ComboBox.ItemTemplate>
 
-                <ComboBox.ItemTemplate>
+                <DataTemplate>
 
-                    <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
 
-                        <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
 
-                    </DataTemplate>
+            </ComboBox.ItemTemplate>
 
-                </ComboBox.ItemTemplate>
+        </ComboBox>
 
-            </ComboBox>
-
-        </StackPanel>
-
-        <Button Content="Back" Command="{Binding NavigateBackCommand}" />
-        
     </StackPanel>
-    
+
 </UserControl>

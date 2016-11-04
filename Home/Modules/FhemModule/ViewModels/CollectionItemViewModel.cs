@@ -29,6 +29,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 
         private bool  m_isSelected;
 
+        private bool  m_isVisible = true;
+
         //-- Fields
         #endregion
         //---------------------------------------------------------------------
@@ -45,10 +47,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         public bool IsSelected
         {
-            get
-            {
-                return m_isSelected;
-            }
+            get { return m_isSelected; }
             set
             {
                 if( this.SetProperty( ref m_isSelected, value ) )
@@ -59,6 +58,19 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
                         this.OnSelected();
                     }
                 }                
+            }
+        }
+
+        /// <summary>
+        /// Gets a flag that indicates whether the attributes of the Fhem 
+        /// object are visible.
+        /// </summary>
+        public bool IsVisible
+        {
+            get { return m_isVisible; }
+            set
+            {
+                this.SetProperty( ref m_isVisible, value );
             }
         }
 
