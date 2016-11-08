@@ -34,6 +34,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Properties
 
         /// <summary>
+        /// Gets the command for editing the Fhem object name.
+        /// </summary>
+        public DelegateCommand EditFhemObjectNameCommand { get; private set; }
+
+        /// <summary>
         /// Gets the Fhem objects repository.
         /// </summary>
         public ICollectionView FhemObjectsRepository { get; private set; }
@@ -41,7 +46,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Gets the command for opening the details of a Fhem object.
         /// </summary>
-        public DelegateCommand<FhemObject> OpenFhemObjectDetailsCommand { get; private set; }
+        public DelegateCommand OpenFhemObjectDetailsCommand { get; private set; }
         
         //-- Properties
         #endregion
@@ -59,7 +64,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             this.Header = "Show Fhem Objects";
 
             //-- Initialize commands
-            this.OpenFhemObjectDetailsCommand = new DelegateCommand<FhemObject>( this.OpenFhemObjectDetailsCommandAction );
+            this.EditFhemObjectNameCommand = new DelegateCommand( this.EditFhemObjectNameCommandAction );
+            this.OpenFhemObjectDetailsCommand = new DelegateCommand( this.OpenFhemObjectDetailsCommandAction );
 
             //-- Register to events
             this.FhemService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
@@ -102,7 +108,20 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         //---------------------------------------------------------------------
         #region Methods
 
-        private void OpenFhemObjectDetailsCommandAction( FhemObject a_fhemObject )
+        /// <summary>
+        /// Performs the action that should be invoked by the 
+        /// 'EditFhemObjectNameCommand'.
+        /// </summary>
+        private void EditFhemObjectNameCommandAction()
+        {
+            
+        }
+
+        /// <summary>
+        /// Performs the action that should be invoked by the 
+        /// 'OpenFhemObjectDetailsCommand'.
+        /// </summary>
+        private void OpenFhemObjectDetailsCommandAction()
         {
             this.RegionManager.RequestNavigate( "TitleRegion", new Uri( "FhemObjectTitleView", UriKind.Relative ) );
             this.RegionManager.RequestNavigate( "NavigationRegion", new Uri( "FhemObjectNavigationView", UriKind.Relative ) );
