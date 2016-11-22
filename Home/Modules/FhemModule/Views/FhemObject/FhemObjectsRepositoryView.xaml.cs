@@ -20,20 +20,20 @@
  */
 using System.Windows.Controls;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.Views
+namespace Sand.Fhem.Home.Modules.FhemModule.Views.FhemObject
 {
     /// <summary>
-    /// Interaction logic for FhemObjectNavigationView.xaml
+    /// Interaction logic for FhemObjectsRepositoryView.xaml
     /// </summary>
-    public partial class FhemObjectNavigationView : UserControl
+    public partial class FhemObjectsRepositoryView : UserControl
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectNavigationView class.
+        /// Initializes a new instance of the FhemObjectsRepositoryView class.
         /// </summary>
-        public FhemObjectNavigationView()
+        public FhemObjectsRepositoryView()
         {
             InitializeComponent();
         }

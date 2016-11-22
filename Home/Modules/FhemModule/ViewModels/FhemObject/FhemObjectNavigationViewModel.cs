@@ -22,7 +22,7 @@ using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
 {
     public class FhemObjectNavigationViewModel : FhemNavigationViewModelBase, INavigationAware
     {
@@ -36,9 +36,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         private FhemObjectPossibleSetsViewModel  m_fhemObjectPossibleSetsViewModel;
 
         private FhemObjectReadingsViewModel  m_fhemObjectReadingsViewModel;
-
-        private int  m_selectedIndex;
-
+        
         private FhemViewModelBase  m_selectedItem;
 
         //-- Fields

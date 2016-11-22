@@ -18,40 +18,27 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Prism.Regions;
-using Sand.Fhem.Home.Modules.FhemModule.Services;
-using System;
+using System.Windows.Controls;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
+namespace Sand.Fhem.Home.Modules.FhemModule.Views.FhemObject
 {
-    public class FhemObjectAttributesViewModel : FhemViewModelBase
+    /// <summary>
+    /// Interaction logic for FhemObjectReadingsView.xaml
+    /// </summary>
+    public partial class FhemObjectReadingsView : UserControl
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectAttributesViewModel class.
+        /// Initializes a new instance of the FhemObjectReadingsView class.
         /// </summary>
-        public FhemObjectAttributesViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
+        public FhemObjectReadingsView()
         {
-            //-- Initialize properties
-            this.Header = "Attributes";
+            InitializeComponent();
         }
 
         //-- Constructors
-        #endregion
-        //---------------------------------------------------------------------
-        #region FhemContentViewModel Members
-
-        protected override void OnSelected()
-        {
-            base.OnSelected();
-
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectAttributesView", UriKind.Relative ) );
-        }
-
-        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
     }

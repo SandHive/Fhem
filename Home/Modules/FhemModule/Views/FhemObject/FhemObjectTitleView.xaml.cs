@@ -18,41 +18,27 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Prism.Regions;
-using Sand.Fhem.Home.Modules.FhemModule.Services;
-using System;
+using System.Windows.Controls;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
+namespace Sand.Fhem.Home.Modules.FhemModule.Views.FhemObject
 {
-    public class FhemObjectPossibleSetsViewModel : FhemViewModelBase
+    /// <summary>
+    /// Interaction logic for FhemObjectTitleView.xaml
+    /// </summary>
+    public partial class FhemObjectTitleView : UserControl
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectPossibleSetsViewModel 
-        /// class.
+        /// Initializes a new instance of the FhemObjectTitleView class.
         /// </summary>
-        public FhemObjectPossibleSetsViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
+        public FhemObjectTitleView()
         {
-            //-- Initialize properties
-            this.Header = "Possible Sets";
+            InitializeComponent();
         }
 
         //-- Constructors
-        #endregion
-        //---------------------------------------------------------------------
-        #region FhemContentViewModel Members
-
-        protected override void OnSelected()
-        {
-            base.OnSelected();
-
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectPossibleSetsView", UriKind.Relative ) );
-        }
-
-        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
     }

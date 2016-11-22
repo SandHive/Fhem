@@ -18,26 +18,36 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Commands;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
 {
-    public class FhemObjectInternalsViewModel : FhemViewModelBase
+    public class FhemObjectTitleViewModel : FhemViewModelBase
     {
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets the command for navigating back to the main screen.
+        /// </summary>
+        public DelegateCommand NavigateBackCommand { get; private set; }
+        
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectInternalsViewModel 
-        /// class.
+        /// Initializes a new instance of the FhemObjectAttributesViewModel class.
         /// </summary>
-        public FhemObjectInternalsViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+        public FhemObjectTitleViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
             : base( a_fhemService, a_regionManager )
         {
-            //-- Initialize properties
-            this.Header = "Internals";
+            //-- Initialize commands
+            this.NavigateBackCommand = new DelegateCommand( this.NavigateBackCommandAction );
         }
 
         //-- Constructors
@@ -49,10 +59,22 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         {
             base.OnSelected();
 
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectInternalsView", UriKind.Relative ) );
+            this.RegionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemObjectTitleView", UriKind.Relative ) );
         }
 
         //-- FhemContentViewModel Members
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        private void NavigateBackCommandAction()
+        {
+            this.RegionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemServerSettingsView", UriKind.Relative ) );
+            this.RegionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemMainNavigationView", UriKind.Relative ) );
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsRepositoryView", UriKind.Relative ) );
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

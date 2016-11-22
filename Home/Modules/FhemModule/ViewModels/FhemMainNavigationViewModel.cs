@@ -20,6 +20,7 @@
  */
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {

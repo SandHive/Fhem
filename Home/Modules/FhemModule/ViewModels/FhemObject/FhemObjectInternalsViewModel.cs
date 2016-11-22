@@ -18,27 +18,41 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using System.Windows.Controls;
+using Prism.Regions;
+using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.Views
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
 {
-    /// <summary>
-    /// Interaction logic for FhemObjectAttributesView.xaml
-    /// </summary>
-    public partial class FhemObjectAttributesView : UserControl
+    public class FhemObjectInternalsViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectAttributesView class.
+        /// Initializes a new instance of the FhemObjectInternalsViewModel 
+        /// class.
         /// </summary>
-        public FhemObjectAttributesView()
+        public FhemObjectInternalsViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService, a_regionManager )
         {
-            InitializeComponent();
+            //-- Initialize properties
+            this.Header = "Internals";
         }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region FhemContentViewModel Members
+
+        protected override void OnSelected()
+        {
+            base.OnSelected();
+
+            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectInternalsView", UriKind.Relative ) );
+        }
+
+        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
     }
