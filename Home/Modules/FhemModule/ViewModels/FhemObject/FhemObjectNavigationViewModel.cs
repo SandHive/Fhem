@@ -18,26 +18,30 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Commands;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
+using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
 {
-    public class FhemObjectNavigationViewModel : FhemNavigationViewModelBase, INavigationAware
+    public class FhemObjectNavigationViewModel : FhemViewModelBase, INavigationAware
     {
         //---------------------------------------------------------------------
         #region Fields
 
-        private FhemObjectAttributesViewModel  m_fhemObjectAttributesViewModel;
+        private MenuItemViewModel  m_attributesMenuItemViewModel;
 
-        private FhemObjectInternalsViewModel  m_fhemObjectInternalsViewModel;
+        private MenuItemViewModel  m_internalsMenuItemViewModel;
 
-        private FhemObjectPossibleSetsViewModel  m_fhemObjectPossibleSetsViewModel;
+        private MenuItemViewModel  m_possibleSetsMenuItemViewModel;
 
-        private FhemObjectReadingsViewModel  m_fhemObjectReadingsViewModel;
-        
-        private FhemViewModelBase  m_selectedItem;
+        private MenuItemViewModel  m_readingsMenuItemViewModel;
+
+        private IRegionManager  m_regionManager;
+            
+        private MenuItemViewModel  m_selectedItem;
 
         //-- Fields
         #endregion
@@ -45,9 +49,14 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         #region Properties
 
         /// <summary>
+        /// Gets the menu entry view models for the Fhem object details.
+        /// </summary>
+        public ObservableCollection<MenuItemViewModel> MenuEntriesViewModels { get; } = new ObservableCollection<MenuItemViewModel>();
+
+        /// <summary>
         /// Gets or sets the selected item.
         /// </summary>
-        public FhemViewModelBase SelectedItem
+        public MenuItemViewModel SelectedItem
         {
             get { return m_selectedItem; }
             set
@@ -65,19 +74,36 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         /// Initializes a new instance of the FhemMainNavigationViewModel class.
         /// </summary>
         public FhemObjectNavigationViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
+            : base( a_fhemService )
         {
             //-- Initialize fields
-            m_fhemObjectAttributesViewModel = new FhemObjectAttributesViewModel( a_fhemService, a_regionManager );
-            m_fhemObjectInternalsViewModel = new FhemObjectInternalsViewModel( a_fhemService, a_regionManager );
-            m_fhemObjectPossibleSetsViewModel = new FhemObjectPossibleSetsViewModel( a_fhemService, a_regionManager );
-            m_fhemObjectReadingsViewModel = new FhemObjectReadingsViewModel( a_fhemService, a_regionManager );
+            m_regionManager = a_regionManager;
+            m_attributesMenuItemViewModel = new MenuItemViewModel(
+
+                "Attributes",
+                new DelegateCommand( () => a_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectAttributesView", UriKind.Relative ) ) )
+            );
+            m_internalsMenuItemViewModel = new MenuItemViewModel(
+
+                "Internals",
+                new DelegateCommand( () => a_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectInternalsView", UriKind.Relative ) ) )
+            );
+            m_possibleSetsMenuItemViewModel = new MenuItemViewModel(
+
+                "Possible Sets",
+                new DelegateCommand( () => a_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectPossibleSetsView", UriKind.Relative ) ) )
+            );
+            m_readingsMenuItemViewModel = new MenuItemViewModel(
+
+                "Readings",
+                new DelegateCommand( () => a_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectReadingsView", UriKind.Relative ) ) )
+            );
 
             //-- Add all navigation view models to our list
-            this.NavigationViewModels.Add( m_fhemObjectAttributesViewModel );
-            this.NavigationViewModels.Add( m_fhemObjectInternalsViewModel );
-            this.NavigationViewModels.Add( m_fhemObjectPossibleSetsViewModel );
-            this.NavigationViewModels.Add( m_fhemObjectReadingsViewModel );
+            this.MenuEntriesViewModels.Add( m_attributesMenuItemViewModel );
+            this.MenuEntriesViewModels.Add( m_internalsMenuItemViewModel );
+            this.MenuEntriesViewModels.Add( m_possibleSetsMenuItemViewModel );
+            this.MenuEntriesViewModels.Add( m_readingsMenuItemViewModel );
         }
 
         //-- Constructors
@@ -98,31 +124,31 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         public void OnNavigatedTo( NavigationContext navigationContext )
         {
             //-- Update the 'IsVisible' flag of all navigation view models
-            m_fhemObjectAttributesViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsAttributes;
-            m_fhemObjectInternalsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsInternals;
-            m_fhemObjectPossibleSetsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsPossibleSets;
-            m_fhemObjectReadingsViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsReadings;
+            m_attributesMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsAttributes;
+            m_internalsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsInternals;
+            m_possibleSetsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsPossibleSets;
+            m_readingsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsReadings;
 
             //-- Select and navigate always to the first visible navigation view model
-            if( m_fhemObjectAttributesViewModel.IsVisible )
+            if( m_attributesMenuItemViewModel.IsVisible )
             {
-                this.SelectedItem = m_fhemObjectAttributesViewModel;
-                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectAttributesView", UriKind.Relative ) );
+                this.SelectedItem = m_attributesMenuItemViewModel;
+                m_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectAttributesView", UriKind.Relative ) );
             }
-            else if( m_fhemObjectInternalsViewModel.IsVisible )
+            else if( m_internalsMenuItemViewModel.IsVisible )
             {
-                this.SelectedItem = m_fhemObjectInternalsViewModel;
-                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectInternalsView", UriKind.Relative ) );
+                this.SelectedItem = m_internalsMenuItemViewModel;
+                m_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectInternalsView", UriKind.Relative ) );
             }
-            else if( m_fhemObjectPossibleSetsViewModel.IsVisible )
+            else if( m_possibleSetsMenuItemViewModel.IsVisible )
             {
-                this.SelectedItem = m_fhemObjectPossibleSetsViewModel;
-                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectPossibleSetsView", UriKind.Relative ) );
+                this.SelectedItem = m_possibleSetsMenuItemViewModel;
+                m_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectPossibleSetsView", UriKind.Relative ) );
             }
-            else if( m_fhemObjectReadingsViewModel.IsVisible )
+            else if( m_readingsMenuItemViewModel.IsVisible )
             {
-                this.SelectedItem = m_fhemObjectReadingsViewModel;
-                this.RegionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectReadingsView", UriKind.Relative ) );
+                this.SelectedItem = m_readingsMenuItemViewModel;
+                m_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectReadingsView", UriKind.Relative ) );
             }
         }
 

@@ -31,6 +31,13 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
     public class FhemObjectsRepositoryViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
+        #region Fields
+
+        private IRegionManager  m_regionManager;
+
+        //-- Fields
+        #endregion
+        //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
@@ -58,10 +65,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         /// class.
         /// </summary>
         public FhemObjectsRepositoryViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
+            : base( a_fhemService )
         {
-            //-- Initialize properties
-            this.Header = "Show Fhem Objects";
+            //-- Initialize fields
+            m_regionManager = a_regionManager;
 
             //-- Initialize commands
             this.EditFhemObjectNameCommand = new DelegateCommand( this.EditFhemObjectNameCommandAction );
@@ -94,18 +101,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         //-- Event Handlers
         #endregion
         //---------------------------------------------------------------------
-        #region FhemContentViewModel Members
-
-        protected override void OnSelected()
-        {
-            base.OnSelected();
-
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsRepositoryView", UriKind.Relative ) );
-        }
-
-        //-- FhemContentViewModel Members
-        #endregion
-        //---------------------------------------------------------------------
         #region Methods
 
         /// <summary>
@@ -123,8 +118,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         /// </summary>
         private void OpenFhemObjectDetailsCommandAction()
         {
-            this.RegionManager.RequestNavigate( "TitleRegion", new Uri( "FhemObjectTitleView", UriKind.Relative ) );
-            this.RegionManager.RequestNavigate( "NavigationRegion", new Uri( "FhemObjectNavigationView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "TitleRegion", new Uri( "FhemObjectTitleView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "NavigationRegion", new Uri( "FhemObjectNavigationView", UriKind.Relative ) );
         }
 
         //-- Methods

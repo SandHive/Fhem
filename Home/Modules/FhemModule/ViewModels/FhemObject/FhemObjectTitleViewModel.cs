@@ -28,6 +28,13 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
     public class FhemObjectTitleViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
+        #region Fields
+
+        private IRegionManager  m_regionManager;
+
+        //-- Fields
+        #endregion
+        //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
@@ -43,9 +50,13 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         /// <summary>
         /// Initializes a new instance of the FhemObjectAttributesViewModel class.
         /// </summary>
+        /// <param name="a_fhemService"></param>
         public FhemObjectTitleViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
+            : base( a_fhemService )
         {
+            //-- Initialize fields
+            m_regionManager = a_regionManager;
+
             //-- Initialize commands
             this.NavigateBackCommand = new DelegateCommand( this.NavigateBackCommandAction );
         }
@@ -53,25 +64,13 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
-        #region FhemContentViewModel Members
-
-        protected override void OnSelected()
-        {
-            base.OnSelected();
-
-            this.RegionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemObjectTitleView", UriKind.Relative ) );
-        }
-
-        //-- FhemContentViewModel Members
-        #endregion
-        //---------------------------------------------------------------------
         #region Methods
 
         private void NavigateBackCommandAction()
         {
-            this.RegionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemServerSettingsView", UriKind.Relative ) );
-            this.RegionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemMainNavigationView", UriKind.Relative ) );
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsRepositoryView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemServerSettingsView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemMainNavigationView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsRepositoryView", UriKind.Relative ) );
         }
 
         //-- Methods

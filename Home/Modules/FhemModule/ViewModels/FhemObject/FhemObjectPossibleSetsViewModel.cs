@@ -18,9 +18,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
-using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
 {
@@ -33,26 +31,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
         /// Initializes a new instance of the FhemObjectPossibleSetsViewModel 
         /// class.
         /// </summary>
-        public FhemObjectPossibleSetsViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
-        {
-            //-- Initialize properties
-            this.Header = "Possible Sets";
-        }
+        /// <param name="a_fhemService"></param>
+        public FhemObjectPossibleSetsViewModel( IFhemService a_fhemService )
+            : base( a_fhemService ) { }
 
         //-- Constructors
-        #endregion
-        //---------------------------------------------------------------------
-        #region FhemContentViewModel Members
-
-        protected override void OnSelected()
-        {
-            base.OnSelected();
-
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectPossibleSetsView", UriKind.Relative ) );
-        }
-
-        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
     }

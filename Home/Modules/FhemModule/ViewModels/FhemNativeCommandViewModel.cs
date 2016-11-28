@@ -74,29 +74,15 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the FhemNativeCommandViewModel class.
         /// </summary>
-        public FhemNativeCommandViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
+        /// <param name="a_fhemService"></param>
+        public FhemNativeCommandViewModel( IFhemService a_fhemService )
+            : base( a_fhemService )
         {
-            //-- Initialize properties
-            this.Header = "Send Native Command";
-
             //-- Initialize commands
             this.SendNativeCommandStringCommand = new DelegateCommand( () => this.SendNativeCommandStringCommandAction() );
         }
 
         //-- Constructors
-        #endregion
-        //---------------------------------------------------------------------
-        #region FhemContentViewModel Members
-
-        protected override void OnSelected()
-        {
-            base.OnSelected();
-        
-            this.RegionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemNativeCommandView", UriKind.Relative ) );
-        }
-
-        //-- FhemContentViewModel Members
         #endregion
         //---------------------------------------------------------------------
         #region Methods

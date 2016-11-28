@@ -18,26 +18,52 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Commands;
+using Prism.Mvvm;
 using Prism.Regions;
-using Sand.Fhem.Home.Modules.FhemModule.Services;
-using Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject;
+using System;
+using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemMainNavigationViewModel : FhemNavigationViewModelBase
+    public class FhemMainNavigationViewModel : BindableBase
     {
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets the main menu entry view models.
+        /// </summary>
+        public ObservableCollection<MenuItemViewModel> MainMenuEntriesViewModels { get; } = new ObservableCollection<MenuItemViewModel>();
+
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the FhemMainNavigationViewModel class.
         /// </summary>
-        public FhemMainNavigationViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
-            : base( a_fhemService, a_regionManager )
+        public FhemMainNavigationViewModel( IRegionManager a_regionManager )
         {
             //-- Initialize properties
-            this.NavigationViewModels.Add( new FhemObjectsRepositoryViewModel( a_fhemService, a_regionManager ) );
-            this.NavigationViewModels.Add( new FhemNativeCommandViewModel( a_fhemService, a_regionManager ) );
+            this.MainMenuEntriesViewModels.Add(
+
+                new MenuItemViewModel(
+
+                    "Show Fhem Objects",
+                    new DelegateCommand( () => a_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemObjectsRepositoryView", UriKind.Relative ) ) )
+                )
+            );
+
+            this.MainMenuEntriesViewModels.Add(
+
+                new MenuItemViewModel(
+
+                    "Send Native Command",
+                    new DelegateCommand( () => a_regionManager.RequestNavigate( "ContentRegion", new Uri( "FhemNativeCommandView", UriKind.Relative ) ) )
+                )
+            );
         }
 
         //-- Constructors

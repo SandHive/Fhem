@@ -5,7 +5,7 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObject.FhemObjectNavigationView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListBox ItemsSource="{Binding NavigationViewModels}" 
+    <ListBox ItemsSource="{Binding MenuEntriesViewModels}" 
              ItemContainerStyle="{StaticResource FhemNavigationListBoxItemStyle}"
              MinWidth="300" 
              SelectedItem="{Binding SelectedItem}">

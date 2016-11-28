@@ -19,10 +19,11 @@
  * IN THE SOFTWARE.
  */
 using Prism.Mvvm;
+using System.Windows.Input;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public abstract class CollectionItemViewModel : BindableBase
+    public class MenuItemViewModel : BindableBase
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -39,7 +40,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Gets the header.
         /// </summary>
-        public object Header { get; protected set; }
+        public object Header { get; private set; }
 
         /// <summary>
         /// Gets or sets a flag that specifies whether this content view model
@@ -54,8 +55,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
                 {
                     if( m_isSelected )
                     {
-                        //-- Give an inherited class the chance to react on the selection
-                        this.OnSelected();
+                        //-- 
+                        if( this.ClickCommand.CanExecute( null ) )
+                        {
+                            this.ClickCommand.Execute( null );
+                        }
                     }
                 }                
             }
@@ -74,17 +78,33 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             }
         }
 
+        /// <summary>
+        /// Gets the command that is executed when the menu item is clicked.
+        /// </summary>
+        public ICommand ClickCommand { get; private set; }
+
         //-- Properties
         #endregion
         //---------------------------------------------------------------------
-        #region Methods
+        #region Constructors
 
         /// <summary>
-        /// Invoked when the 'IsSelected' property is set to 'True'.
+        /// Initializes a new instance of the MenuItemViewModel class.
         /// </summary>
-        protected virtual void OnSelected() { }
+        /// <param name="a_header">
+        /// The header.
+        /// </param>
+        /// <param name="a_clickCommand">
+        /// The command that is executed when the menu item is clicked.
+        /// </param>
+        public MenuItemViewModel( object a_header, ICommand a_clickCommand )
+        {
+            //-- Initialize properties
+            this.Header = a_header;
+            this.ClickCommand = a_clickCommand;
+        }
 
-        //-- Methods
+        //-- Constructors
         #endregion
         //---------------------------------------------------------------------
     }

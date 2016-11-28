@@ -18,12 +18,12 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Prism.Regions;
+using Prism.Mvvm;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public abstract class FhemViewModelBase : CollectionItemViewModel
+    public abstract class FhemViewModelBase : BindableBase
     {
         //---------------------------------------------------------------------
         #region Properties
@@ -33,11 +33,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         public IFhemService FhemService { get; private set; }
         
-        /// <summary>
-        /// Gets the region manager.
-        /// </summary>
-        protected IRegionManager RegionManager { get; private set; }
-
         //-- Properties
         #endregion
         //---------------------------------------------------------------------
@@ -46,11 +41,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Initializes a new instance of the FhemContentViewModel class.
         /// </summary>
-        public FhemViewModelBase( IFhemService a_fhemService, IRegionManager a_regionManager )
+        public FhemViewModelBase( IFhemService a_fhemService )
         {
             //-- Initialize properties
             this.FhemService = a_fhemService;
-            this.RegionManager = a_regionManager;
         }
 
         //-- Constructors
