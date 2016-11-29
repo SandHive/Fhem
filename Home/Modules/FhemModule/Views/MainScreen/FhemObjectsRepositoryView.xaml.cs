@@ -20,20 +20,20 @@
  */
 using System.Windows.Controls;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.Views
+namespace Sand.Fhem.Home.Modules.FhemModule.Views.MainScreen
 {
     /// <summary>
-    /// Interaction logic for FhemNativeCommandView.xaml
+    /// Interaction logic for FhemObjectsRepositoryView.xaml
     /// </summary>
-    public partial class FhemNativeCommandView : UserControl
+    public partial class FhemObjectsRepositoryView : UserControl
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemNativeCommandView class.
+        /// Initializes a new instance of the FhemObjectsRepositoryView class.
         /// </summary>
-        public FhemNativeCommandView()
+        public FhemObjectsRepositoryView()
         {
             InitializeComponent();
         }

@@ -19,82 +19,94 @@
  * IN THE SOFTWARE.
  */
 using Prism.Commands;
-using Prism.Regions;
+using Prism.Mvvm;
+using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Data;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
 {
-    public class FhemNativeCommandViewModel : FhemViewModelBase
+    public class FhemServerSettingsViewModel : BindableBase
     {
         //---------------------------------------------------------------------
         #region Fields
 
-        private string  m_fhemResponse;
-
+        private IFhemService  m_fhemService;
+        
         //-- Fields
         #endregion
         //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
-        /// Gets or sets the native command string. 
+        /// Gets the command for connecting to the Fhem server.
         /// </summary>
-        public string NativeCommandString { get; set; }
+        public DelegateCommand ConnectCommand { get; private set; }
         
         /// <summary>
-        /// Gets the response of the native command string.
+        /// Gets or sets the IP adress of the Fhem server.
         /// </summary>
-        public string FhemResponse
-        {
-            get { return m_fhemResponse; }
-            private set
-            {
-                //-- Check that the value has really changed
-                if( value == m_fhemResponse ) { return; }
+        public string FhemServerIP { get; set; } = "192.168.178.50";
 
-                //-- Apply value
-                m_fhemResponse = value;
-
-                //-- Propagate the change
-                this.OnPropertyChanged();
-            }
-        }
-        
         /// <summary>
-        /// Gets the command for sending a native command string.
+        /// Gets or sets the port of the Fhem server.
         /// </summary>
-        public DelegateCommand SendNativeCommandStringCommand { get; private set; }
+        public string FhemServerPort { get; set; } = "7072";
 
+        /// <summary>
+        /// Gets a flag that specifies whether a Fhem client is connected.
+        /// </summary>
+        public bool IsFhemClientConnected {  get { return m_fhemService.FhemClient.IsConnected; } }
+        
         //-- Properties
         #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemNativeCommandViewModel class.
+        /// Initializes a new instance of the FhemServerSettingsViewModel 
+        /// class.
         /// </summary>
-        /// <param name="a_fhemService"></param>
-        public FhemNativeCommandViewModel( IFhemService a_fhemService )
-            : base( a_fhemService )
+        public FhemServerSettingsViewModel( IFhemService a_fhemService )
         {
+            //-- Initialize fields
+            m_fhemService = a_fhemService;
+
+            //-- Register to events
+            m_fhemService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged ;
+
             //-- Initialize commands
-            this.SendNativeCommandStringCommand = new DelegateCommand( () => this.SendNativeCommandStringCommandAction() );
+            this.ConnectCommand = new DelegateCommand( () => this.ConnectCommandAction()  );
         }
 
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
+        #region Event Handlers
+
+        private void FhemClient_IsConnectedChanged( object sender, EventArgs e )
+        {
+            //-- Just force an update of the 'IsFhemClientConnected' property
+            this.OnPropertyChanged( "IsFhemClientConnected" );
+        }
+
+        //-- Event Handlers
+        #endregion
+        //---------------------------------------------------------------------
         #region Methods
 
         /// <summary>
-        /// The action that should be performed when executing the 'SendNativeCommandStringCommand'.
+        /// The action that should be performed when executing the 'ConnectCommand'.
         /// </summary>
-        private void SendNativeCommandStringCommandAction()
+        private void ConnectCommandAction()
         {
-            this.FhemResponse = this.FhemService.FhemClient.SendNativeCommand( this.NativeCommandString );
+            //-- Connect to the Fhem server
+            m_fhemService.FhemClient.Connect( this.FhemServerIP, int.Parse( this.FhemServerPort ) );
         }
-
+        
         //-- Methods
         #endregion
         //---------------------------------------------------------------------

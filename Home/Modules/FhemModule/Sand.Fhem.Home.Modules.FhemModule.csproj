@@ -79,19 +79,13 @@
     <Compile Include="ViewModels\FhemObjectDetails\FhemObjectNavigationViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectDetails\FhemObjectPossibleSetsViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectDetails\FhemObjectReadingsViewModel.cs" />
-    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectsRepositoryViewModel.cs" />
     <Compile Include="ViewModels\FhemObjectDetails\FhemObjectTitleViewModel.cs" />
+    <Compile Include="ViewModels\MainScreen\FhemMainNavigationViewModel.cs" />
+    <Compile Include="ViewModels\MainScreen\FhemNativeCommandViewModel.cs" />
+    <Compile Include="ViewModels\MainScreen\FhemObjectsRepositoryViewModel.cs" />
+    <Compile Include="ViewModels\MainScreen\FhemServerSettingsViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
-    <Compile Include="ViewModels\FhemMainNavigationViewModel.cs" />
-    <Compile Include="ViewModels\FhemNativeCommandViewModel.cs" />
-    <Compile Include="ViewModels\FhemServerSettingsViewModel.cs" />
     <Compile Include="ViewModels\FhemViewModelBase.cs" />
-    <Compile Include="Views\FhemMainNavigationView.xaml.cs">
-      <DependentUpon>FhemMainNavigationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FhemNativeCommandView.xaml.cs">
-      <DependentUpon>FhemNativeCommandView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FhemObjectDetails\FhemObjectAttributesView.xaml.cs">
       <DependentUpon>FhemObjectAttributesView.xaml</DependentUpon>
     </Compile>
@@ -107,13 +101,19 @@
     <Compile Include="Views\FhemObjectDetails\FhemObjectReadingsView.xaml.cs">
       <DependentUpon>FhemObjectReadingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObjectDetails\FhemObjectsRepositoryView.xaml.cs">
-      <DependentUpon>FhemObjectsRepositoryView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\FhemObjectDetails\FhemObjectTitleView.xaml.cs">
       <DependentUpon>FhemObjectTitleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemServerSettingsView.xaml.cs">
+    <Compile Include="Views\MainScreen\FhemMainNavigationView.xaml.cs">
+      <DependentUpon>FhemMainNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainScreen\FhemNativeCommandView.xaml.cs">
+      <DependentUpon>FhemNativeCommandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainScreen\FhemObjectsRepositoryView.xaml.cs">
+      <DependentUpon>FhemObjectsRepositoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainScreen\FhemServerSettingsView.xaml.cs">
       <DependentUpon>FhemServerSettingsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -133,14 +133,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\FhemModuleResourceLibrary.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FhemMainNavigationView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\FhemNativeCommandView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -164,15 +156,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObjectDetails\FhemObjectsRepositoryView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\FhemObjectDetails\FhemObjectTitleView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemServerSettingsView.xaml">
+    <Page Include="Views\MainScreen\FhemMainNavigationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainScreen\FhemNativeCommandView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainScreen\FhemObjectsRepositoryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainScreen\FhemServerSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

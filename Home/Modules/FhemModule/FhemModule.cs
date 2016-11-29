@@ -22,8 +22,8 @@ using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
-using Sand.Fhem.Home.Modules.FhemModule.Views;
 using Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectDetails;
+using Sand.Fhem.Home.Modules.FhemModule.Views.MainScreen;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule
 {

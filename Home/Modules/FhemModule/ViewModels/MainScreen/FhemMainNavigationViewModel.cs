@@ -24,7 +24,7 @@ using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
 {
     public class FhemMainNavigationViewModel : BindableBase
     {
