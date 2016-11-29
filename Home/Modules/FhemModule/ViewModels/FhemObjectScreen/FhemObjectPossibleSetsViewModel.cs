@@ -18,25 +18,22 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using System.Windows.Controls;
+using Sand.Fhem.Home.Modules.FhemModule.Services;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectDetails
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectScreen
 {
-    /// <summary>
-    /// Interaction logic for FhemObjectPossibleSetsView.xaml
-    /// </summary>
-    public partial class FhemObjectPossibleSetsView : UserControl
+    public class FhemObjectPossibleSetsViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectPossibleSetsView class.
+        /// Initializes a new instance of the FhemObjectPossibleSetsViewModel 
+        /// class.
         /// </summary>
-        public FhemObjectPossibleSetsView()
-        {
-            InitializeComponent();
-        }
+        /// <param name="a_fhemService"></param>
+        public FhemObjectPossibleSetsViewModel( IFhemService a_fhemService )
+            : base( a_fhemService ) { }
 
         //-- Constructors
         #endregion

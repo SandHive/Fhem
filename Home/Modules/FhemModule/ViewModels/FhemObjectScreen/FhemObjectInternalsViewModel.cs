@@ -20,19 +20,19 @@
  */
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectDetails
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectScreen
 {
-    public class FhemObjectReadingsViewModel : FhemViewModelBase
+    public class FhemObjectInternalsViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectReadingsViewModel 
+        /// Initializes a new instance of the FhemObjectInternalsViewModel 
         /// class.
         /// </summary>
         /// <param name="a_fhemService"></param>
-        public FhemObjectReadingsViewModel( IFhemService a_fhemService )
+        public FhemObjectInternalsViewModel( IFhemService a_fhemService )
             : base( a_fhemService ) { }
 
         //-- Constructors

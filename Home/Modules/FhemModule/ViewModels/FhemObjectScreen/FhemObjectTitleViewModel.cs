@@ -18,12 +18,32 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Commands;
+using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectDetails
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectScreen
 {
-    public class FhemObjectAttributesViewModel : FhemViewModelBase
+    public class FhemObjectTitleViewModel : FhemViewModelBase
     {
+        //---------------------------------------------------------------------
+        #region Fields
+
+        private IRegionManager  m_regionManager;
+
+        //-- Fields
+        #endregion
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets the command for navigating back to the main screen.
+        /// </summary>
+        public DelegateCommand NavigateBackCommand { get; private set; }
+        
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
@@ -31,10 +51,29 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectDetails
         /// Initializes a new instance of the FhemObjectAttributesViewModel class.
         /// </summary>
         /// <param name="a_fhemService"></param>
-        public FhemObjectAttributesViewModel( IFhemService a_fhemService )
-            : base( a_fhemService ) { }
+        public FhemObjectTitleViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService )
+        {
+            //-- Initialize fields
+            m_regionManager = a_regionManager;
+
+            //-- Initialize commands
+            this.NavigateBackCommand = new DelegateCommand( this.NavigateBackCommandAction );
+        }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        private void NavigateBackCommandAction()
+        {
+            m_regionManager.RequestNavigate( "TitleRegion", new System.Uri( "FhemServerSettingsView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "NavigationRegion", new System.Uri( "FhemMainNavigationView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "ContentRegion", new System.Uri( "FhemObjectsRepositoryView", UriKind.Relative ) );
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }
