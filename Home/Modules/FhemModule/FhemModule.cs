@@ -23,7 +23,7 @@ using Prism.Modularity;
 using Prism.Regions;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using Sand.Fhem.Home.Modules.FhemModule.Views;
-using Sand.Fhem.Home.Modules.FhemModule.Views.FhemObject;
+using Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectDetails;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule
 {

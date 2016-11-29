@@ -26,7 +26,7 @@ using System;
 using System.ComponentModel;
 using System.Windows.Data;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectDetails
 {
     public class FhemObjectsRepositoryViewModel : FhemViewModelBase
     {

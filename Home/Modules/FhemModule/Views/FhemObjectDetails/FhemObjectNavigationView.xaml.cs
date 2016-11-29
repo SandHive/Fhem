@@ -18,22 +18,25 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System.Windows.Controls;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
+namespace Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectDetails
 {
-    public class FhemObjectInternalsViewModel : FhemViewModelBase
+    /// <summary>
+    /// Interaction logic for FhemObjectNavigationView.xaml
+    /// </summary>
+    public partial class FhemObjectNavigationView : UserControl
     {
         //---------------------------------------------------------------------
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the FhemObjectInternalsViewModel 
-        /// class.
+        /// Initializes a new instance of the FhemObjectNavigationView class.
         /// </summary>
-        /// <param name="a_fhemService"></param>
-        public FhemObjectInternalsViewModel( IFhemService a_fhemService )
-            : base( a_fhemService ) { }
+        public FhemObjectNavigationView()
+        {
+            InitializeComponent();
+        }
 
         //-- Constructors
         #endregion

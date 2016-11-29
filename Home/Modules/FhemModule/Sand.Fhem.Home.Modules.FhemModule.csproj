@@ -74,16 +74,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FhemService.cs" />
     <Compile Include="Services\IFhemService.cs" />
+    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectAttributesViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectInternalsViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectNavigationViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectPossibleSetsViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectReadingsViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectsRepositoryViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectDetails\FhemObjectTitleViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\FhemMainNavigationViewModel.cs" />
     <Compile Include="ViewModels\FhemNativeCommandViewModel.cs" />
-    <Compile Include="ViewModels\FhemObject\FhemObjectAttributesViewModel.cs" />
-    <Compile Include="ViewModels\FhemObject\FhemObjectInternalsViewModel.cs" />
-    <Compile Include="ViewModels\FhemObject\FhemObjectNavigationViewModel.cs" />
-    <Compile Include="ViewModels\FhemObject\FhemObjectPossibleSetsViewModel.cs" />
-    <Compile Include="ViewModels\FhemObject\FhemObjectReadingsViewModel.cs" />
-    <Compile Include="ViewModels\FhemObject\FhemObjectsRepositoryViewModel.cs" />
-    <Compile Include="ViewModels\FhemObject\FhemObjectTitleViewModel.cs" />
     <Compile Include="ViewModels\FhemServerSettingsViewModel.cs" />
     <Compile Include="ViewModels\FhemViewModelBase.cs" />
     <Compile Include="Views\FhemMainNavigationView.xaml.cs">
@@ -92,25 +92,25 @@
     <Compile Include="Views\FhemNativeCommandView.xaml.cs">
       <DependentUpon>FhemNativeCommandView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObject\FhemObjectAttributesView.xaml.cs">
+    <Compile Include="Views\FhemObjectDetails\FhemObjectAttributesView.xaml.cs">
       <DependentUpon>FhemObjectAttributesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObject\FhemObjectInternalsView.xaml.cs">
+    <Compile Include="Views\FhemObjectDetails\FhemObjectInternalsView.xaml.cs">
       <DependentUpon>FhemObjectInternalsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObject\FhemObjectNavigationView.xaml.cs">
+    <Compile Include="Views\FhemObjectDetails\FhemObjectNavigationView.xaml.cs">
       <DependentUpon>FhemObjectNavigationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObject\FhemObjectPossibleSetsView.xaml.cs">
+    <Compile Include="Views\FhemObjectDetails\FhemObjectPossibleSetsView.xaml.cs">
       <DependentUpon>FhemObjectPossibleSetsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObject\FhemObjectReadingsView.xaml.cs">
+    <Compile Include="Views\FhemObjectDetails\FhemObjectReadingsView.xaml.cs">
       <DependentUpon>FhemObjectReadingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObject\FhemObjectsRepositoryView.xaml.cs">
+    <Compile Include="Views\FhemObjectDetails\FhemObjectsRepositoryView.xaml.cs">
       <DependentUpon>FhemObjectsRepositoryView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\FhemObject\FhemObjectTitleView.xaml.cs">
+    <Compile Include="Views\FhemObjectDetails\FhemObjectTitleView.xaml.cs">
       <DependentUpon>FhemObjectTitleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FhemServerSettingsView.xaml.cs">
@@ -144,31 +144,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObject\FhemObjectAttributesView.xaml">
+    <Page Include="Views\FhemObjectDetails\FhemObjectAttributesView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObject\FhemObjectInternalsView.xaml">
+    <Page Include="Views\FhemObjectDetails\FhemObjectInternalsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObject\FhemObjectNavigationView.xaml">
+    <Page Include="Views\FhemObjectDetails\FhemObjectNavigationView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObject\FhemObjectPossibleSetsView.xaml">
+    <Page Include="Views\FhemObjectDetails\FhemObjectPossibleSetsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObject\FhemObjectReadingsView.xaml">
+    <Page Include="Views\FhemObjectDetails\FhemObjectReadingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObject\FhemObjectsRepositoryView.xaml">
+    <Page Include="Views\FhemObjectDetails\FhemObjectsRepositoryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\FhemObject\FhemObjectTitleView.xaml">
+    <Page Include="Views\FhemObjectDetails\FhemObjectTitleView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

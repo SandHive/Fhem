@@ -24,7 +24,7 @@ using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
 using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObject
+namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectDetails
 {
     public class FhemObjectNavigationViewModel : FhemViewModelBase, INavigationAware
     {
