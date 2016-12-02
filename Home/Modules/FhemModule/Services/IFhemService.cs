@@ -19,6 +19,7 @@
  * IN THE SOFTWARE.
  */
 using Sand.Fhem.Basics;
+using Sand.Fhem.Home.Modules.FhemModule.ViewModels;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.Services
 {
@@ -35,9 +36,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         FhemObjectsRepository FhemObjectRepository { get; }
         
         /// <summary>
-        /// Gets or sets the selected Fhem object.
+        /// Gets or sets the selected Fhem object view model.
         /// </summary>
-        FhemObject SelectedFhemObject { get; set; }
+        FhemObjectViewModel SelectedFhemObject { get; set; }
     }
 }
 //-----------------------------------------------------------------------------

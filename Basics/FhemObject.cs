@@ -30,50 +30,7 @@ namespace Sand.Fhem.Basics
     public class FhemObject
     {
         //---------------------------------------------------------------------
-        #region Constants
-
-        private const string STATE_TAG = "STATE";
-
-        //-- Constants
-        #endregion
-        //---------------------------------------------------------------------
         #region Properties
-
-        /// <summary>
-        /// Gets a flag that specifies whether this Fhem object contains 
-        /// attributes.
-        /// </summary>
-        public bool ContainsAttributes
-        {
-            get { return this.Attributes.Count > 0; }
-        }
-
-        /// <summary>
-        /// Gets a flag that specifies whether this Fhem object contains 
-        /// internals.
-        /// </summary>
-        public bool ContainsInternals
-        {
-            get { return this.Internals.Count > 0; }
-        }
-
-        /// <summary>
-        /// Gets a flag that specifies whether this Fhem object contains 
-        /// possible sets.
-        /// </summary>
-        public bool ContainsPossibleSets
-        {
-            get { return this.PossibleSets.Length > 0; }
-        }
-
-        /// <summary>
-        /// Gets a flag that specifies whether this Fhem object contains 
-        /// readings.
-        /// </summary>
-        public bool ContainsReadings
-        {
-            get { return this.Readings.Count > 0; }
-        }
 
         /// <summary>
         /// Gets the attributes of the Fhem object.
@@ -104,11 +61,6 @@ namespace Sand.Fhem.Basics
         /// Gets the readings of the Fhem object.
         /// </summary>
         public FhemReadingItemsCollection Readings { get; private set; }
-
-        /// <summary>
-        /// Gets the state of the Fhem object.
-        /// </summary>
-        public string State { get; private set; }
 
         //-- Properties
         #endregion
@@ -238,13 +190,7 @@ namespace Sand.Fhem.Basics
                     default: break;
                 }
             }
-
-            //-- Store the 'state' in an own property
-            if( me.Internals.ContainsKey( STATE_TAG ) )
-            {
-                me.State = me.Internals[STATE_TAG];
-            }
-
+            
             return me;
         }
 

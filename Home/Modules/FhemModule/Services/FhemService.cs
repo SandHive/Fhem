@@ -20,6 +20,7 @@
  */
 using Prism.Mvvm;
 using Sand.Fhem.Basics;
+using Sand.Fhem.Home.Modules.FhemModule.ViewModels;
 using System;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.Services
@@ -29,7 +30,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         //---------------------------------------------------------------------
         #region Fields
 
-        private FhemObject  m_selectedFhemObject;
+        private FhemObjectViewModel  m_selectedFhemObject;
 
         //-- Fields
         #endregion
@@ -68,7 +69,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
 
         public FhemObjectsRepository FhemObjectRepository { get; private set; }
 
-        public FhemObject SelectedFhemObject
+        public FhemObjectViewModel SelectedFhemObject
         {
             get { return m_selectedFhemObject; }
             set { this.SetProperty( ref m_selectedFhemObject, value ); }

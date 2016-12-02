@@ -21,12 +21,13 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class FhemObjectsRepository : IEnumerable, INotifyCollectionChanged
+    public class FhemObjectsRepository : IEnumerable<FhemObject>, INotifyCollectionChanged
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -68,6 +69,11 @@ namespace Sand.Fhem.Basics
         #region IEnumerable
 
         public IEnumerator GetEnumerator()
+        {
+            return m_fhemObjectCollection.GetEnumerator();
+        }
+
+        IEnumerator<FhemObject> IEnumerable<FhemObject>.GetEnumerator()
         {
             return m_fhemObjectCollection.GetEnumerator();
         }

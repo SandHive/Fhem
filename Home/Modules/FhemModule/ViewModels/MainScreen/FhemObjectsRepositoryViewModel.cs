@@ -23,6 +23,8 @@ using Prism.Regions;
 using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Data;
 //-----------------------------------------------------------------------------
@@ -32,6 +34,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
     {
         //---------------------------------------------------------------------
         #region Fields
+
+        private ObservableCollection<FhemObjectViewModel>  m_fhemObjectsCollection = new ObservableCollection<FhemObjectViewModel>();
 
         private IRegionManager  m_regionManager;
 
@@ -46,9 +50,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
         public DelegateCommand EditFhemObjectNameCommand { get; private set; }
 
         /// <summary>
-        /// Gets the Fhem objects repository.
+        /// Gets the Fhem objects collection view.
         /// </summary>
-        public ICollectionView FhemObjectsRepository { get; private set; }
+        public ICollectionView FhemObjectsCollectionView { get; private set; }
 
         /// <summary>
         /// Gets the command for opening the details of a Fhem object.
@@ -70,6 +74,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
             //-- Initialize fields
             m_regionManager = a_regionManager;
 
+            //-- Initialize properties
+            this.FhemObjectsCollectionView = CollectionViewSource.GetDefaultView( m_fhemObjectsCollection );
+
             //-- Initialize commands
             this.EditFhemObjectNameCommand = new DelegateCommand( this.EditFhemObjectNameCommandAction );
             this.OpenFhemObjectDetailsCommand = new DelegateCommand( this.OpenFhemObjectDetailsCommandAction );
@@ -87,14 +94,45 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
         {
             if( this.FhemService.FhemClient.IsConnected )
             {
-                //-- Use the Fhem object repository as source for the collection view 
-                this.FhemObjectsRepository = CollectionViewSource.GetDefaultView( this.FhemService.FhemObjectRepository );
+                //-- First of all register to the 'CollectionChanged' event in
+                //-- order to get all updates
+                this.FhemService.FhemObjectRepository.CollectionChanged += FhemObjectRepository_CollectionChanged;
 
-                //-- Sort the Fhem objects by their names
-                this.FhemObjectsRepository.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );
+                lock( this )
+                {
+                    foreach( FhemObject fhemObject in this.FhemService.FhemObjectRepository )
+                    {
+                        m_fhemObjectsCollection.Add( FhemObjectViewModel.FromFhemObject( fhemObject ) );
+                    }
+
+                    //-- Sort the Fhem objects by their names
+                    this.FhemObjectsCollectionView.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );
+                }
 
                 //-- Force a property update
-                this.OnPropertyChanged( "FhemObjectsRepository" );
+                this.OnPropertyChanged( "FhemObjectsCollectionView" );
+            }
+        }
+
+        private void FhemObjectRepository_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+        {
+            lock( this )
+            {
+                if( e.OldItems != null )
+                {
+                    foreach( FhemObjectViewModel fhemObjectViewModel in e.OldItems )
+                    {
+                        m_fhemObjectsCollection.Remove( fhemObjectViewModel );
+                    }
+                }
+
+                if( e.NewItems != null )
+                {
+                    foreach( FhemObjectViewModel fhemObjectViewModel in e.NewItems )
+                    {
+                        m_fhemObjectsCollection.Add( fhemObjectViewModel );
+                    }
+                }
             }
         }
 

@@ -82,6 +82,7 @@
     <Compile Include="ViewModels\FhemObjectScreen\FhemObjectTitleViewModel.cs" />
     <Compile Include="ViewModels\MainScreen\FhemMainNavigationViewModel.cs" />
     <Compile Include="ViewModels\MainScreen\FhemNativeCommandViewModel.cs" />
+    <Compile Include="ViewModels\FhemObjectViewModel.cs" />
     <Compile Include="ViewModels\MainScreen\FhemObjectsRepositoryViewModel.cs" />
     <Compile Include="ViewModels\MainScreen\FhemServerSettingsViewModel.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />

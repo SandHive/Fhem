@@ -8,7 +8,7 @@
 
     <GroupBox Grid.Row="0" Header="Fhem Objects" Margin="3" Padding="7">
 
-        <ListView ItemsSource="{Binding FhemObjectsRepository}" SelectedItem="{Binding FhemService.SelectedFhemObject}">
+        <ListView ItemsSource="{Binding FhemObjectsCollectionView}" SelectedItem="{Binding FhemService.SelectedFhemObject}">
 
             <ListView.ItemContainerStyle>
 
