@@ -88,7 +88,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
                 {
                     foreach( FhemObject fhemObject in this.FhemService.FhemObjectRepository )
                     {
-                        m_fhemObjectsCollection.Add( FhemObjectViewModel.FromFhemObject( fhemObject, m_regionManager ) );
+                        m_fhemObjectsCollection.Add( FhemObjectViewModel.Create( fhemObject, m_regionManager ) );
                     }
 
                     //-- Sort the Fhem objects by their names

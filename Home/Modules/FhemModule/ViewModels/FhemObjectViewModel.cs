@@ -172,11 +172,12 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// Creates a FhemObject view model.
         /// </summary>
         /// <param name="a_fhemObject"></param>
+        /// <param name="a_regionManager"></param>
         /// <returns></returns>
-        public static FhemObjectViewModel FromFhemObject( FhemObject a_fhemObject, IRegionManager a_regionManager )
+        public static FhemObjectViewModel Create( FhemObject a_fhemObject, IRegionManager a_regionManager )
         {
             var me = new FhemObjectViewModel( a_fhemObject, a_regionManager );
             

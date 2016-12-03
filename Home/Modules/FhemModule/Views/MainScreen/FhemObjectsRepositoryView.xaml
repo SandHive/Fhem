@@ -42,7 +42,7 @@
 
                                             <MenuItem Header="Open Details" Command="{Binding FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand}" />
 
-                                            <MenuItem Header="Rename" Command="{Binding Binding FhemService.SelectedFhemObject.EditFhemObjectNameCommand}" />
+                                            <MenuItem Header="Rename" Command="{Binding FhemService.SelectedFhemObject.EditFhemObjectNameCommand}" />
 
                                         </ContextMenu>
 
