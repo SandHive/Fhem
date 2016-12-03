@@ -45,19 +45,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
         #region Properties
 
         /// <summary>
-        /// Gets the command for editing the Fhem object name.
-        /// </summary>
-        public DelegateCommand EditFhemObjectNameCommand { get; private set; }
-
-        /// <summary>
         /// Gets the Fhem objects collection view.
         /// </summary>
         public ICollectionView FhemObjectsCollectionView { get; private set; }
-
-        /// <summary>
-        /// Gets the command for opening the details of a Fhem object.
-        /// </summary>
-        public DelegateCommand OpenFhemObjectDetailsCommand { get; private set; }
         
         //-- Properties
         #endregion
@@ -76,11 +66,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
 
             //-- Initialize properties
             this.FhemObjectsCollectionView = CollectionViewSource.GetDefaultView( m_fhemObjectsCollection );
-
-            //-- Initialize commands
-            this.EditFhemObjectNameCommand = new DelegateCommand( this.EditFhemObjectNameCommandAction );
-            this.OpenFhemObjectDetailsCommand = new DelegateCommand( this.OpenFhemObjectDetailsCommandAction );
-
+            
             //-- Register to events
             this.FhemService.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
         }
@@ -102,7 +88,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
                 {
                     foreach( FhemObject fhemObject in this.FhemService.FhemObjectRepository )
                     {
-                        m_fhemObjectsCollection.Add( FhemObjectViewModel.FromFhemObject( fhemObject ) );
+                        m_fhemObjectsCollection.Add( FhemObjectViewModel.FromFhemObject( fhemObject, m_regionManager ) );
                     }
 
                     //-- Sort the Fhem objects by their names
@@ -137,30 +123,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
         }
 
         //-- Event Handlers
-        #endregion
-        //---------------------------------------------------------------------
-        #region Methods
-
-        /// <summary>
-        /// Performs the action that should be invoked by the 
-        /// 'EditFhemObjectNameCommand'.
-        /// </summary>
-        private void EditFhemObjectNameCommandAction()
-        {
-            
-        }
-
-        /// <summary>
-        /// Performs the action that should be invoked by the 
-        /// 'OpenFhemObjectDetailsCommand'.
-        /// </summary>
-        private void OpenFhemObjectDetailsCommandAction()
-        {
-            m_regionManager.RequestNavigate( "TitleRegion", new Uri( "FhemObjectTitleView", UriKind.Relative ) );
-            m_regionManager.RequestNavigate( "NavigationRegion", new Uri( "FhemObjectNavigationView", UriKind.Relative ) );
-        }
-
-        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

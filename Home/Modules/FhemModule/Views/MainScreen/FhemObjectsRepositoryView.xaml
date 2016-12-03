@@ -40,9 +40,9 @@
                                              ContextMenu via its 'PlacementTarget' property -->
                                         <ContextMenu DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
 
-                                            <MenuItem Header="Open Details" Command="{Binding OpenFhemObjectDetailsCommand}" />
+                                            <MenuItem Header="Open Details" Command="{Binding FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand}" />
 
-                                            <MenuItem Header="Rename" Command="{Binding EditFhemObjectNameCommand}" />
+                                            <MenuItem Header="Rename" Command="{Binding Binding FhemService.SelectedFhemObject.EditFhemObjectNameCommand}" />
 
                                         </ContextMenu>
 
@@ -50,7 +50,7 @@
 
                                     <TextBlock.InputBindings>
 
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OpenFhemObjectDetailsCommand, ElementName=me}" />
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand, ElementName=me}" />
 
                                     </TextBlock.InputBindings>
 
@@ -71,7 +71,7 @@
 
                                     <TextBlock.InputBindings>
 
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.OpenFhemObjectDetailsCommand, ElementName=me}" />
+                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand, ElementName=me}" />
 
                                     </TextBlock.InputBindings>
 

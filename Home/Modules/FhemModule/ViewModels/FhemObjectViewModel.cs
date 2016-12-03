@@ -18,8 +18,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Sand.Fhem.Basics;
+using System;
 using System.Collections.ObjectModel;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
@@ -32,6 +35,13 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         private const string STATE_TAG = "STATE";
 
         //-- Constants
+        #endregion
+        //---------------------------------------------------------------------
+        #region Fields
+
+        private IRegionManager  m_regionManager;
+
+        //-- Fields
         #endregion
         //---------------------------------------------------------------------
         #region Properties
@@ -78,6 +88,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         }
 
         /// <summary>
+        /// Gets the command for editing the Fhem object name.
+        /// </summary>
+        public DelegateCommand EditFhemObjectNameCommand { get; private set; }
+
+        /// <summary>
         /// Gets the underlying <see cref="FhemObject"/>.
         /// </summary>
         internal FhemObject FhemObject { get; private set; }
@@ -91,6 +106,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Gets the name of the Fhem object.
         /// </summary>
         public string Name { get { return this.FhemObject.Name; } }
+
+        /// <summary>
+        /// Gets the command for opening the details of a Fhem object.
+        /// </summary>
+        public DelegateCommand OpenFhemObjectDetailsCommand { get; private set; }
 
         /// <summary>
         /// Gets the possible attributes of the Fhem object.
@@ -123,10 +143,18 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <param name="a_fhemObject">
         /// The <see cref="FhemObject"/> that is represented by this view model.
         /// </param>
-        private FhemObjectViewModel( FhemObject a_fhemObject )
+        /// <param name="a_regionManager"></param>
+        private FhemObjectViewModel( FhemObject a_fhemObject, IRegionManager a_regionManager )
         {
             //-- Initialize fields
+            m_regionManager = a_regionManager;
+
+            //-- Initialize properties
             this.FhemObject = a_fhemObject;
+
+            //-- Initialize commands
+            this.EditFhemObjectNameCommand = new DelegateCommand( this.EditFhemObjectNameCommandAction );
+            this.OpenFhemObjectDetailsCommand = new DelegateCommand( this.OpenFhemObjectDetailsCommandAction );
         }
 
         //-- Constructors
@@ -134,9 +162,23 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         //---------------------------------------------------------------------
         #region Methods
 
-        public static FhemObjectViewModel FromFhemObject( FhemObject a_fhemObject )
+        /// <summary>
+        /// Performs the action that should be invoked by the 
+        /// 'EditFhemObjectNameCommand'.
+        /// </summary>
+        private void EditFhemObjectNameCommandAction()
         {
-            var me = new FhemObjectViewModel( a_fhemObject );
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a_fhemObject"></param>
+        /// <returns></returns>
+        public static FhemObjectViewModel FromFhemObject( FhemObject a_fhemObject, IRegionManager a_regionManager )
+        {
+            var me = new FhemObjectViewModel( a_fhemObject, a_regionManager );
             
             //-- Store the 'state' in an own property
             if( a_fhemObject.Internals.ContainsKey( STATE_TAG ) )
@@ -145,6 +187,16 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             }
 
             return me;
+        }
+        
+        /// <summary>
+        /// Performs the action that should be invoked by the 
+        /// 'OpenFhemObjectDetailsCommand'.
+        /// </summary>
+        private void OpenFhemObjectDetailsCommandAction()
+        {
+            m_regionManager.RequestNavigate( "TitleRegion", new Uri( "FhemObjectTitleView", UriKind.Relative ) );
+            m_regionManager.RequestNavigate( "NavigationRegion", new Uri( "FhemObjectNavigationView", UriKind.Relative ) );
         }
 
         //-- Methods
