@@ -39,6 +39,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         //---------------------------------------------------------------------
         #region Fields
 
+        private bool  m_isNameEditable;
+
         private IRegionManager  m_regionManager;
 
         //-- Fields
@@ -103,9 +105,28 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public ReadOnlyDictionary<string, string> Internals { get { return this.FhemObject.Internals; } }
 
         /// <summary>
+        /// Gets a flag that indicates whether the name is currently editable.
+        /// </summary>
+        public bool IsNameEditable
+        {
+            get { return m_isNameEditable; }
+            private set
+            {
+                this.SetProperty( ref m_isNameEditable, value );
+            }
+        }
+
+        /// <summary>
         /// Gets the name of the Fhem object.
         /// </summary>
-        public string Name { get { return this.FhemObject.Name; } }
+        public string Name
+        {
+            get { return this.FhemObject.Name; }
+            set
+            {
+
+            }
+        }
 
         /// <summary>
         /// Gets the command for opening the details of a Fhem object.
@@ -168,7 +189,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         private void EditFhemObjectNameCommandAction()
         {
-
+            this.IsNameEditable = true;
         }
 
         /// <summary>

@@ -30,37 +30,84 @@
 
                             <DataTemplate>
 
-                                <TextBlock Text="{Binding Name}" Tag="{Binding DataContext, ElementName=me}">
+                                <DataTemplate.Resources>
 
-                                    <TextBlock.ContextMenu>
+                                    <DataTemplate x:Key="EditableFhemObjectNameTemplate">
 
-                                        <!-- The ContextMenu is not part of the visual tree, therefore bindings to a
-                                             relative source will not work. The trick is to set the ViewModel as 'Tag' 
-                                             of the TextBlock and to apply the ViewModel as 'DataContext' of the 
-                                             ContextMenu via its 'PlacementTarget' property -->
-                                        <ContextMenu DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                        <TextBox Name="FhemObjectNameTextBox" Text="{Binding Name}">
 
-                                            <MenuItem Header="Open Details" Command="{Binding FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand}" />
+                                            <TextBox.Style>
 
-                                            <MenuItem Header="Rename" Command="{Binding FhemService.SelectedFhemObject.EditFhemObjectNameCommand}" />
+                                                <Style>
 
-                                        </ContextMenu>
+                                                    <Style.Triggers>
 
-                                    </TextBlock.ContextMenu>
+                                                        <DataTrigger Binding="{Binding IsNameEditable}" Value="True">
 
-                                    <TextBlock.InputBindings>
+                                                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=FhemObjectNameTextBox}" />
 
-                                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand, ElementName=me}" />
+                                                        </DataTrigger>
 
-                                    </TextBlock.InputBindings>
+                                                    </Style.Triggers>
+                                                    
+                                                </Style>
+                                                
+                                            </TextBox.Style>
+                                            
+                                        </TextBox>
 
-                                </TextBlock>
+                                    </DataTemplate>
 
+                                    <DataTemplate x:Key="ReadOnlyFhemObjectNameTemplate">
+
+                                        <TextBlock Text="{Binding Name}" Tag="{Binding DataContext.FhemService.SelectedFhemObject, ElementName=me}">
+
+                                            <TextBlock.ContextMenu>
+
+                                                <!-- The ContextMenu is not part of the visual tree, therefore bindings to a
+                                                     relative source will not work. The trick is to set the ViewModel as 'Tag' 
+                                                     of the TextBlock and to apply the ViewModel as 'DataContext' of the 
+                                                     ContextMenu via its 'PlacementTarget' property -->
+                                                <ContextMenu DataContext="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+
+                                                    <MenuItem Header="Open Details" Command="{Binding OpenFhemObjectDetailsCommand}" />
+
+                                                    <MenuItem Header="Rename" Command="{Binding EditFhemObjectNameCommand}" />
+
+                                                </ContextMenu>
+
+                                            </TextBlock.ContextMenu>
+
+                                            <TextBlock.InputBindings>
+
+                                                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DataContext.FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand, ElementName=me}" />
+
+                                            </TextBlock.InputBindings>
+
+                                        </TextBlock>
+
+                                    </DataTemplate>
+
+                                </DataTemplate.Resources>
+
+                                <ContentControl Name="FhemObjectNameControl" Content="{Binding}" ContentTemplate="{StaticResource ReadOnlyFhemObjectNameTemplate}" />
+
+                                <DataTemplate.Triggers>
+
+                                    <DataTrigger Binding="{Binding IsNameEditable}" Value="True">
+
+                                        <Setter Property="ContentTemplate" TargetName="FhemObjectNameControl" Value="{StaticResource EditableFhemObjectNameTemplate}" />
+
+                                    </DataTrigger>
+                                    
+                                </DataTemplate.Triggers>
+                                
                             </DataTemplate>
 
                         </GridViewColumn.CellTemplate>
 
                     </GridViewColumn>
+                    
                     <GridViewColumn Header="State">
 
                         <GridViewColumn.CellTemplate>
