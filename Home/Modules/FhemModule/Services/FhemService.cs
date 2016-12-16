@@ -72,7 +72,19 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         public FhemObjectViewModel SelectedFhemObject
         {
             get { return m_selectedFhemObject; }
-            set { this.SetProperty( ref m_selectedFhemObject, value ); }
+            set
+            {
+                if( m_selectedFhemObject != null )
+                {
+                    if( m_selectedFhemObject.IsNameEditable )
+                    {
+                        //-- Remove the 'IsNameEditable' flag of the previous selected Fhem object
+                        m_selectedFhemObject.IsNameEditable = false;
+                    }
+                }
+
+                this.SetProperty( ref m_selectedFhemObject, value );
+            }
         }
 
         //-- IFhemService Members

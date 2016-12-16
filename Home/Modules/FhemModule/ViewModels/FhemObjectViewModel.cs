@@ -49,6 +49,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Properties
 
         /// <summary>
+        /// Gets the command for aborting the Fhem object renaming.
+        /// </summary>
+        public DelegateCommand AbortFhemObjectRenamingCommand { get; private set; }
+
+        /// <summary>
         /// Gets the attributes of the Fhem object.
         /// </summary>
         public ReadOnlyDictionary<string, string> Attributes { get { return this.FhemObject.Attributes; } }
@@ -110,7 +115,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public bool IsNameEditable
         {
             get { return m_isNameEditable; }
-            private set
+            internal set
             {
                 this.SetProperty( ref m_isNameEditable, value );
             }
@@ -149,6 +154,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public FhemReadingItemsCollection Readings { get { return this.FhemObject.Readings; } }
 
         /// <summary>
+        /// Gets the command for renaming the Fhem object.
+        /// </summary>
+        public DelegateCommand RenameFhemObjectNameCommand { get; private set; }
+
+        /// <summary>
         /// Gets the state of the Fhem object.
         /// </summary>
         public string State { get; private set; }
@@ -174,23 +184,16 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             this.FhemObject = a_fhemObject;
 
             //-- Initialize commands
-            this.EditFhemObjectNameCommand = new DelegateCommand( this.EditFhemObjectNameCommandAction );
+            this.AbortFhemObjectRenamingCommand = new DelegateCommand( () => this.IsNameEditable = false );
+            this.EditFhemObjectNameCommand = new DelegateCommand( () => this.IsNameEditable = true );
             this.OpenFhemObjectDetailsCommand = new DelegateCommand( this.OpenFhemObjectDetailsCommandAction );
+            this.RenameFhemObjectNameCommand = new DelegateCommand( this.RenameFhemObjectNameCommandAction );
         }
 
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
         #region Methods
-
-        /// <summary>
-        /// Performs the action that should be invoked by the 
-        /// 'EditFhemObjectNameCommand'.
-        /// </summary>
-        private void EditFhemObjectNameCommandAction()
-        {
-            this.IsNameEditable = true;
-        }
 
         /// <summary>
         /// Creates a FhemObject view model.
@@ -219,6 +222,15 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         {
             m_regionManager.RequestNavigate( "TitleRegion", new Uri( "FhemObjectTitleView", UriKind.Relative ) );
             m_regionManager.RequestNavigate( "NavigationRegion", new Uri( "FhemObjectNavigationView", UriKind.Relative ) );
+        }
+
+        /// <summary>
+        /// Performs the action that should be invoked by the 
+        /// 'RenameFhemObjectNameCommand'.
+        /// </summary>
+        private void RenameFhemObjectNameCommandAction()
+        {
+            this.IsNameEditable = false;
         }
 
         //-- Methods
