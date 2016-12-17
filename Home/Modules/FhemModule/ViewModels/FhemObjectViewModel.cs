@@ -24,6 +24,8 @@ using Prism.Regions;
 using Sand.Fhem.Basics;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
@@ -40,6 +42,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Fields
 
         private bool  m_isNameEditable;
+
+        private IInputElement  m_lastFocusedElementBeforeRenaming;
 
         private IRegionManager  m_regionManager;
 
@@ -184,8 +188,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             this.FhemObject = a_fhemObject;
 
             //-- Initialize commands
-            this.AbortFhemObjectRenamingCommand = new DelegateCommand( () => this.IsNameEditable = false );
-            this.EditFhemObjectNameCommand = new DelegateCommand( () => this.IsNameEditable = true );
+            this.AbortFhemObjectRenamingCommand = new DelegateCommand( this.AbortFhemObjectRenamingCommandAction );
+            this.EditFhemObjectNameCommand = new DelegateCommand( this.EditFhemObjectNameCommandAction );
             this.OpenFhemObjectDetailsCommand = new DelegateCommand( this.OpenFhemObjectDetailsCommandAction );
             this.RenameFhemObjectNameCommand = new DelegateCommand( this.RenameFhemObjectNameCommandAction );
         }
@@ -194,6 +198,18 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #endregion
         //---------------------------------------------------------------------
         #region Methods
+
+        /// <summary>
+        /// Performs the action that should be invoked by the 
+        /// 'AbortFhemObjectRenamingCommand'.
+        /// </summary>
+        private void AbortFhemObjectRenamingCommandAction()
+        {
+            //-- Restore the focus
+            m_lastFocusedElementBeforeRenaming?.Focus();
+
+            this.IsNameEditable = false;
+        }
 
         /// <summary>
         /// Creates a FhemObject view model.
@@ -213,7 +229,19 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 
             return me;
         }
-        
+
+        /// <summary>
+        /// Performs the action that should be invoked by the 
+        /// 'EditFhemObjectNameCommand'.
+        /// </summary>
+        private void EditFhemObjectNameCommandAction()
+        {
+            //-- Keep the last focused element in mind
+            m_lastFocusedElementBeforeRenaming = Keyboard.FocusedElement;
+
+            this.IsNameEditable = true;
+        }
+
         /// <summary>
         /// Performs the action that should be invoked by the 
         /// 'OpenFhemObjectDetailsCommand'.
@@ -230,6 +258,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         private void RenameFhemObjectNameCommandAction()
         {
+            //-- Restore the focus
+            m_lastFocusedElementBeforeRenaming?.Focus();
+
             this.IsNameEditable = false;
         }
 
