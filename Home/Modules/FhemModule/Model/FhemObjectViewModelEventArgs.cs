@@ -18,39 +18,43 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Sand.Fhem.Basics;
-using Sand.Fhem.Home.Modules.FhemModule.Model;
 using Sand.Fhem.Home.Modules.FhemModule.ViewModels;
-using System;
+using System.ComponentModel;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Home.Modules.FhemModule.Services
+namespace Sand.Fhem.Home.Modules.FhemModule.Model
 {
-    public interface IFhemService
+    public class FhemObjectViewModelEventArgs : CancelEventArgs
     {
-        /// <summary>
-        /// Gets the Fhem client.
-        /// </summary>
-        FhemClient FhemClient { get; }
+        //---------------------------------------------------------------------
+        #region Properties
 
         /// <summary>
-        /// Occurs when the editing of the Fhem object name ends.
+        /// Gets the Fhem object view model.
         /// </summary>
-        event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingEnd;
+        public FhemObjectViewModel FhemObjectViewModel { get; private set; }
+
+        //-- Properties
+        #endregion
+        //---------------------------------------------------------------------
+        #region Constructors
 
         /// <summary>
-        /// Occurs when the editing of the Fhem object name starts.
+        /// Initializes a new instance of the FhemObjectViewModelEventArgs
+        /// class.
         /// </summary>
-        event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingStart;
+        /// <param name="a_fhemObjectViewModel">
+        /// The Fhem object view model.
+        /// </param>
+        public FhemObjectViewModelEventArgs( FhemObjectViewModel a_fhemObjectViewModel )
+            : base()
+        {
+            //-- Initialize properties
+            this.FhemObjectViewModel = a_fhemObjectViewModel;
+        }
 
-        /// <summary>
-        /// Gets the repository with all available Fhem objects.
-        /// </summary>
-        FhemObjectsRepository FhemObjectRepository { get; }
-        
-        /// <summary>
-        /// Gets or sets the selected Fhem object view model.
-        /// </summary>
-        FhemObjectViewModel SelectedFhemObject { get; set; }
+        //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
     }
 }
 //-----------------------------------------------------------------------------

@@ -22,6 +22,7 @@ using Prism.Mvvm;
 using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.ViewModels;
 using System;
+using Sand.Fhem.Home.Modules.FhemModule.Model;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.Services
 {
@@ -67,6 +68,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
 
         public FhemClient FhemClient { get; } = new FhemClient();
 
+        public event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingEnd;
+
+        public event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingStart;
+
         public FhemObjectsRepository FhemObjectRepository { get; private set; }
 
         public FhemObjectViewModel SelectedFhemObject
@@ -88,6 +93,33 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         }
 
         //-- IFhemService Members
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        /// <summary>
+        /// Raises the 'FhemObjectNameEditingEnd' event.
+        /// </summary>
+        /// <param name="a_fhemObjectViewModel">
+        /// The affected <see cref="FhemObjectViewModel"/>.
+        /// </param>
+        internal void RaiseFhemObjectNameEditingEndEvent( FhemObjectViewModel a_fhemObjectViewModel )
+        {
+            this.FhemObjectNameEditingEnd?.Invoke( this, new FhemObjectViewModelEventArgs( a_fhemObjectViewModel ) );
+        }
+
+        /// <summary>
+        /// Raises the 'FhemObjectNameEditingStart' event.
+        /// </summary>
+        /// <param name="a_fhemObjectViewModel">
+        /// The affected <see cref="FhemObjectViewModel"/>.
+        /// </param>
+        internal void RaiseFhemObjectNameEditingStartEvent( FhemObjectViewModel a_fhemObjectViewModel )
+        {
+            this.FhemObjectNameEditingStart?.Invoke( this, new FhemObjectViewModelEventArgs( a_fhemObjectViewModel ) );
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

@@ -1,12 +1,20 @@
 ﻿<UserControl 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:Local.Behaviors="clr-namespace:Sand.Fhem.Home.Modules.FhemModule.Behaviors"
+    xmlns:Prism.Mvvm="clr-namespace:Prism.Mvvm;assembly=Prism.Wpf"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.MainScreen.FhemObjectsRepositoryView"
-    prism:ViewModelLocator.AutoWireViewModel="True">
+    Prism.Mvvm:ViewModelLocator.AutoWireViewModel="True"
+    Name="me">
 
     <ListView ItemsSource="{Binding FhemObjectsCollectionView}" SelectedItem="{Binding FhemService.SelectedFhemObject}">
 
+        <i:Interaction.Behaviors>
+
+            <Local.Behaviors:RestoreFocusOnListViewItemBehavior />
+
+        </i:Interaction.Behaviors>
         <ListView.InputBindings>
 
             <KeyBinding Key="F2" Command="{Binding FhemService.SelectedFhemObject.EditFhemObjectNameCommand}" />

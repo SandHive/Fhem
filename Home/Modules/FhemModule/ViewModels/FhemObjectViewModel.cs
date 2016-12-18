@@ -24,8 +24,6 @@ using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Input;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
@@ -42,9 +40,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #region Fields
 
         private bool  m_isNameEditable;
-
-        private IInputElement  m_lastFocusedElementBeforeRenaming;
-
+        
         private IRegionManager  m_regionManager;
 
         //-- Fields
@@ -207,9 +203,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         private void AbortFhemObjectRenamingCommandAction()
         {
-            //-- Restore the focus
-            m_lastFocusedElementBeforeRenaming?.Focus();
-
+            //-- Inform the Fhem service about the ending of the editing
+            ( (FhemService) this.FhemService ).RaiseFhemObjectNameEditingEndEvent( this );
+            
             this.IsNameEditable = false;
         }
 
@@ -239,8 +235,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         private void EditFhemObjectNameCommandAction()
         {
-            //-- Keep the last focused element in mind
-            m_lastFocusedElementBeforeRenaming = Keyboard.FocusedElement;
+            //-- Inform the Fhem service about the starting of the editing
+            ( (FhemService) this.FhemService ).RaiseFhemObjectNameEditingStartEvent( this );
 
             this.IsNameEditable = true;
         }
@@ -261,8 +257,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         private void RenameFhemObjectNameCommandAction()
         {
-            //-- Restore the focus
-            m_lastFocusedElementBeforeRenaming?.Focus();
+            //-- Inform the Fhem service about the ending of the editing
+            ( (FhemService) this.FhemService ).RaiseFhemObjectNameEditingEndEvent( this );
 
             this.IsNameEditable = false;
         }
