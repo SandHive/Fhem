@@ -19,9 +19,9 @@
  * IN THE SOFTWARE.
  */
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Regions;
 using Sand.Fhem.Basics;
+using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
@@ -29,7 +29,7 @@ using System.Windows.Input;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
-    public class FhemObjectViewModel : BindableBase
+    public class FhemObjectViewModel : FhemViewModelBase
     {
         //---------------------------------------------------------------------
         #region Constants
@@ -178,8 +178,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <param name="a_fhemObject">
         /// The <see cref="FhemObject"/> that is represented by this view model.
         /// </param>
+        /// <param name="a_fhemService"></param>
         /// <param name="a_regionManager"></param>
-        private FhemObjectViewModel( FhemObject a_fhemObject, IRegionManager a_regionManager )
+        private FhemObjectViewModel( FhemObject a_fhemObject, IFhemService a_fhemService, IRegionManager a_regionManager )
+            : base( a_fhemService )
         {
             //-- Initialize fields
             m_regionManager = a_regionManager;
@@ -215,11 +217,12 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Creates a FhemObject view model.
         /// </summary>
         /// <param name="a_fhemObject"></param>
+        /// <param name="a_fhemService"></param>
         /// <param name="a_regionManager"></param>
         /// <returns></returns>
-        public static FhemObjectViewModel Create( FhemObject a_fhemObject, IRegionManager a_regionManager )
+        public static FhemObjectViewModel Create( FhemObject a_fhemObject, IFhemService a_fhemService, IRegionManager a_regionManager )
         {
-            var me = new FhemObjectViewModel( a_fhemObject, a_regionManager );
+            var me = new FhemObjectViewModel( a_fhemObject, a_fhemService, a_regionManager );
             
             //-- Store the 'state' in an own property
             if( a_fhemObject.Internals.ContainsKey( STATE_TAG ) )
