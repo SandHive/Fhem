@@ -122,16 +122,9 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         }
 
         /// <summary>
-        /// Gets the name of the Fhem object.
+        /// Gets or sets the name of the Fhem object.
         /// </summary>
-        public string Name
-        {
-            get { return this.FhemObject.Name; }
-            set
-            {
-
-            }
-        }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the command for opening the details of a Fhem object.
@@ -184,6 +177,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 
             //-- Initialize properties
             this.FhemObject = a_fhemObject;
+            this.Name = this.FhemObject.Name;
 
             //-- Initialize commands
             this.AbortFhemObjectRenamingCommand = new DelegateCommand( this.AbortFhemObjectRenamingCommandAction );
@@ -261,6 +255,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             ( (FhemService) this.FhemService ).RaiseFhemObjectNameEditingEndEvent( this );
 
             this.IsNameEditable = false;
+
+            this.FhemService.RenameFhemObject( this.FhemObject, this.Name );
         }
 
         //-- Methods

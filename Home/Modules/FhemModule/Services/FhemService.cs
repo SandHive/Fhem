@@ -74,6 +74,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
 
         public FhemObjectsRepository FhemObjectRepository { get; private set; }
 
+        public void RenameFhemObject( FhemObject a_fhemObject, string a_newName )
+        {
+            
+        }
+
         public FhemObjectViewModel SelectedFhemObject
         {
             get { return m_selectedFhemObject; }
