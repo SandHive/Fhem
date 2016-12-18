@@ -115,7 +115,7 @@ namespace Sand.Fhem.Basics
 
             if( resultBytes.Count == 0 )
             {
-                throw new TimeoutException();
+                return null;
             }
 
             return Encoding.ASCII.GetString( resultBytes.ToArray() );
