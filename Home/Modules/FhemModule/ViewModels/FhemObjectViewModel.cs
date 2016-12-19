@@ -24,6 +24,7 @@ using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
@@ -38,6 +39,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         #endregion
         //---------------------------------------------------------------------
         #region Fields
+
+        private string  m_fhemObjectName;
 
         private bool  m_isNameEditable;
         
@@ -124,7 +127,14 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Gets or sets the name of the Fhem object.
         /// </summary>
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return m_fhemObjectName; }
+            set
+            {
+                this.SetProperty( ref m_fhemObjectName, value );
+            }
+        }
 
         /// <summary>
         /// Gets the command for opening the details of a Fhem object.
@@ -199,7 +209,8 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         {
             //-- Inform the Fhem service about the ending of the editing
             ( (FhemService) this.FhemService ).RaiseFhemObjectNameEditingEndEvent( this );
-            
+
+            //-- Just make the name readonly again and discard the changes
             this.IsNameEditable = false;
         }
 
@@ -232,6 +243,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             //-- Inform the Fhem service about the starting of the editing
             ( (FhemService) this.FhemService ).RaiseFhemObjectNameEditingStartEvent( this );
 
+            //-- Make the name editable
             this.IsNameEditable = true;
         }
 
@@ -254,9 +266,20 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             //-- Inform the Fhem service about the ending of the editing
             ( (FhemService) this.FhemService ).RaiseFhemObjectNameEditingEndEvent( this );
 
+            //-- Make the name readonly again
             this.IsNameEditable = false;
 
-            this.FhemService.RenameFhemObject( this.FhemObject, this.Name );
+            //-- Rename the FhemObject 
+            var fhemClientResponse = this.FhemService.FhemClient.RenameFhemObject( this.FhemObject, this.Name );
+
+            if( fhemClientResponse.IsFailed )
+            {
+                //-- Renaming failed, so let's take the original name again
+                this.Name = this.FhemObject.Name;
+
+                //-- Show the error information
+                MessageBox.Show( fhemClientResponse.ErrorInformation, "Error", MessageBoxButton.OK, MessageBoxImage.Error );
+            }
         }
 
         //-- Methods

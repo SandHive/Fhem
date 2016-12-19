@@ -155,6 +155,38 @@ namespace Sand.Fhem.Basics
 
             return fhemObjectRepository;
         }
+
+        /// <summary>
+        /// Renames a <see cref="FhemObject"/>.
+        /// </summary>
+        /// <param name="a_fhemObject">
+        /// The affected FhemObject.
+        /// </param>
+        /// <param name="a_newName">
+        /// The new name.
+        /// </param>
+        public FhemClientResponse RenameFhemObject( FhemObject a_fhemObject, string a_newName )
+        {
+            if( a_fhemObject.Name != a_newName )
+            {
+                //-- Assemble the native command for renaming the Fhem object
+                var nativeRenameCommand = String.Format( "rename {0} {1}", a_fhemObject.Name, a_newName );
+
+                //-- Send the renaming command
+                var response = this.SendNativeCommand( nativeRenameCommand );
+
+                if( response != null )
+                {
+                    //-- Any response will describe an error in this case
+                    return new FhemClientResponse( response );
+                }
+
+                //-- Check that a FhemObject with the new name really exist
+            }
+
+            //-- Everything ok
+            return new FhemClientResponse();
+        }
         
         /// <summary>
         /// Sends a native Fhem command.

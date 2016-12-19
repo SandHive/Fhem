@@ -18,7 +18,6 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Prism.Commands;
 using Prism.Regions;
 using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
