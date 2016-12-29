@@ -24,7 +24,7 @@ using System.Text;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class NetworkStreamWriter
+    public class NetworkStreamWriter : INetworkStreamWriter
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -55,14 +55,8 @@ namespace Sand.Fhem.Basics
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
-        #region Methods
+        #region INetworkStreamWriter Members
 
-        /// <summary>
-        /// Writes a string to the underlying network stream.
-        /// </summary>
-        /// <param name="a_string">
-        /// The string that should be written to the network stream.
-        /// </param>
         public void Write( string a_string )
         {
             //-- Convert the native string into a byte array
@@ -73,7 +67,7 @@ namespace Sand.Fhem.Basics
             m_networkStream.Flush();
         }
 
-        //-- Methods
+        //-- INetworkStreamWriter Members
         #endregion
         //---------------------------------------------------------------------
     }

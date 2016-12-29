@@ -26,7 +26,7 @@ using System.Text;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
-    public class NetworkStreamReader : IDisposable
+    public class NetworkStreamReader : INetworkStreamReader
     {
         //---------------------------------------------------------------------
         #region Fields
@@ -36,17 +36,6 @@ namespace Sand.Fhem.Basics
         private NetworkStream  m_networkStream;
 
         //-- Fields
-        #endregion
-        //---------------------------------------------------------------------
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets the time span that is waited for a network stream 
-        /// response.
-        /// </summary>
-        public TimeSpan WaitingTimeSpanForResponse { get; set; } = TimeSpan.FromMilliseconds( 250 );
-
-        //-- Properties
         #endregion
         //---------------------------------------------------------------------
         #region Constructors
@@ -71,24 +60,13 @@ namespace Sand.Fhem.Basics
         //-- Constructors
         #endregion
         //---------------------------------------------------------------------
-        #region IDisposable Members
+        #region INetworkStreamReader Members
 
         public void Dispose()
         {
             m_binaryReader?.Dispose();
         }
 
-        //-- IDisposable Members
-        #endregion
-        //---------------------------------------------------------------------
-        #region Methods
-
-        /// <summary>
-        /// Reads a string from the network stream.
-        /// </summary>
-        /// <returns>
-        /// The string that was read from the network stream.
-        /// </returns>
         public string ReadString()
         {
             var referenceDateTime = DateTime.Now;
@@ -121,7 +99,9 @@ namespace Sand.Fhem.Basics
             return Encoding.ASCII.GetString( resultBytes.ToArray() );
         }
 
-        //-- Methods
+        public TimeSpan WaitingTimeSpanForResponse { get; set; } = TimeSpan.FromMilliseconds( 250 );
+
+        //-- INetworkStreamReader Members
         #endregion
         //---------------------------------------------------------------------
     }
