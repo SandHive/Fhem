@@ -41,9 +41,9 @@ namespace Sand.Fhem.Basics
 
         private bool  m_isConnected;
 
-        private NetworkStreamReader  m_networkStreamReader;
+        private INetworkStreamReader  m_networkStreamReader;
 
-        private NetworkStreamWriter  m_networkStreamWriter;
+        private INetworkStreamWriter  m_networkStreamWriter;
 
         private TcpClient  m_tcpClient;
 
@@ -94,6 +94,21 @@ namespace Sand.Fhem.Basics
         public FhemClient( string a_hostName, int a_telnetPort )
         {
             this.Connect( a_hostName, a_telnetPort );
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the FhemClient class.
+        /// </summary>
+        /// <param name="a_networkStreamReader"></param>
+        /// <param name="a_networkStreamWriter"></param>
+        /// <remarks>
+        /// This constructor is intended for unit testing.
+        /// </remarks>
+        internal FhemClient( INetworkStreamReader a_networkStreamReader, INetworkStreamWriter a_networkStreamWriter )
+        {
+            //-- Initialize fields
+            m_networkStreamReader = a_networkStreamReader;
+            m_networkStreamWriter = a_networkStreamWriter;
         }
 
         //-- Constructors
@@ -165,8 +180,16 @@ namespace Sand.Fhem.Basics
         /// <param name="a_newName">
         /// The new name.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// The FhemObject may not be null.
+        /// </exception>
         public FhemClientResponse RenameFhemObject( FhemObject a_fhemObject, string a_newName )
         {
+            if( a_fhemObject == null )
+            {
+                throw new ArgumentNullException( "The FhemObject may not be null!" );
+            }
+
             if( a_fhemObject.Name != a_newName )
             {
                 //-- Assemble the native command for renaming the Fhem object
