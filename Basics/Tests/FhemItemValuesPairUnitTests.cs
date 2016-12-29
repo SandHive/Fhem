@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Sand.Fhem.Basics.Tests
 {
     [TestClass]
-    public class FhemItemValuesPairUnitTest
+    public class FhemItemValuesPairUnitTests
     {
         //---------------------------------------------------------------------
         #region Tests
