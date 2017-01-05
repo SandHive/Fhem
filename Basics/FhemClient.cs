@@ -173,6 +173,47 @@ namespace Sand.Fhem.Basics
         }
 
         /// <summary>
+        /// Gets a specific <see cref="FhemObject"/>.
+        /// </summary>
+        /// <param name="a_fhemObjectName">
+        /// The name of the desired Fhem object.
+        /// </param>
+        /// <returns>
+        /// The fitting Fhem object or null when no fitting object was found.
+        /// </returns>
+        public FhemObject GetFhemObject( string a_fhemObjectName )
+        {
+            //-- Use the 'jsonlist2' command for creating the FHEM object list
+            var jsonlist2Response = this.SendNativeCommand( String.Format( "jsonlist2 {0}", a_fhemObjectName ) );
+
+            //-- Parse the response into a JSON object
+            var jsonObject = JObject.Parse( jsonlist2Response );
+
+            //-- Determine the 3 main json tokens
+            var argJsonToken = jsonObject.First;
+            var resultsJsonToken = argJsonToken.Next;
+            var totalResultsJsonToken = (JProperty) resultsJsonToken.Next;
+
+            //-- Determine the first json token that represents a fhem object
+            var fhemObjectAsJsonObject = (JObject) resultsJsonToken.First.First;
+
+            //-- Get the number of results
+            var resultsCount = (int) totalResultsJsonToken.Value;
+
+            if( resultsCount > 0 )
+            {
+                //-- Parse the Fhem object from the JObject
+                var fhemObject = FhemObject.FromJObject( fhemObjectAsJsonObject );
+
+                //-- Return the first found Fhem object
+                return fhemObject;    
+            }
+
+            //-- Nothing found :(
+            return null;
+        }
+
+        /// <summary>
         /// Gets all available Fhem objects.
         /// </summary>
         /// <returns></returns>
@@ -192,8 +233,11 @@ namespace Sand.Fhem.Basics
             //-- Determine the first json token that represents a fhem object
             var fhemObjectAsJsonObject = (JObject) resultsJsonToken.First.First;
 
+            //-- Get the number of results
+            var resultsCount = (int) totalResultsJsonToken.Value;
+
             //-- Prepare the list for storing all Fhem objects
-            var fhemObjects = new List<FhemObject>( (int) totalResultsJsonToken.Value );
+            var fhemObjects = new List<FhemObject>( resultsCount );
 
             while( fhemObjectAsJsonObject != null )
             {
