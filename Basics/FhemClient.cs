@@ -20,6 +20,7 @@
  */
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
@@ -150,14 +151,14 @@ namespace Sand.Fhem.Basics
             //-- Set a flag that we are connected
             this.IsConnected = true;
         }
-
+        
         /// <summary>
         /// Gets a repository with all available Fhem objects.
         /// </summary>
         /// <returns>
         /// A repository with all available Fhem objects.
         /// </returns>
-        public FhemObjectsRepository GetObjectRepository()
+        public FhemObjectsRepository GetFhemObjectRepository()
         {
             //-- Use the 'jsonlist2' command for creating the FHEM object repository
             var response = this.SendNativeCommand( "jsonlist2" );
@@ -169,6 +170,44 @@ namespace Sand.Fhem.Basics
             var fhemObjectRepository = FhemObjectsRepository.Create( jsonObject );
 
             return fhemObjectRepository;
+        }
+
+        /// <summary>
+        /// Gets all available Fhem objects.
+        /// </summary>
+        /// <returns></returns>
+        public FhemObject[] GetFhemObjects()
+        {
+            //-- Use the 'jsonlist2' command for creating the FHEM object list
+            var jsonlist2Response = this.SendNativeCommand( "jsonlist2" );
+
+            //-- Parse the response into a JSON object
+            var jsonObject = JObject.Parse( jsonlist2Response );
+
+            //-- Determine the 3 main json tokens
+            var argJsonToken = jsonObject.First;
+            var resultsJsonToken = argJsonToken.Next;
+            var totalResultsJsonToken = (JProperty) resultsJsonToken.Next;
+
+            //-- Determine the first json token that represents a fhem object
+            var fhemObjectAsJsonObject = (JObject) resultsJsonToken.First.First;
+
+            //-- Prepare the list for storing all Fhem objects
+            var fhemObjects = new List<FhemObject>( (int) totalResultsJsonToken.Value );
+
+            while( fhemObjectAsJsonObject != null )
+            {
+                //-- Parse the Fhem object from the JObject
+                var fhemObject = FhemObject.FromJObject( fhemObjectAsJsonObject );
+
+                //-- Add it to the list
+                fhemObjects.Add( fhemObject );
+
+                //-- Update to the next JObject
+                fhemObjectAsJsonObject = (JObject) fhemObjectAsJsonObject.Next;
+            }
+
+            return fhemObjects.ToArray();
         }
 
         /// <summary>
@@ -203,8 +242,6 @@ namespace Sand.Fhem.Basics
                     //-- Any response will describe an error in this case
                     return new FhemClientResponse( response );
                 }
-
-                //-- Check that a FhemObject with the new name really exist
             }
 
             //-- Everything ok

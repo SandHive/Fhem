@@ -57,7 +57,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
             if( this.FhemClient.IsConnected )
             {
                 //-- Get the Fhem object repository 
-                this.FhemObjectRepository = this.FhemClient.GetObjectRepository();
+                this.FhemObjectRepository = this.FhemClient.GetFhemObjectRepository();
             }
         }
 
