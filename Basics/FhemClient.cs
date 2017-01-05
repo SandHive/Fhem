@@ -21,6 +21,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net.Sockets;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
@@ -153,26 +154,6 @@ namespace Sand.Fhem.Basics
         }
         
         /// <summary>
-        /// Gets a repository with all available Fhem objects.
-        /// </summary>
-        /// <returns>
-        /// A repository with all available Fhem objects.
-        /// </returns>
-        public FhemObjectsRepository GetFhemObjectRepository()
-        {
-            //-- Use the 'jsonlist2' command for creating the FHEM object repository
-            var response = this.SendNativeCommand( "jsonlist2" );
-
-            //-- Parse the response into a JSON object
-            var jsonObject = JObject.Parse( response );
-
-            //-- Create the FHEM object repository
-            var fhemObjectRepository = FhemObjectsRepository.Create( jsonObject );
-
-            return fhemObjectRepository;
-        }
-
-        /// <summary>
         /// Gets a specific <see cref="FhemObject"/>.
         /// </summary>
         /// <param name="a_fhemObjectName">
@@ -217,7 +198,7 @@ namespace Sand.Fhem.Basics
         /// Gets all available Fhem objects.
         /// </summary>
         /// <returns></returns>
-        public FhemObject[] GetFhemObjects()
+        public ReadOnlyCollection<FhemObject> GetFhemObjects()
         {
             //-- Use the 'jsonlist2' command for creating the FHEM object list
             var jsonlist2Response = this.SendNativeCommand( "jsonlist2" );
@@ -251,7 +232,7 @@ namespace Sand.Fhem.Basics
                 fhemObjectAsJsonObject = (JObject) fhemObjectAsJsonObject.Next;
             }
 
-            return fhemObjects.ToArray();
+            return fhemObjects.AsReadOnly();
         }
 
         /// <summary>

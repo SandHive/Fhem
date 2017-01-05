@@ -57,7 +57,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
             if( this.FhemClient.IsConnected )
             {
                 //-- Get the Fhem object repository 
-                this.FhemObjectRepository = this.FhemClient.GetFhemObjectRepository();
+                this.FhemObjectRepository = FhemObjectsRepository.Create( this.FhemClient );
             }
         }
 
@@ -73,12 +73,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         public event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingStart;
 
         public FhemObjectsRepository FhemObjectRepository { get; private set; }
-
-        public void RenameFhemObject( FhemObject a_fhemObject, string a_newName )
-        {
-            
-        }
-
+        
         public FhemObjectViewModel SelectedFhemObject
         {
             get { return m_selectedFhemObject; }

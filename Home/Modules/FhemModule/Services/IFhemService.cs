@@ -46,18 +46,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         /// Gets the repository with all available Fhem objects.
         /// </summary>
         FhemObjectsRepository FhemObjectRepository { get; }
-
-        /// <summary>
-        /// Renames a <see cref="FhemObject"/>.
-        /// </summary>
-        /// <param name="a_fhemObject">
-        /// The FhemObject that should be renamed.
-        /// </param>
-        /// <param name="a_newName">
-        /// The new name of the Fhem object.
-        /// </param>
-        void RenameFhemObject( FhemObject a_fhemObject, string a_newName );
-
+        
         /// <summary>
         /// Gets or sets the selected Fhem object view model.
         /// </summary>

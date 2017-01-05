@@ -32,7 +32,9 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Fields
 
-        private ObservableCollection<FhemObject>  m_fhemObjectCollection = new ObservableCollection<FhemObject>();
+        private FhemClient  m_fhemClient;
+
+        private ObservableCollection<FhemObject>  m_fhemObjectCollection;
 
         //-- Fields
         #endregion
@@ -42,13 +44,20 @@ namespace Sand.Fhem.Basics
         /// <summary>
         /// Initializes a new instance of the FhemObjectsRepository class.
         /// </summary>
+        /// <param name="a_fhemClient">
+        /// The Fhem client for keeping the repository up to date.
+        /// </param>
         /// <remarks>
         /// The constructor is private to force the usage of the static 
         /// 'Create' method (long lasting operations do not belong into a 
         /// constructor ;).
         /// </remarks>
-        private FhemObjectsRepository()
+        private FhemObjectsRepository( FhemClient a_fhemClient, IEnumerable<FhemObject> a_fhemObjects )
         {
+            //-- Initialize fields
+            m_fhemClient = a_fhemClient;
+            m_fhemObjectCollection = new ObservableCollection<FhemObject>( a_fhemObjects );
+
             //-- Register to events
             m_fhemObjectCollection.CollectionChanged += fhemObjectCollection_CollectionChanged;
         }
@@ -91,43 +100,19 @@ namespace Sand.Fhem.Basics
         #region Methods
 
         /// <summary>
-        /// Creates a FhemObjectRepository instance by parsing a corresponding
-        /// JSON object.
+        /// Creates a Fhem objects repository.
         /// </summary>
-        /// <param name="a_jsonObject"></param>
-        /// <exception cref="ArgumentNullException">
-        /// The JSON object may not be null.
-        /// </exception>
+        /// <param name="a_fhemClient">
+        /// The Fhem client for keeping the repository up to date.
+        /// </param>
         /// <returns>
-        /// The created FhemObjectRepository instance.
+        /// The created FhemObjectsRepository instance.
         /// </returns>
-        public static FhemObjectsRepository Create( JObject a_jsonObject )
+        public static FhemObjectsRepository Create( FhemClient a_fhemClient )
         {
-            if( a_jsonObject == null )
-            {
-                throw new ArgumentNullException( "The JSON object may not be null!" );
-            }
+            var fhemObjects = a_fhemClient.GetFhemObjects();
 
-            var me = new FhemObjectsRepository();
-
-            //-- Determine the 3 main json tokens
-            var argJsonToken = a_jsonObject.First;
-            var resultsJsonToken = argJsonToken.Next;
-            var totalResultsJsonToken = resultsJsonToken.Next;
-
-            //-- Determine the first json token that represents a fhem object
-            var fhemObjectAsJsonObject = (JObject) resultsJsonToken.First.First;
-
-            while( fhemObjectAsJsonObject != null )
-            {
-                var fhemObject = FhemObject.FromJObject( fhemObjectAsJsonObject );
-
-                me.m_fhemObjectCollection.Add( fhemObject );
-
-                fhemObjectAsJsonObject = (JObject) fhemObjectAsJsonObject.Next;
-            }
-
-            return me;
+            return new FhemObjectsRepository( a_fhemClient, fhemObjects );
         }
 
         //-- Methods
