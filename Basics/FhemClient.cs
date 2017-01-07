@@ -111,6 +111,7 @@ namespace Sand.Fhem.Basics
             //-- Initialize fields
             m_networkStreamReader = a_networkStreamReader;
             m_networkStreamWriter = a_networkStreamWriter;
+            m_isConnected = true;
         }
 
         //-- Constructors
@@ -129,6 +130,20 @@ namespace Sand.Fhem.Basics
         #endregion
         //---------------------------------------------------------------------
         #region Methods
+
+        /// <summary>
+        /// Checks the connection to the Fhem server.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">
+        /// The Fhem client is not connected to a Fhem server.
+        /// </exception>
+        private void CheckConnection()
+        {
+            if( !m_isConnected )
+            {
+                throw new InvalidOperationException( "The Fhem client is not connected to a Fhem server!" );
+            }
+        }
 
         /// <summary>
         /// Connects this Fhem client with a Fhem server.
@@ -164,6 +179,9 @@ namespace Sand.Fhem.Basics
         /// </returns>
         public FhemObject GetFhemObject( string a_fhemObjectName )
         {
+            //-- Check that we are really connected to a Fhem server
+            this.CheckConnection();
+
             //-- Use the 'jsonlist2' command for creating the FHEM object list
             var jsonlist2Response = this.SendNativeCommand( String.Format( "jsonlist2 {0}", a_fhemObjectName ) );
 
@@ -200,6 +218,9 @@ namespace Sand.Fhem.Basics
         /// <returns></returns>
         public ReadOnlyCollection<FhemObject> GetFhemObjects()
         {
+            //-- Check that we are really connected to a Fhem server
+            this.CheckConnection();
+
             //-- Use the 'jsonlist2' command for creating the FHEM object list
             var jsonlist2Response = this.SendNativeCommand( "jsonlist2" );
 
@@ -249,6 +270,9 @@ namespace Sand.Fhem.Basics
         /// </exception>
         public FhemClientResponse RenameFhemObject( FhemObject a_fhemObject, string a_newName )
         {
+            //-- Check that we are really connected to a Fhem server
+            this.CheckConnection();
+
             if( a_fhemObject == null )
             {
                 throw new ArgumentNullException( "The FhemObject may not be null!" );
@@ -287,6 +311,9 @@ namespace Sand.Fhem.Basics
         /// </returns>
         public string SendNativeCommand( string a_nativeCommandString )
         {
+            //-- Check that we are really connected to a Fhem server
+            this.CheckConnection();
+
             if( String.IsNullOrWhiteSpace( a_nativeCommandString ) )
             {
                 throw new ArgumentNullException( "The native command string may not be null or empty!" );
