@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sand.Fhem.Home.Modules.Fhem
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sand.Fhem.Basics.Tests", "Basics\Tests\Sand.Fhem.Basics.Tests.csproj", "{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sand.Fhem.Home.Basics", "Home\Basics\Sand.Fhem.Home.Basics.csproj", "{8BAFDC7B-C17F-4245-A3CA-56C81C546142}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70A3B7CC-BAD3-47F9-B806-EB68B63C0CF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BAFDC7B-C17F-4245-A3CA-56C81C546142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BAFDC7B-C17F-4245-A3CA-56C81C546142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BAFDC7B-C17F-4245-A3CA-56C81C546142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BAFDC7B-C17F-4245-A3CA-56C81C546142}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
