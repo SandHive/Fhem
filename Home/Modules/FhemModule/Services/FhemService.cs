@@ -36,34 +36,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         //-- Fields
         #endregion
         //---------------------------------------------------------------------
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the FhemService class.
-        /// </summary>
-        public FhemService()
-        {
-            //-- Register to events
-            this.FhemClient.IsConnectedChanged += FhemClient_IsConnectedChanged;
-        }
-
-        //-- Constructors
-        #endregion
-        //---------------------------------------------------------------------
-        #region Event Handlers
-
-        private void FhemClient_IsConnectedChanged( object sender, EventArgs e )
-        {
-            if( this.FhemClient.IsConnected )
-            {
-                //-- Get the Fhem object repository 
-                this.FhemObjectRepository = FhemObjectsRepository.Create( this.FhemClient );
-            }
-        }
-
-        //-- Event Handlers
-        #endregion
-        //---------------------------------------------------------------------
         #region IFhemService Members
 
         public FhemClient FhemClient { get; } = new FhemClient();
@@ -71,8 +43,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         public event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingEnd;
 
         public event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingStart;
-
-        public FhemObjectsRepository FhemObjectRepository { get; private set; }
         
         public FhemObjectViewModel SelectedFhemObject
         {

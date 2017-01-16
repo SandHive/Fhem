@@ -125,6 +125,10 @@
       <Project>{44631110-4be8-448e-b78e-fc9eb3b93b5d}</Project>
       <Name>Sand.Fhem.Basics</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Basics\Sand.Fhem.Home.Basics.csproj">
+      <Project>{8BAFDC7B-C17F-4245-A3CA-56C81C546142}</Project>
+      <Name>Sand.Fhem.Home.Basics</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\ResourceDictionaries\Styles\Named\FhemNavigationListBoxItemStyle.xaml">

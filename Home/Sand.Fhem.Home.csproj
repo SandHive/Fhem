@@ -108,6 +108,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Basics\Sand.Fhem.Home.Basics.csproj">
+      <Project>{8bafdc7b-c17f-4245-a3ca-56c81c546142}</Project>
+      <Name>Sand.Fhem.Home.Basics</Name>
+    </ProjectReference>
     <ProjectReference Include="Modules\FhemModule\Sand.Fhem.Home.Modules.FhemModule.csproj">
       <Project>{91bf7649-9b6a-4912-bf0a-0040523080cd}</Project>
       <Name>Sand.Fhem.Home.Modules.FhemModule</Name>

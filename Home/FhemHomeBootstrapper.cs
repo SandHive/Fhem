@@ -18,8 +18,10 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using Microsoft.Practices.Unity;
 using Prism.Modularity;
 using Prism.Unity;
+using Sand.Fhem.Home.Basics.Services;
 using System.Windows;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Prism.FhemAgent
@@ -27,7 +29,25 @@ namespace Sand.Fhem.Prism.FhemAgent
     internal class FhemHomeBootstrapper : UnityBootstrapper
     {
         //---------------------------------------------------------------------
+        #region Fields
+
+        private IApplicationService  m_applicationService;
+
+        //-- Fields
+        #endregion
+        //---------------------------------------------------------------------
         #region UnityBootstrapper Members
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+
+            //-- Create services
+            m_applicationService = new ApplicationService();
+
+            //-- Register services
+            this.Container.RegisterInstance<IApplicationService>( m_applicationService );
+        }
 
         protected override void ConfigureModuleCatalog()
         {

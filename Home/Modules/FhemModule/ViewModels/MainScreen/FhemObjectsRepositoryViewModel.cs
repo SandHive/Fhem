@@ -20,8 +20,10 @@
  */
 using Prism.Regions;
 using Sand.Fhem.Basics;
+using Sand.Fhem.Home.Basics.Services;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -34,10 +36,16 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
         //---------------------------------------------------------------------
         #region Fields
 
+        private IApplicationService  m_applicationService;
+
         private ObservableCollection<FhemObjectViewModel>  m_fhemObjectsCollection = new ObservableCollection<FhemObjectViewModel>();
 
-        private IRegionManager  m_regionManager;
+        private Dictionary<FhemObject, FhemObjectViewModel>  m_fhemObjectViewModelsByFhemObjects = new Dictionary<FhemObject, FhemObjectViewModel>();
 
+        private FhemObjectsRepository  m_fhemObjectsRepository;
+
+        private IRegionManager  m_regionManager;
+        
         //-- Fields
         #endregion
         //---------------------------------------------------------------------
@@ -57,10 +65,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
         /// Initializes a new instance of the FhemObjectsRepositoryViewModel 
         /// class.
         /// </summary>
-        public FhemObjectsRepositoryViewModel( IFhemService a_fhemService, IRegionManager a_regionManager )
+        public FhemObjectsRepositoryViewModel( IFhemService a_fhemService, IRegionManager a_regionManager, IApplicationService a_applicationService )
             : base( a_fhemService )
         {
             //-- Initialize fields
+            m_applicationService = a_applicationService;
             m_regionManager = a_regionManager;
 
             //-- Initialize properties
@@ -77,51 +86,98 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
 
         private void FhemClient_IsConnectedChanged( object sender, EventArgs e )
         {
-            if( this.FhemService.FhemClient.IsConnected )
+            if( !m_applicationService.UserInterfaceDispatcher.CheckAccess() )
             {
-                //-- First of all register to the 'CollectionChanged' event in
-                //-- order to get all updates
-                this.FhemService.FhemObjectRepository.CollectionChanged += FhemObjectRepository_CollectionChanged;
-
-                lock( this )
+                m_applicationService.UserInterfaceDispatcher.BeginInvoke( new EventHandler( FhemClient_IsConnectedChanged ), sender, e );
+            }
+            else
+            {
+                if( this.FhemService.FhemClient.IsConnected )
                 {
-                    foreach( FhemObject fhemObject in this.FhemService.FhemObjectRepository )
+                    //-- Get the Fhem object repository 
+                    m_fhemObjectsRepository = new FhemObjectsRepository( this.FhemService.FhemClient );
+
+                    //-- First of all register to the 'CollectionChanged' event in
+                    //-- order to get all updates
+                    m_fhemObjectsRepository.CollectionChanged += m_fhemObjectRepository_CollectionChanged;
+
+                    lock( this )
                     {
-                        m_fhemObjectsCollection.Add( FhemObjectViewModel.Create( fhemObject, this.FhemService, m_regionManager ) );
+                        foreach( FhemObject fhemObject in m_fhemObjectsRepository )
+                        {
+                            this.HandleNewFhemObject( fhemObject, this.FhemService, m_regionManager );
+                        }
+
+                        //-- Sort the Fhem objects by their names
+                        this.FhemObjectsCollectionView.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );
                     }
 
-                    //-- Sort the Fhem objects by their names
-                    this.FhemObjectsCollectionView.SortDescriptions.Add( new SortDescription( "Name", ListSortDirection.Ascending ) );
+                    //-- Force a property update
+                    //this.OnPropertyChanged( "FhemObjectsCollectionView" );
                 }
-
-                //-- Force a property update
-                this.OnPropertyChanged( "FhemObjectsCollectionView" );
             }
         }
 
-        private void FhemObjectRepository_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+        private void m_fhemObjectRepository_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
-            lock( this )
+            if( !m_applicationService.UserInterfaceDispatcher.CheckAccess() )
             {
-                if( e.OldItems != null )
+                m_applicationService.UserInterfaceDispatcher.BeginInvoke( new NotifyCollectionChangedEventHandler( m_fhemObjectRepository_CollectionChanged ), sender, e );
+            }
+            else
+            {
+                lock( this )
                 {
-                    foreach( FhemObjectViewModel fhemObjectViewModel in e.OldItems )
+                    if( e.OldItems != null )
                     {
-                        m_fhemObjectsCollection.Remove( fhemObjectViewModel );
+                        foreach( FhemObject fhemObject in e.OldItems )
+                        {
+                            this.HandleRemovedFhemObject( fhemObject );
+                        }
                     }
-                }
 
-                if( e.NewItems != null )
-                {
-                    foreach( FhemObjectViewModel fhemObjectViewModel in e.NewItems )
+                    if( e.NewItems != null )
                     {
-                        m_fhemObjectsCollection.Add( fhemObjectViewModel );
+                        foreach( FhemObject fhemObject in e.NewItems )
+                        {
+                            this.HandleNewFhemObject( fhemObject, this.FhemService, m_regionManager );
+                        }
                     }
                 }
             }
         }
 
         //-- Event Handlers
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        private void HandleNewFhemObject( FhemObject a_fhemObject, IFhemService a_fhemService, IRegionManager a_regionManager )
+        {
+            //-- First of all create a view model for the Fhem object
+            var fhemObjectViewModel = FhemObjectViewModel.Create( a_fhemObject, a_fhemService, a_regionManager, m_applicationService );
+
+            //-- Add the view model to the public collection
+            m_fhemObjectsCollection.Add( fhemObjectViewModel );
+
+            //-- Add a link between the Fhem object and its view model to the private index
+            m_fhemObjectViewModelsByFhemObjects.Add( a_fhemObject, fhemObjectViewModel );
+        }
+
+        private void HandleRemovedFhemObject( FhemObject a_fhemObject )
+        {
+            if( m_fhemObjectViewModelsByFhemObjects.ContainsKey( a_fhemObject ) )
+            {
+                //-- Determine the corresponding view model
+                var fhemObjectViewModel = m_fhemObjectViewModelsByFhemObjects[a_fhemObject];
+
+                //-- Remove the view model from the collection
+                m_fhemObjectsCollection.Remove( fhemObjectViewModel );
+                m_fhemObjectViewModelsByFhemObjects.Remove( a_fhemObject );
+            }
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

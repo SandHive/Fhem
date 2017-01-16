@@ -18,12 +18,11 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Timers;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
@@ -36,7 +35,35 @@ namespace Sand.Fhem.Basics
 
         private ObservableCollection<FhemObject>  m_fhemObjectCollection;
 
+        private Timer  m_updateTimer;
+
+        private double  m_updateTimerInterval = 1000;
+
         //-- Fields
+        #endregion
+        //---------------------------------------------------------------------
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the update intervall.
+        /// </summary>
+        public double UpdateInterval
+        {
+            get { return m_updateTimerInterval;  }
+            set
+            {
+                //-- Do nothing when the value has not changed
+                if( value == m_updateTimerInterval ) { return; }
+
+                //-- Update the timer interval
+                m_updateTimerInterval = value;
+
+                //-- Reset the update timer
+                this.ResetUpdateTimer( m_updateTimerInterval );
+            }
+        }
+
+        //-- Properties
         #endregion
         //---------------------------------------------------------------------
         #region Constructors
@@ -52,14 +79,24 @@ namespace Sand.Fhem.Basics
         /// 'Create' method (long lasting operations do not belong into a 
         /// constructor ;).
         /// </remarks>
-        private FhemObjectsRepository( FhemClient a_fhemClient, IEnumerable<FhemObject> a_fhemObjects )
+        public FhemObjectsRepository( FhemClient a_fhemClient )
         {
             //-- Initialize fields
             m_fhemClient = a_fhemClient;
-            m_fhemObjectCollection = new ObservableCollection<FhemObject>( a_fhemObjects );
+
+            //-- Initialize the observable collection
+            m_fhemObjectCollection = new ObservableCollection<FhemObject>();
 
             //-- Register to events
-            m_fhemObjectCollection.CollectionChanged += fhemObjectCollection_CollectionChanged;
+            m_fhemObjectCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
+
+            //-- Start the update timer with a very small interval to force an
+            //-- immediate update. After elapsing, the timer will be configured
+            //-- anew for standard use
+            m_updateTimer = new Timer( 20 );
+            m_updateTimer.AutoReset = false; //-- The starter event handler should be called only once
+            m_updateTimer.Elapsed += m_updateTimer_Elapsed_StarterHandler;
+            m_updateTimer.Start();
         }
 
         //-- Constructors
@@ -67,9 +104,32 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Event Handlers
 
-        private void fhemObjectCollection_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
+        private void m_fhemObjectCollection_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
         {
             this.CollectionChanged?.Invoke( this, e );
+        }
+
+        private void m_updateTimer_Elapsed( object sender, ElapsedEventArgs e )
+        {
+            
+        }
+
+        private void m_updateTimer_Elapsed_StarterHandler( object sender, ElapsedEventArgs e )
+        {
+            //-- Get all available Fhem objects
+            var fhemObjects = m_fhemClient.GetFhemObjects();
+
+            //-- Initialize the observable collection
+            foreach( var fhemObject in fhemObjects )
+            {
+                m_fhemObjectCollection.Add( fhemObject );
+            }
+
+            //-- Register to events
+            m_fhemObjectCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
+
+            //-- Reset the update timer for regular use
+            this.ResetUpdateTimer( m_updateTimerInterval );
         }
 
         //-- Event Handlers
@@ -100,19 +160,24 @@ namespace Sand.Fhem.Basics
         #region Methods
 
         /// <summary>
-        /// Creates a Fhem objects repository.
+        /// Resets the update timer with the given update interval.
         /// </summary>
-        /// <param name="a_fhemClient">
-        /// The Fhem client for keeping the repository up to date.
+        /// <param name="a_updateInterval">
+        /// The update interval.
         /// </param>
-        /// <returns>
-        /// The created FhemObjectsRepository instance.
-        /// </returns>
-        public static FhemObjectsRepository Create( FhemClient a_fhemClient )
+        private void ResetUpdateTimer( double a_updateInterval )
         {
-            var fhemObjects = a_fhemClient.GetFhemObjects();
+            if( m_updateTimer != null )
+            {
+                //-- Stop an existing timer
+                m_updateTimer.Stop();
+                m_updateTimer.Elapsed -= m_updateTimer_Elapsed;
+            }
 
-            return new FhemObjectsRepository( a_fhemClient, fhemObjects );
+            //-- Create a new timer with the new interval
+            m_updateTimer = new Timer( a_updateInterval );
+            m_updateTimer.Elapsed += m_updateTimer_Elapsed;
+            m_updateTimer.Start();
         }
 
         //-- Methods

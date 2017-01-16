@@ -41,11 +41,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         /// Occurs when the editing of the Fhem object name starts.
         /// </summary>
         event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingStart;
-
-        /// <summary>
-        /// Gets the repository with all available Fhem objects.
-        /// </summary>
-        FhemObjectsRepository FhemObjectRepository { get; }
         
         /// <summary>
         /// Gets or sets the selected Fhem object view model.
