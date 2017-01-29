@@ -33,7 +33,9 @@ namespace Sand.Fhem.Basics
 
         private FhemClient  m_fhemClient;
 
-        private ObservableCollection<FhemObject>  m_fhemObjectCollection;
+        private ObservableCollection<FhemObject>  m_fhemObjectsCollection = new ObservableCollection<FhemObject>();
+
+        private SortedList<int, FhemObject>  m_fhemObjectsByNr = new SortedList<int, FhemObject>();
 
         private Timer  m_updateTimer;
 
@@ -83,12 +85,9 @@ namespace Sand.Fhem.Basics
         {
             //-- Initialize fields
             m_fhemClient = a_fhemClient;
-
-            //-- Initialize the observable collection
-            m_fhemObjectCollection = new ObservableCollection<FhemObject>();
-
+            
             //-- Register to events
-            m_fhemObjectCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
+            m_fhemObjectsCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
 
             //-- Start the update timer with a very small interval to force an
             //-- immediate update. After elapsing, the timer will be configured
@@ -122,11 +121,12 @@ namespace Sand.Fhem.Basics
             //-- Initialize the observable collection
             foreach( var fhemObject in fhemObjects )
             {
-                m_fhemObjectCollection.Add( fhemObject );
+                m_fhemObjectsCollection.Add( fhemObject );
+                m_fhemObjectsByNr.Add( fhemObject.ID, fhemObject );
             }
 
             //-- Register to events
-            m_fhemObjectCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
+            m_fhemObjectsCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
 
             //-- Reset the update timer for regular use
             this.ResetUpdateTimer( m_updateTimerInterval );
@@ -139,12 +139,12 @@ namespace Sand.Fhem.Basics
 
         public IEnumerator GetEnumerator()
         {
-            return m_fhemObjectCollection.GetEnumerator();
+            return m_fhemObjectsCollection.GetEnumerator();
         }
 
         IEnumerator<FhemObject> IEnumerable<FhemObject>.GetEnumerator()
         {
-            return m_fhemObjectCollection.GetEnumerator();
+            return m_fhemObjectsCollection.GetEnumerator();
         }
 
         //-- IEnumerable
