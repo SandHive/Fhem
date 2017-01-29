@@ -122,7 +122,7 @@
 
                         <DataTemplate>
 
-                            <TextBlock Text="{Binding State}">
+                            <TextBlock Text="{Binding FhemObject.State}">
 
                                 <TextBlock.InputBindings>
 

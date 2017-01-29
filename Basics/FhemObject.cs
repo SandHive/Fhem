@@ -33,6 +33,7 @@ namespace Sand.Fhem.Basics
         #region Constants
 
         private const string INTERNALS_ID_TAG = "NR";
+        private const string INTERNALS_STATE_TAG = "STATE";
 
         //-- Constants
         #endregion
@@ -73,6 +74,11 @@ namespace Sand.Fhem.Basics
         /// Gets the readings of the Fhem object.
         /// </summary>
         public FhemReadingItemsCollection Readings { get; private set; }
+
+        /// <summary>
+        /// Gets the state of the Fhem object.
+        /// </summary>
+        public string State { get; private set; }
 
         //-- Properties
         #endregion
@@ -205,6 +211,12 @@ namespace Sand.Fhem.Basics
 
             //-- Initialize properties
             me.ID = int.Parse( me.Internals[INTERNALS_ID_TAG] );
+
+            //-- Store the 'state' in an own property
+            if( me.Internals.ContainsKey( INTERNALS_STATE_TAG ) )
+            {
+                me.State = me.Internals[INTERNALS_STATE_TAG];
+            }
 
             return me;
         }

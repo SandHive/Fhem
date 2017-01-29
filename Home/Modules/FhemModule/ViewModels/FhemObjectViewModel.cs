@@ -24,20 +24,11 @@ using Sand.Fhem.Basics;
 using Sand.Fhem.Home.Basics.Services;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;
-using System.Collections.ObjectModel;
-using System.Windows;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
 {
     public class FhemObjectViewModel : FhemViewModelBase
     {
-        //---------------------------------------------------------------------
-        #region Constants
-
-        private const string STATE_TAG = "STATE";
-
-        //-- Constants
-        #endregion
         //---------------------------------------------------------------------
         #region Fields
 
@@ -139,11 +130,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// </summary>
         public DelegateCommand RenameFhemObjectNameCommand { get; private set; }
 
-        /// <summary>
-        /// Gets the state of the Fhem object.
-        /// </summary>
-        public string State { get; private set; }
-
         //-- Properties
         #endregion
         //---------------------------------------------------------------------
@@ -158,7 +144,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <param name="a_fhemService"></param>
         /// <param name="a_regionManager"></param>
         /// <param name="a_applicationService"></param>
-        private FhemObjectViewModel( FhemObject a_fhemObject, IFhemService a_fhemService, IRegionManager a_regionManager, IApplicationService a_applicationService )
+        public FhemObjectViewModel( FhemObject a_fhemObject, IFhemService a_fhemService, IRegionManager a_regionManager, IApplicationService a_applicationService )
             : base( a_fhemService )
         {
             //-- Initialize fields
@@ -193,28 +179,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
             //-- Just make the name readonly again and discard the changes
             this.IsNameEditable = false;
         }
-
-        /// <summary>
-        /// Creates a FhemObject view model.
-        /// </summary>
-        /// <param name="a_fhemObject"></param>
-        /// <param name="a_fhemService"></param>
-        /// <param name="a_regionManager"></param>
-        /// <param name="a_applicationService"></param>
-        /// <returns></returns>
-        public static FhemObjectViewModel Create( FhemObject a_fhemObject, IFhemService a_fhemService, IRegionManager a_regionManager, IApplicationService a_applicationService )
-        {
-            var me = new FhemObjectViewModel( a_fhemObject, a_fhemService, a_regionManager, a_applicationService );
-            
-            //-- Store the 'state' in an own property
-            if( a_fhemObject.Internals.ContainsKey( STATE_TAG ) )
-            {
-                me.State = a_fhemObject.Internals[STATE_TAG];
-            }
-
-            return me;
-        }
-
+        
         /// <summary>
         /// Performs the action that should be invoked by the 
         /// 'EditFhemObjectNameCommand'.

@@ -155,7 +155,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.MainScreen
         private void HandleNewFhemObject( FhemObject a_fhemObject, IFhemService a_fhemService, IRegionManager a_regionManager )
         {
             //-- First of all create a view model for the Fhem object
-            var fhemObjectViewModel = FhemObjectViewModel.Create( a_fhemObject, a_fhemService, a_regionManager, m_applicationService );
+            var fhemObjectViewModel = new FhemObjectViewModel( a_fhemObject, a_fhemService, a_regionManager, m_applicationService );
 
             //-- Add the view model to the public collection
             m_fhemObjectsCollection.Add( fhemObjectViewModel );
