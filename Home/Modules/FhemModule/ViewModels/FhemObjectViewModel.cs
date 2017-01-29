@@ -58,12 +58,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Gets the command for aborting the Fhem object renaming.
         /// </summary>
         public DelegateCommand AbortFhemObjectRenamingCommand { get; private set; }
-
-        /// <summary>
-        /// Gets the attributes of the Fhem object.
-        /// </summary>
-        public ReadOnlyDictionary<string, string> Attributes { get { return this.FhemObject.Attributes; } }
-
+        
         /// <summary>
         /// Gets a flag that specifies whether the Fhem object contains 
         /// attributes.
@@ -111,11 +106,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         public FhemObject FhemObject { get; private set; }
 
         /// <summary>
-        /// Gets the internals of the Fhem object.
-        /// </summary>
-        public ReadOnlyDictionary<string, string> Internals { get { return this.FhemObject.Internals; } }
-
-        /// <summary>
         /// Gets a flag that indicates whether the name is currently editable.
         /// </summary>
         public bool IsNameEditable
@@ -143,21 +133,6 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// Gets the command for opening the details of a Fhem object.
         /// </summary>
         public DelegateCommand OpenFhemObjectDetailsCommand { get; private set; }
-
-        /// <summary>
-        /// Gets the possible attributes of the Fhem object.
-        /// </summary>
-        public FhemPossibleAttributesCollection PossibleAttributes { get { return this.FhemObject.PossibleAttributes; } }
-
-        /// <summary>
-        /// Gets the possible sets of the Fhem object.
-        /// </summary>
-        public string[] PossibleSets { get { return this.FhemObject.PossibleSets; } }
-
-        /// <summary>
-        /// Gets the readings of the Fhem object.
-        /// </summary>
-        public FhemReadingItemsCollection Readings { get { return this.FhemObject.Readings; } }
 
         /// <summary>
         /// Gets the command for renaming the Fhem object.

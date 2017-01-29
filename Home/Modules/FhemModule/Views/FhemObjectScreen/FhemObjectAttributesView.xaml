@@ -23,7 +23,7 @@
         </ListView>
 
         <TextBlock Text="PossibleAttributes: " />
-        <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.PossibleAttributes}">
+        <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.FhemObject.PossibleAttributes}">
 
             <ComboBox.ItemTemplate>
 

@@ -5,7 +5,7 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectScreen.FhemObjectReadingsView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListView ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.Readings}">
+    <ListView ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.FhemObject.Readings}">
 
         <ListView.View>
 
