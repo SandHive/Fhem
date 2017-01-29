@@ -30,12 +30,24 @@ namespace Sand.Fhem.Basics
     public class FhemObject
     {
         //---------------------------------------------------------------------
+        #region Constants
+
+        private const string INTERNALS_ID_TAG = "NR";
+
+        //-- Constants
+        #endregion
+        //---------------------------------------------------------------------
         #region Properties
 
         /// <summary>
         /// Gets the attributes of the Fhem object.
         /// </summary>
         public ReadOnlyDictionary<string, string> Attributes { get; private set; }
+
+        /// <summary>
+        /// Gets the unique Fhem identifier.
+        /// </summary>
+        public int ID { get; private set; }
 
         /// <summary>
         /// Gets the internals of the Fhem object.
@@ -190,7 +202,10 @@ namespace Sand.Fhem.Basics
                     default: break;
                 }
             }
-            
+
+            //-- Initialize properties
+            me.ID = int.Parse( me.Internals[INTERNALS_ID_TAG] );
+
             return me;
         }
 
