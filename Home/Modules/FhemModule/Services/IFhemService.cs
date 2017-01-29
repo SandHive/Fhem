@@ -45,7 +45,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         /// <summary>
         /// Gets or sets the selected Fhem object view model.
         /// </summary>
-        FhemObjectViewModel SelectedFhemObject { get; set; }
+        FhemObjectViewModel SelectedFhemObjectViewModel { get; set; }
     }
 }
 //-----------------------------------------------------------------------------

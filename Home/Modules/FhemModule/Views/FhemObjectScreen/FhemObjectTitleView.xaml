@@ -9,7 +9,7 @@
 
         <Button Content="Back" Command="{Binding NavigateBackCommand}" Margin="5" />
 
-        <TextBlock Text="{Binding FhemService.SelectedFhemObject.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
+        <TextBlock Text="{Binding FhemService.SelectedFhemObjectViewModel.Name}" Style="{StaticResource FhemObjectNameTextBlockStyle}" />
 
     </StackPanel>
     

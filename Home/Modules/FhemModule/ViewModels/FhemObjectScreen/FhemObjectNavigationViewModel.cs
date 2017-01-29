@@ -124,10 +124,10 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectScreen
         public void OnNavigatedTo( NavigationContext navigationContext )
         {
             //-- Update the 'IsVisible' flag of all navigation view models
-            m_attributesMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsAttributes;
-            m_internalsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsInternals;
-            m_possibleSetsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsPossibleSets;
-            m_readingsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObject.ContainsReadings;
+            m_attributesMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObjectViewModel.ContainsAttributes;
+            m_internalsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObjectViewModel.ContainsInternals;
+            m_possibleSetsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObjectViewModel.ContainsPossibleSets;
+            m_readingsMenuItemViewModel.IsVisible = this.FhemService.SelectedFhemObjectViewModel.ContainsReadings;
 
             //-- Select and navigate always to the first visible navigation view model
             if( m_attributesMenuItemViewModel.IsVisible )

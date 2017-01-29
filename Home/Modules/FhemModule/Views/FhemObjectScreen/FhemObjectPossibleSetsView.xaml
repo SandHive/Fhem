@@ -5,6 +5,6 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectScreen.FhemObjectPossibleSetsView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <ListBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleSets}" />
+    <ListBox ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.PossibleSets}" />
 
 </UserControl>

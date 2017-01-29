@@ -108,7 +108,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
         /// <summary>
         /// Gets the underlying <see cref="FhemObject"/>.
         /// </summary>
-        internal FhemObject FhemObject { get; private set; }
+        public FhemObject FhemObject { get; private set; }
 
         /// <summary>
         /// Gets the internals of the Fhem object.

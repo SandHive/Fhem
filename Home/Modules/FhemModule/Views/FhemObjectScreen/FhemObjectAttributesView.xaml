@@ -7,7 +7,7 @@
 
     <StackPanel>
 
-        <ListView ItemsSource="{Binding FhemService.SelectedFhemObject.Attributes}" Visibility="{Binding FhemService.SelectedFhemObject.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <ListView ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.FhemObject.Attributes}" Visibility="{Binding FhemService.SelectedFhemObjectViewModel.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <ListView.View>
 
@@ -23,7 +23,7 @@
         </ListView>
 
         <TextBlock Text="PossibleAttributes: " />
-        <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObject.PossibleAttributes}">
+        <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.PossibleAttributes}">
 
             <ComboBox.ItemTemplate>
 

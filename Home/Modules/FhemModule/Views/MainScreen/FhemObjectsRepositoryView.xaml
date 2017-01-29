@@ -8,7 +8,7 @@
     Prism.Mvvm:ViewModelLocator.AutoWireViewModel="True"
     Name="me">
 
-    <ListView ItemsSource="{Binding FhemObjectsCollectionView}" SelectedItem="{Binding FhemService.SelectedFhemObject}">
+    <ListView ItemsSource="{Binding FhemObjectsCollectionView}" SelectedItem="{Binding FhemService.SelectedFhemObjectViewModel}">
 
         <i:Interaction.Behaviors>
 
@@ -17,7 +17,7 @@
         </i:Interaction.Behaviors>
         <ListView.InputBindings>
 
-            <KeyBinding Key="F2" Command="{Binding FhemService.SelectedFhemObject.EditFhemObjectNameCommand}" />
+            <KeyBinding Key="F2" Command="{Binding FhemService.SelectedFhemObjectViewModel.EditFhemObjectNameCommand}" />
 
         </ListView.InputBindings>
         
@@ -39,8 +39,8 @@
 
                                         <TextBox.InputBindings>
 
-                                            <KeyBinding Key="Esc" Command="{Binding FhemService.SelectedFhemObject.AbortFhemObjectRenamingCommand}" />
-                                            <KeyBinding Key="Return" Command="{Binding FhemService.SelectedFhemObject.RenameFhemObjectNameCommand}" />
+                                            <KeyBinding Key="Esc" Command="{Binding FhemService.SelectedFhemObjectViewModel.AbortFhemObjectRenamingCommand}" />
+                                            <KeyBinding Key="Return" Command="{Binding FhemService.SelectedFhemObjectViewModel.RenameFhemObjectNameCommand}" />
 
                                         </TextBox.InputBindings>
 
@@ -68,7 +68,7 @@
 
                                 <DataTemplate x:Key="ReadOnlyFhemObjectNameTemplate">
 
-                                    <TextBlock Text="{Binding Name}" Tag="{Binding FhemService.SelectedFhemObject}">
+                                    <TextBlock Text="{Binding Name}" Tag="{Binding FhemService.SelectedFhemObjectViewModel}">
 
                                         <TextBlock.ContextMenu>
 
@@ -88,7 +88,7 @@
 
                                         <TextBlock.InputBindings>
 
-                                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand}" />
+                                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding FhemService.SelectedFhemObjectViewModel.OpenFhemObjectDetailsCommand}" />
 
                                         </TextBlock.InputBindings>
 
@@ -126,7 +126,7 @@
 
                                 <TextBlock.InputBindings>
 
-                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding FhemService.SelectedFhemObject.OpenFhemObjectDetailsCommand}" />
+                                    <MouseBinding Gesture="LeftDoubleClick" Command="{Binding FhemService.SelectedFhemObjectViewModel.OpenFhemObjectDetailsCommand}" />
 
                                 </TextBlock.InputBindings>
 

@@ -44,7 +44,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
 
         public event EventHandler<FhemObjectViewModelEventArgs> FhemObjectNameEditingStart;
         
-        public FhemObjectViewModel SelectedFhemObject
+        public FhemObjectViewModel SelectedFhemObjectViewModel
         {
             get { return m_selectedFhemObject; }
             set
