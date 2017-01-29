@@ -284,7 +284,7 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels
                 this.Name = this.FhemObject.Name;
 
                 //-- Show the error information
-                MessageBox.Show( fhemClientResponse.ErrorInformation, "Error", MessageBoxButton.OK, MessageBoxImage.Error );
+                m_applicationService.ShowErrorMessage( fhemClientResponse.ErrorInformation );
             }
         }
 
