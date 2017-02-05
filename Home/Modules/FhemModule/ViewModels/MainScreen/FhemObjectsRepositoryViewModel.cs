@@ -20,6 +20,7 @@
  */
 using Prism.Regions;
 using Sand.Fhem.Basics;
+using Sand.Fhem.Basics.Collections;
 using Sand.Fhem.Home.Basics.Services;
 using Sand.Fhem.Home.Modules.FhemModule.Services;
 using System;

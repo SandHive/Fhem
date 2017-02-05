@@ -19,6 +19,7 @@
  * IN THE SOFTWARE.
  */
 using Newtonsoft.Json.Linq;
+using Sand.Fhem.Basics.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

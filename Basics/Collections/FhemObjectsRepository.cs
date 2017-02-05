@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Timers;
 //-----------------------------------------------------------------------------
-namespace Sand.Fhem.Basics
+namespace Sand.Fhem.Basics.Collections
 {
     public class FhemObjectsRepository : IEnumerable<FhemObject>, INotifyCollectionChanged
     {

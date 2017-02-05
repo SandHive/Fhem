@@ -42,12 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\FhemObjectsRepository.cs" />
+    <Compile Include="Collections\FhemPossibleAttributesCollection.cs" />
+    <Compile Include="Collections\FhemReadingItemsCollection.cs" />
     <Compile Include="FhemClientResponse.cs" />
     <Compile Include="FhemItemValuesPair.cs" />
     <Compile Include="FhemObject.cs" />
-    <Compile Include="FhemObjectsRepository.cs" />
-    <Compile Include="FhemPossibleAttributesCollection.cs" />
-    <Compile Include="FhemReadingItemsCollection.cs" />
     <Compile Include="FhemReadingItem.cs" />
     <Compile Include="INetworkStreamReader.cs" />
     <Compile Include="INetworkStreamWriter.cs" />
