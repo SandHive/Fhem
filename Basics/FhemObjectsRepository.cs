@@ -18,9 +18,9 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS 
  * IN THE SOFTWARE.
  */
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Timers;
 //-----------------------------------------------------------------------------
@@ -32,14 +32,12 @@ namespace Sand.Fhem.Basics
         #region Fields
 
         private FhemClient  m_fhemClient;
-
-        private ObservableCollection<FhemObject>  m_fhemObjectsCollection = new ObservableCollection<FhemObject>();
-
+        
         private SortedList<int, FhemObject>  m_fhemObjectsByNr = new SortedList<int, FhemObject>();
 
         private Timer  m_updateTimer;
 
-        private double  m_updateTimerInterval = 1000;
+        private double  m_updateTimerInterval = 5000;
 
         //-- Fields
         #endregion
@@ -47,8 +45,16 @@ namespace Sand.Fhem.Basics
         #region Properties
 
         /// <summary>
+        /// Gets the duration of the last repository update. Just nice to know.
+        /// </summary>
+        public TimeSpan LastUpdateDuration { get; private set; }
+
+        /// <summary>
         /// Gets or sets the update intervall.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The update interval may not be smaller than 2000ms.
+        /// </exception>
         public double UpdateInterval
         {
             get { return m_updateTimerInterval;  }
@@ -56,6 +62,11 @@ namespace Sand.Fhem.Basics
             {
                 //-- Do nothing when the value has not changed
                 if( value == m_updateTimerInterval ) { return; }
+
+                if( value < 2000 )
+                {
+                    throw new ArgumentOutOfRangeException( "The update interval may not be smaller than 2000ms!" );
+                }
 
                 //-- Update the timer interval
                 m_updateTimerInterval = value;
@@ -86,9 +97,6 @@ namespace Sand.Fhem.Basics
             //-- Initialize fields
             m_fhemClient = a_fhemClient;
             
-            //-- Register to events
-            m_fhemObjectsCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
-
             //-- Start the update timer with a very small interval to force an
             //-- immediate update. After elapsing, the timer will be configured
             //-- anew for standard use
@@ -103,31 +111,55 @@ namespace Sand.Fhem.Basics
         //---------------------------------------------------------------------
         #region Event Handlers
 
-        private void m_fhemObjectCollection_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
-        {
-            this.CollectionChanged?.Invoke( this, e );
-        }
-
         private void m_updateTimer_Elapsed( object sender, ElapsedEventArgs e )
         {
+            //-- Keep the start timestamp in mind
+            var startDateTime = DateTime.Now;
+
+            //-- Get all available Fhem objects
+            var currentFhemObjects = m_fhemClient.GetFhemObjects();
+
+            //-- Determine old Fhem objects
+            ////var oldFhemObjects = new List<FhemObject>();
+            ////foreach( FhemObject tmpFhemObject in m_fhemObjectsByNr.Values )
+            ////{
+            ////    if( !currentFhemObjects.ContainsKey( tmpFhemObject.ID ) )
+            ////    {
+            ////        oldFhemObjects.Add( tmpFhemObject );
+            ////    }
+            ////}
             
+            ////-- Determine new Fhem objects
+            //var newFhemObjects = new List<FhemObject>();
+            //foreach( FhemObject currentFhemObject in currentFhemObjects )
+            //{
+            //    if( !m_fhemObjectsByNr.ContainsKey( currentFhemObject.ID ) )
+            //    {
+            //        newFhemObjects.Add( currentFhemObject );
+            //    }
+            //}
+
+            ////-- Raise the 'CollectionChanged' event
+            //this.CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Replace, newFhemObjects, oldFhemObjects ) );
+
+            //-- Calculate the update duration
+            this.LastUpdateDuration = DateTime.Now - startDateTime;
         }
 
         private void m_updateTimer_Elapsed_StarterHandler( object sender, ElapsedEventArgs e )
         {
             //-- Get all available Fhem objects
             var fhemObjects = m_fhemClient.GetFhemObjects();
-
+            
             //-- Initialize the observable collection
             foreach( var fhemObject in fhemObjects )
             {
-                m_fhemObjectsCollection.Add( fhemObject );
                 m_fhemObjectsByNr.Add( fhemObject.ID, fhemObject );
             }
 
-            //-- Register to events
-            m_fhemObjectsCollection.CollectionChanged += m_fhemObjectCollection_CollectionChanged;
-
+            //-- Raise the 'CollectionChanged' event
+            this.CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add, fhemObjects ) );
+            
             //-- Reset the update timer for regular use
             this.ResetUpdateTimer( m_updateTimerInterval );
         }
@@ -139,12 +171,12 @@ namespace Sand.Fhem.Basics
 
         public IEnumerator GetEnumerator()
         {
-            return m_fhemObjectsCollection.GetEnumerator();
+            return m_fhemObjectsByNr.Values.GetEnumerator();
         }
 
         IEnumerator<FhemObject> IEnumerable<FhemObject>.GetEnumerator()
         {
-            return m_fhemObjectsCollection.GetEnumerator();
+            return m_fhemObjectsByNr.Values.GetEnumerator();
         }
 
         //-- IEnumerable
