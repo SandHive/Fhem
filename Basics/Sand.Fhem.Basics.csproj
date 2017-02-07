@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\FhemObjectsCollection.cs" />
     <Compile Include="Collections\FhemObjectsRepository.cs" />
     <Compile Include="Collections\FhemPossibleAttributesCollection.cs" />
     <Compile Include="Collections\FhemReadingItemsCollection.cs" />

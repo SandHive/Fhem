@@ -19,6 +19,7 @@
  * IN THE SOFTWARE.
  */
 using Newtonsoft.Json.Linq;
+using Sand.Fhem.Basics.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -216,7 +217,7 @@ namespace Sand.Fhem.Basics
         /// Gets all available Fhem objects.
         /// </summary>
         /// <returns></returns>
-        public ReadOnlyCollection<FhemObject> GetFhemObjects()
+        public FhemObjectsCollection GetFhemObjects()
         {
             //-- Check that we are really connected to a Fhem server
             this.CheckConnection();
@@ -234,12 +235,9 @@ namespace Sand.Fhem.Basics
 
             //-- Determine the first json token that represents a fhem object
             var fhemObjectAsJsonObject = (JObject) resultsJsonToken.First.First;
-
-            //-- Get the number of results
-            var resultsCount = (int) totalResultsJsonToken.Value;
-
+            
             //-- Prepare the list for storing all Fhem objects
-            var fhemObjects = new List<FhemObject>( resultsCount );
+            var fhemObjectsCollection = new FhemObjectsCollection();
 
             while( fhemObjectAsJsonObject != null )
             {
@@ -247,13 +245,13 @@ namespace Sand.Fhem.Basics
                 var fhemObject = FhemObject.FromJObject( fhemObjectAsJsonObject );
 
                 //-- Add it to the list
-                fhemObjects.Add( fhemObject );
+                fhemObjectsCollection.Add( fhemObject );
 
                 //-- Update to the next JObject
                 fhemObjectAsJsonObject = (JObject) fhemObjectAsJsonObject.Next;
             }
 
-            return fhemObjects.AsReadOnly();
+            return fhemObjectsCollection;
         }
 
         /// <summary>

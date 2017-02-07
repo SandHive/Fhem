@@ -32,8 +32,8 @@ namespace Sand.Fhem.Basics.Collections
         #region Fields
 
         private FhemClient  m_fhemClient;
-        
-        private SortedList<int, FhemObject>  m_fhemObjectsByNr = new SortedList<int, FhemObject>();
+
+        private FhemObjectsCollection  m_fhemObjectsCollection = new FhemObjectsCollection();
 
         private Timer  m_updateTimer;
 
@@ -149,16 +149,10 @@ namespace Sand.Fhem.Basics.Collections
         private void m_updateTimer_Elapsed_StarterHandler( object sender, ElapsedEventArgs e )
         {
             //-- Get all available Fhem objects
-            var fhemObjects = m_fhemClient.GetFhemObjects();
-            
-            //-- Initialize the observable collection
-            foreach( var fhemObject in fhemObjects )
-            {
-                m_fhemObjectsByNr.Add( fhemObject.ID, fhemObject );
-            }
+            m_fhemObjectsCollection = m_fhemClient.GetFhemObjects();
 
             //-- Raise the 'CollectionChanged' event
-            this.CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add, fhemObjects ) );
+            this.CollectionChanged?.Invoke( this, new NotifyCollectionChangedEventArgs( NotifyCollectionChangedAction.Add, m_fhemObjectsCollection ) );
             
             //-- Reset the update timer for regular use
             this.ResetUpdateTimer( m_updateTimerInterval );
@@ -171,12 +165,12 @@ namespace Sand.Fhem.Basics.Collections
 
         public IEnumerator GetEnumerator()
         {
-            return m_fhemObjectsByNr.Values.GetEnumerator();
+            return m_fhemObjectsCollection.GetEnumerator();
         }
 
         IEnumerator<FhemObject> IEnumerable<FhemObject>.GetEnumerator()
         {
-            return m_fhemObjectsByNr.Values.GetEnumerator();
+            return ( (IEnumerable<FhemObject>) m_fhemObjectsCollection ).GetEnumerator();
         }
 
         //-- IEnumerable
