@@ -20,9 +20,11 @@
  */
 using Prism.Mvvm;
 using Sand.Fhem.Basics;
+using System.Diagnostics;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectScreen
 {
+    [DebuggerDisplay( "Item: {Item.Name}" )]
     public class FhemItemValuePairViewModel : BindableBase
     {
         //---------------------------------------------------------------------

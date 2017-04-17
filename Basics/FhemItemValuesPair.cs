@@ -20,9 +20,11 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
 {
+    [DebuggerDisplay( "Name: {Name}" )]
     public class FhemItemValuesPair
     {
         //---------------------------------------------------------------------
