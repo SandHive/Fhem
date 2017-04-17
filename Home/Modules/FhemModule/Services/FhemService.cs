@@ -58,9 +58,14 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
                     }
                 }
 
-                this.SetProperty( ref m_selectedFhemObject, value );
+                if( this.SetProperty( ref m_selectedFhemObject, value ) )
+                {
+                    this.SelectedFhemObjectViewModelChanged?.Invoke( this, EventArgs.Empty );
+                }
             }
         }
+
+        public event EventHandler SelectedFhemObjectViewModelChanged;
 
         //-- IFhemService Members
         #endregion

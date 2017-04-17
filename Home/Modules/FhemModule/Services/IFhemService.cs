@@ -46,6 +46,11 @@ namespace Sand.Fhem.Home.Modules.FhemModule.Services
         /// Gets or sets the selected Fhem object view model.
         /// </summary>
         FhemObjectViewModel SelectedFhemObjectViewModel { get; set; }
+
+        /// <summary>
+        /// Occurs when the selected Fhem object view model has changed.
+        /// </summary>
+        event EventHandler SelectedFhemObjectViewModelChanged;
     }
 }
 //-----------------------------------------------------------------------------

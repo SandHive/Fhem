@@ -7,14 +7,52 @@
 
     <StackPanel>
 
-        <ListView ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.FhemObject.Attributes}" Visibility="{Binding FhemService.SelectedFhemObjectViewModel.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <ListView ItemsSource="{Binding AttributeViewModels}" Visibility="{Binding FhemService.SelectedFhemObjectViewModel.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
 
             <ListView.View>
 
                 <GridView>
 
-                    <GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Name" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Item.Name}" Header="Name" />
+                    <GridViewColumn Header="Value">
+
+                        <GridViewColumn.CellTemplate>
+
+                            <DataTemplate>
+
+                                <DataTemplate.Resources>
+
+                                    <DataTemplate x:Key="MultipleValuesTemplate">
+
+                                        <ComboBox ItemsSource="{Binding Item.Values}" SelectedItem="{Binding SelectedValue, Mode=TwoWay}" />
+
+                                    </DataTemplate>
+
+                                    <DataTemplate x:Key="SingleValueTemplate">
+
+                                        <TextBlock Text="{Binding SelectedValue}" />
+
+                                    </DataTemplate>
+
+                                </DataTemplate.Resources>
+
+                                <ContentControl Name="FhemItemValuesPairControl" Content="{Binding}" ContentTemplate="{StaticResource SingleValueTemplate}" />
+
+                                <DataTemplate.Triggers>
+
+                                    <DataTrigger Binding="{Binding HasMultipleValues}" Value="True">
+
+                                        <Setter Property="ContentTemplate" TargetName="FhemItemValuesPairControl" Value="{StaticResource MultipleValuesTemplate}" />
+
+                                    </DataTrigger>
+
+                                </DataTemplate.Triggers>
+
+                            </DataTemplate>
+                            
+                        </GridViewColumn.CellTemplate>
+
+                    </GridViewColumn>
 
                 </GridView>
 
@@ -23,13 +61,18 @@
         </ListView>
 
         <TextBlock Text="PossibleAttributes: " />
-        <ComboBox ItemsSource="{Binding FhemService.SelectedFhemObjectViewModel.FhemObject.PossibleAttributes}">
+        <ComboBox ItemsSource="{Binding PossibleAttributeViewModels}">
 
             <ComboBox.ItemTemplate>
 
                 <DataTemplate>
 
-                    <TextBlock Text="{Binding Name}" />
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <TextBlock Text="{Binding Item.Name}" />
+                        <ListBox ItemsSource="{Binding Item.Values}" />
+                        
+                    </StackPanel>
 
                 </DataTemplate>
 

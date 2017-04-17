@@ -19,11 +19,22 @@
  * IN THE SOFTWARE.
  */
 using Sand.Fhem.Home.Modules.FhemModule.Services;
+using System.Collections.ObjectModel;
+using System.Linq;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectScreen
 {
     public class FhemObjectAttributesViewModel : FhemViewModelBase
     {
+        //---------------------------------------------------------------------
+        #region Properties
+
+        public ObservableCollection<FhemItemValuePairViewModel> AttributeViewModels { get; } = new ObservableCollection<FhemItemValuePairViewModel>();
+
+        public ObservableCollection<FhemItemValuePairViewModel> PossibleAttributeViewModels { get; } = new ObservableCollection<FhemItemValuePairViewModel>();
+
+        //-- Properties
+        #endregion
         //---------------------------------------------------------------------
         #region Constructors
 
@@ -32,9 +43,48 @@ namespace Sand.Fhem.Home.Modules.FhemModule.ViewModels.FhemObjectScreen
         /// </summary>
         /// <param name="a_fhemService"></param>
         public FhemObjectAttributesViewModel( IFhemService a_fhemService )
-            : base( a_fhemService ) { }
+            : base( a_fhemService )
+        {
+            //-- Register to events
+            a_fhemService.SelectedFhemObjectViewModelChanged += ( sender, e ) => this.Initialize();
+
+            //-- For the case that there exists already a selected Fhem object view model
+            this.Initialize();            
+        }
 
         //-- Constructors
+        #endregion
+        //---------------------------------------------------------------------
+        #region Methods
+
+        private void Initialize()
+        {
+            if( this.FhemService.SelectedFhemObjectViewModel != null )
+            {
+                //-- Initialize the possible attributes
+                this.PossibleAttributeViewModels.Clear();
+                foreach( var fhemItemValuePair in this.FhemService.SelectedFhemObjectViewModel.FhemObject.PossibleAttributes )
+                {
+                    this.PossibleAttributeViewModels.Add( new FhemItemValuePairViewModel( fhemItemValuePair ) );
+                }
+
+                //-- Initialize the active attributes
+                this.AttributeViewModels.Clear();
+                foreach( var keyValuePair in this.FhemService.SelectedFhemObjectViewModel.FhemObject.Attributes )
+                {
+                    var attributeName = keyValuePair.Key;
+                    var attributeValue = keyValuePair.Value;
+
+                    //--
+                    var fhemItemValuePairViewModel = this.PossibleAttributeViewModels.Single( itemViewModel => itemViewModel.Item.Name == attributeName );
+                    fhemItemValuePairViewModel.SelectedValue = attributeValue;
+
+                    this.AttributeViewModels.Add( fhemItemValuePairViewModel );
+                }
+            }
+        }
+
+        //-- Methods
         #endregion
         //---------------------------------------------------------------------
     }

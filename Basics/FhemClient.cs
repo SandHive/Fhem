@@ -21,8 +21,6 @@
 using Newtonsoft.Json.Linq;
 using Sand.Fhem.Basics.Collections;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Net.Sockets;
 //-----------------------------------------------------------------------------
 namespace Sand.Fhem.Basics
