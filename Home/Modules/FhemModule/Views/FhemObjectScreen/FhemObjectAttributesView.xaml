@@ -5,6 +5,12 @@
     x:Class="Sand.Fhem.Home.Modules.FhemModule.Views.FhemObjectScreen.FhemObjectAttributesView"
     prism:ViewModelLocator.AutoWireViewModel="True">
 
+    <UserControl.Resources>
+
+        <ResourceDictionary Source="..\..\Resources\ResourceDictionaries\Styles\Named\FhemItemValuePairComboBoxStyle.xaml" />
+
+    </UserControl.Resources>
+
     <StackPanel>
 
         <ListView ItemsSource="{Binding AttributeViewModels}" Visibility="{Binding FhemService.SelectedFhemObjectViewModel.ContainsAttributes, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -24,7 +30,7 @@
 
                                     <DataTemplate x:Key="MultipleValuesTemplate">
 
-                                        <ComboBox ItemsSource="{Binding Item.Values}" SelectedItem="{Binding SelectedValue, Mode=TwoWay}" />
+                                        <ComboBox ItemsSource="{Binding Item.Values}" Text="{Binding SelectedValue, Mode=TwoWay}" Style="{StaticResource FhemItemValuePairComboBoxStyle}" />
 
                                     </DataTemplate>
 
